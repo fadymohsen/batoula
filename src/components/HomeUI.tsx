@@ -201,33 +201,46 @@ export default function HomeUI({ content }: { content: Record<string, string> })
           >
             <motion.div variants={fadeUp} className="space-y-4">
               <h1 className="text-5xl lg:text-7xl font-black text-charcoal leading-[1.05] tracking-tight">
-                {dict.hero.title1} <span className="text-rose">{dict.hero.titleHighlight}</span> {dict.hero.title2} <br />
-                {dict.hero.title3}
+                {getContent(content, "hero_title_1", dict.hero.title1)}{" "}
+                <span className="text-rose">
+                  {getContent(content, "hero_title_highlight", dict.hero.titleHighlight)}
+                </span>{" "}
+                {getContent(content, "hero_title_2", dict.hero.title2)} <br />
+                {getContent(content, "hero_title_3", dict.hero.title3)}
               </h1>
               <p className={`text-lg font-bold text-charcoal/50 max-w-lg ${isRtl ? "ms-auto" : "me-auto"} leading-relaxed`}>
-                {dict.hero.subtitle}
+                {getContent(content, "hero_description", dict.hero.subtitle)}
               </p>
             </motion.div>
 
-            <motion.div variants={fadeUp} className="pt-6 border-t border-charcoal/8">
-              <div className="grid grid-cols-3 gap-4">
+            <motion.div variants={fadeUp} className="pt-8 border-t border-charcoal/8">
+              <div className="flex flex-wrap items-end gap-x-8 gap-y-4 justify-start">
                 <div className={textAlign}>
-                  <div className="text-3xl lg:text-4xl font-black text-charcoal leading-none tracking-tight">
-                    +<AnimatedCounter to={2000} />
+                  <div className="text-6xl lg:text-7xl font-black text-charcoal leading-none tracking-tight">
+                    +<AnimatedCounter to={parseInt(getContent(content, "stats_1_value", dict.hero.stat1Value).replace(/\D/g, ''))} />
                   </div>
-                  <div className="text-[10px] font-bold text-charcoal/35 mt-1.5">{dict.hero.stat1Label}</div>
-                </div>
-                <div className={`${textAlign} border-x border-charcoal/10 px-4`}>
-                  <div className="text-3xl lg:text-4xl font-black text-rose leading-none tracking-tight">
-                    <AnimatedCounter to={27} /><span className="text-lg font-bold"> {dict.hero.stat2Unit}</span>
+                  <div className="text-xs font-bold text-charcoal/35 mt-2">
+                    {getContent(content, "stats_1_label", dict.hero.stat1Label)}
                   </div>
-                  <div className="text-[10px] font-bold text-charcoal/35 mt-1.5">{dict.hero.stat2Label}</div>
                 </div>
+                <div className="w-px h-12 bg-charcoal/10 self-center hidden sm:block" />
                 <div className={textAlign}>
-                  <div className="text-3xl lg:text-4xl font-black text-charcoal leading-none tracking-tight">
-                    +<AnimatedCounter to={500} />
+                  <div className="text-4xl lg:text-5xl font-black text-rose leading-none tracking-tight">
+                    <AnimatedCounter to={parseInt(getContent(content, "stats_2_value", dict.hero.stat2Value).replace(/\D/g, ''))} />
+                    <span className="text-2xl font-bold"> {dict.hero.stat2Unit}</span>
                   </div>
-                  <div className="text-[10px] font-bold text-charcoal/35 mt-1.5">{dict.hero.stat3Label}</div>
+                  <div className="text-xs font-bold text-charcoal/35 mt-2">
+                    {getContent(content, "stats_2_label", dict.hero.stat2Label)}
+                  </div>
+                </div>
+                <div className="w-px h-12 bg-charcoal/10 self-center hidden sm:block" />
+                <div className={textAlign}>
+                  <div className="text-4xl lg:text-5xl font-black text-charcoal leading-none tracking-tight">
+                    +<AnimatedCounter to={parseInt(getContent(content, "stats_3_value", dict.hero.stat3Value).replace(/\D/g, ''))} />
+                  </div>
+                  <div className="text-xs font-bold text-charcoal/35 mt-2">
+                    {getContent(content, "stats_3_label", dict.hero.stat3Label)}
+                  </div>
                 </div>
               </div>
             </motion.div>
@@ -248,7 +261,7 @@ export default function HomeUI({ content }: { content: Record<string, string> })
           >
             <div className="relative w-full max-w-[380px] lg:max-w-[460px] aspect-[4/5] rounded-[48px] overflow-hidden shadow-[0_48px_96px_-16px_rgba(0,0,0,0.3)] bg-charcoal border-[10px] border-white group">
               <Image
-                src="/coach-batoula.jpg"
+                src={getContent(content, "hero_image", "/coach-batoula.jpg")}
                 alt={dict.hero.imageAlt}
                 fill
                 className="object-cover object-top group-hover:scale-105 transition-transform duration-1000"
@@ -268,13 +281,17 @@ export default function HomeUI({ content }: { content: Record<string, string> })
             <div className={`space-y-7 ${textAlign} order-2 lg:order-1`}>
               <div className="space-y-3">
                 <h2 className="text-3xl lg:text-4xl font-black text-charcoal leading-tight">
-                  {dict.about.title} <span className="text-rose">{dict.about.titleHighlight}</span> {dict.about.titleEnd}
+                  {getContent(content, "about_title", dict.about.title)}{" "}
+                  <span className="text-rose">
+                    {getContent(content, "about_title_highlight", dict.about.titleHighlight)}
+                  </span>{" "}
+                  {getContent(content, "about_title_end", dict.about.titleEnd)}
                 </h2>
                 <div className={`w-16 h-1.5 bg-gold rounded-full ${isRtl ? "ms-auto" : "me-auto"}`} />
               </div>
 
               <p className="text-base font-bold text-charcoal/65 leading-relaxed">
-                {dict.about.intro}
+                {getContent(content, "about_description", dict.about.intro)}
               </p>
 
               <div className="border-t border-charcoal/8">
@@ -294,12 +311,22 @@ export default function HomeUI({ content }: { content: Record<string, string> })
 
             <div className="relative order-1 lg:order-2 flex justify-center">
               <div className="relative rounded-[48px] overflow-hidden aspect-[4/5] w-full max-w-[400px] shadow-xl border-[10px] border-[#fafafa]">
-                <Image src="/coach-batoula-about.jpg" alt={dict.hero.imageAlt} fill className="object-cover object-top" unoptimized />
+                <Image
+                  src={getContent(content, "about_image", "/coach-batoula-about.jpg")}
+                  alt={dict.hero.imageAlt}
+                  fill
+                  className="object-cover object-top"
+                  unoptimized
+                />
                 <div className="absolute inset-0 bg-gradient-to-t from-charcoal/30 to-transparent" />
               </div>
               <div className={`absolute -bottom-6 ${isRtl ? "-start-6" : "-end-6"} glass p-6 rounded-[32px] shadow-xl border border-white/20`}>
-                <div className="text-4xl font-black text-rose mb-1">{dict.about.weightLoss}</div>
-                <div className="text-xs font-black text-charcoal">{dict.about.weightLossLabel}</div>
+                <div className="text-4xl font-black text-rose mb-1">
+                  {getContent(content, "about_weight_loss", dict.about.weightLoss)}
+                </div>
+                <div className="text-xs font-black text-charcoal">
+                  {getContent(content, "about_weight_loss_label", dict.about.weightLossLabel)}
+                </div>
               </div>
             </div>
           </div>
@@ -406,10 +433,10 @@ export default function HomeUI({ content }: { content: Record<string, string> })
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
             <h2 className="text-3xl lg:text-4xl font-black leading-tight italic text-rose">
-              &quot;{dict.mission.quote}&quot;
+              &quot;{getContent(content, "mission_quote", dict.mission.quote)}&quot;
             </h2>
             <p className="text-white/60 text-lg leading-relaxed">
-              {dict.mission.description}
+              {getContent(content, "mission_description", dict.mission.description)}
             </p>
           </div>
 
@@ -430,17 +457,25 @@ export default function HomeUI({ content }: { content: Record<string, string> })
         <div className="max-w-4xl mx-auto px-6 text-center">
           <motion.div variants={fadeUp} initial="hidden" whileInView="show" className="space-y-5 mb-14">
             <h2 className="text-4xl lg:text-5xl font-black text-charcoal leading-tight">
-              {dict.results.title}
+              {getContent(content, "trans_title", dict.results.title)}
               <br />
-              <span className="text-rose">{dict.results.titleHighlight}</span>
+              <span className="text-rose">
+                {getContent(content, "trans_title_highlight", dict.results.titleHighlight)}
+              </span>
             </h2>
             <p className="text-charcoal/50 leading-relaxed text-lg font-bold max-w-xl mx-auto">
-              {dict.results.subtitle}
+              {getContent(content, "trans_description", dict.results.subtitle)}
             </p>
           </motion.div>
 
           <motion.div variants={fadeUp} initial="hidden" whileInView="show" className="relative rounded-[40px] overflow-hidden shadow-2xl aspect-square max-w-[420px] mx-auto border-8 border-background mb-12">
-            <Image src="/coach-batoula-logo.jpg" alt={dict.results.imageAlt} fill className="object-cover" unoptimized />
+            <Image
+              src={getContent(content, "trans_image", "/coach-batoula-logo.jpg")}
+              alt={dict.results.imageAlt}
+              fill
+              className="object-cover"
+              unoptimized
+            />
           </motion.div>
 
           <motion.div variants={fadeUp} initial="hidden" whileInView="show" className="flex flex-col sm:flex-row gap-4 justify-center items-center">
@@ -517,19 +552,21 @@ export default function HomeUI({ content }: { content: Record<string, string> })
             <div className="w-12 h-0.5 bg-rose mt-3" />
           </div>
           <div className="divide-y divide-charcoal/8">
-            {dict.faq.items.map((faq: { q: string; a: string }, i: number) => (
-              <div key={i} className="py-6 cursor-pointer group" onClick={() => setOpenFaq(openFaq === i ? null : i)}>
+            {[1, 2].map((num) => (
+              <div key={num} className="py-6 cursor-pointer group" onClick={() => setOpenFaq(openFaq === num ? null : num)}>
                 <div className="flex justify-between items-center">
-                  <span className={`flex-1 font-black text-lg transition-colors ${openFaq === i ? 'text-rose' : 'text-charcoal group-hover:text-rose'}`}>{faq.q}</span>
-                  <ChevronDown size={18} className={`transition-transform duration-300 ms-4 shrink-0 ${openFaq === i ? 'rotate-180 text-rose' : 'text-charcoal/25'}`} />
+                  <span className={`flex-1 font-black text-lg transition-colors ${openFaq === num ? 'text-rose' : 'text-charcoal group-hover:text-rose'}`}>
+                    {getContent(content, `faq_${num}_q`, dict.faq.items[num-1]?.q || "")}
+                  </span>
+                  <ChevronDown size={18} className={`transition-transform duration-300 ms-4 shrink-0 ${openFaq === num ? 'rotate-180 text-rose' : 'text-charcoal/25'}`} />
                 </div>
-                {openFaq === i && (
+                {openFaq === num && (
                   <motion.div
                     initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.2 }}
                     className="mt-3 text-charcoal/55 text-base font-semibold leading-relaxed pe-8"
                   >
-                    {faq.a}
+                    {getContent(content, `faq_${num}_a`, dict.faq.items[num-1]?.a || "")}
                   </motion.div>
                 )}
               </div>

@@ -13,18 +13,27 @@ function getLocaleFromRequest(req: Request): string {
 
 export default auth((req) => {
   const { pathname } = req.nextUrl;
+  // Normalize pathname to lowercase for checking
+  const lowerPath = pathname.toLowerCase();
 
-  // Skip locale logic for api, _next, static files, admin
+  // 1. Handle locale-prefixed admin paths (e.g., /ar/admin -> /admin)
+  const localeAdminMatch = lowerPath.match(/^\/(ar|en)\/admin/);
+  if (localeAdminMatch) {
+    const newPath = pathname.replace(/^\/(ar|en)/i, "");
+    return NextResponse.redirect(new URL(newPath, req.url));
+  }
+
+  // 2. Skip locale logic for api, _next, static files, and admin
   if (
-    pathname.startsWith("/api") ||
-    pathname.startsWith("/_next") ||
-    pathname.startsWith("/admin") ||
+    lowerPath.startsWith("/api") ||
+    lowerPath.startsWith("/_next") ||
+    lowerPath.startsWith("/admin") ||
     pathname.includes(".") // static files
   ) {
     // Admin auth logic
-    if (pathname.startsWith("/admin")) {
+    if (lowerPath.startsWith("/admin")) {
       const isLoggedIn = !!req.auth;
-      const isLoginPage = pathname === "/admin/login";
+      const isLoginPage = lowerPath === "/admin/login";
       if (isLoginPage && isLoggedIn) {
         return NextResponse.redirect(new URL("/admin", req.url));
       }

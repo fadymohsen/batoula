@@ -75,7 +75,7 @@ export default async function AdminCMSPage() {
   }));
 
   const groupedContent = sanitizedContents.reduce((acc, item) => {
-    const config = CMS_CONFIG[item.key] || { label: item.key, group: "عام", icon: Layout };
+    const config = CMS_CONFIG[item.key] || { label: item.key, group: "عام", icon: "layout" };
     if (!acc[config.group]) acc[config.group] = [];
     acc[config.group].push({ ...item, config });
     return acc;
