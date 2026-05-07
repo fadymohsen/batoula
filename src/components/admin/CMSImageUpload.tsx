@@ -23,7 +23,10 @@ export default function CMSImageUpload({
       const formData = new FormData();
       formData.append("file", file);
       
-      const result = await uploadFileAction(formData);
+      const result = await uploadFileAction(formData).catch(err => {
+        // This catches network errors or Next.js action errors
+        return { success: false, error: err.message };
+      });
       
       if (!result.success) {
         throw new Error(result.error);
@@ -34,7 +37,12 @@ export default function CMSImageUpload({
       setTimeout(() => setDone(false), 3000);
     } catch (error: any) {
       console.error("Upload failed", error);
-      alert(`فشل الرفع: ${error.message || 'يرجى المحاولة مرة أخرى'}`);
+      const msg = error.message || '';
+      if (msg.includes("Unexpected token")) {
+        alert("فشل الرفع: حجم الملف كبير جداً أو انتهت جلسة العمل. يرجى تجربة صورة أصغر.");
+      } else {
+        alert(`فشل الرفع: ${msg || 'يرجى المحاولة مرة أخرى'}`);
+      }
     } finally {
       setUploading(false);
     }
