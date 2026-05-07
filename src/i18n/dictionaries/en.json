@@ -103,7 +103,18 @@
     "title": "Internationally Accredited Certificates",
     "subtitle": "I continuously develop myself to always give you the best",
     "prev": "Previous",
-    "next": "Next"
+    "next": "Next",
+    "items": [
+      { "title": "SuperHuman Clinics", "sub": "Clinical Nutrition Training" },
+      { "title": "Challenge Academy", "sub": "Clinical & Sports Nutrition" },
+      { "title": "ICNC 2026", "sub": "International Cosmetic Nutrition" },
+      { "title": "ICN Certificate", "sub": "Healthy Nutrition Certificate" },
+      { "title": "Diabetes Workshop", "sub": "Specialized Diabetes Workshop" },
+      { "title": "CFT Course", "sub": "Body Anatomy & Program Design" },
+      { "title": "Diploma Certificate", "sub": "Diploma Holder" },
+      { "title": "With Certificates", "sub": "Batoula with her certificates" },
+      { "title": "INSEP PRO", "sub": "Batoula at INSEP PRO" }
+    ]
   },
   "mission": {
     "quote": "My message to you: It's not about dieting, it's about living",

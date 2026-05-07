@@ -61,16 +61,16 @@ const staggerItem = {
   show:   { opacity: 1, y: 0,  scale: 1, transition: { duration: 0.5 } },
 };
 
-const CERTIFICATES = [
-  { img: "/content/_.jpg (3).jpeg",  title: "SuperHuman Clinics",  sub: "Clinical Nutrition Training",  orient: "portrait"  },
-  { img: "/content/_.jpg (5).jpeg",  title: "Challenge Academy",   sub: "Clinical & Sports Nutrition",   orient: "portrait"  },
-  { img: "/content/_.jpg (9).jpeg",  title: "ICNC 2026",           sub: "International Cosmetic Nutrition", orient: "portrait"  },
-  { img: "/content/_.jpg.jpeg",      title: "ICN Certificate",     sub: "Healthy Nutrition Certificate",        orient: "landscape", rotate: -90 },
-  { img: "/content/_.jpg (2).jpeg",  title: "Diabetes Workshop",   sub: "Specialized Diabetes Workshop",        orient: "landscape", rotate: -90 },
-  { img: "/content/_.jpg (8).jpeg",  title: "CFT Course",          sub: "Body Anatomy & Program Design",     orient: "landscape", rotate: -90 },
-  { img: "/content/_.jpg (6).jpeg",  title: "Diploma Certificate", sub: "Diploma Holder",       orient: "landscape" },
-  { img: "/content/_.jpg (10).jpeg", title: "With Certificates",   sub: "Batoula with her certificates",              orient: "landscape" },
-  { img: "/content/_.jpg (11).jpeg", title: "INSEP PRO",           sub: "Batoula at INSEP PRO",             orient: "landscape" },
+const CERT_IMAGES = [
+  { img: "/content/_.jpg (3).jpeg",  orient: "portrait" },
+  { img: "/content/_.jpg (5).jpeg",  orient: "portrait" },
+  { img: "/content/_.jpg (9).jpeg",  orient: "portrait" },
+  { img: "/content/_.jpg.jpeg",      orient: "landscape", rotate: -90 },
+  { img: "/content/_.jpg (2).jpeg",  orient: "landscape", rotate: -90 },
+  { img: "/content/_.jpg (8).jpeg",  orient: "landscape", rotate: -90 },
+  { img: "/content/_.jpg (6).jpeg",  orient: "landscape" },
+  { img: "/content/_.jpg (10).jpeg", orient: "landscape" },
+  { img: "/content/_.jpg (11).jpeg", orient: "landscape" },
 ];
 
 function CertCarousel() {
@@ -123,8 +123,9 @@ function CertCarousel() {
           ref={trackRef}
           className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 px-6 no-scrollbar"
         >
-          {CERTIFICATES.map((cert, idx) => {
+          {CERT_IMAGES.map((cert, idx) => {
             const rotate = (cert as { rotate?: number }).rotate;
+            const translated = dict.certs.items[idx];
             return (
               <div key={idx} data-cert="" className="snap-start shrink-0 group relative w-52 h-72 rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
                 {rotate ? (
@@ -132,15 +133,15 @@ function CertCarousel() {
                     className="absolute top-1/2 left-1/2"
                     style={{ width: "133.34%", height: "75%", transform: `translate(-50%, -50%) rotate(${rotate}deg)` }}
                   >
-                    <Image src={cert.img} alt={cert.title} fill className="object-cover" unoptimized />
+                    <Image src={cert.img} alt={translated?.title || ""} fill className="object-cover" unoptimized />
                   </div>
                 ) : (
-                  <Image src={cert.img} alt={cert.title} fill className="object-cover group-hover:scale-[1.03] transition-transform duration-300" unoptimized />
+                  <Image src={cert.img} alt={translated?.title || ""} fill className="object-cover group-hover:scale-[1.03] transition-transform duration-300" unoptimized />
                 )}
                 <div className="absolute inset-0 bg-gradient-to-t from-charcoal/75 via-charcoal/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 <div className="absolute bottom-0 inset-x-0 p-4 translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 text-right">
-                  <div className="text-white font-black text-sm leading-snug">{cert.title}</div>
-                  <div className="text-white/60 text-xs mt-0.5">{cert.sub}</div>
+                  <div className="text-white font-black text-sm leading-snug">{translated?.title}</div>
+                  <div className="text-white/60 text-xs mt-0.5">{translated?.sub}</div>
                 </div>
               </div>
             );
@@ -174,11 +175,11 @@ export default function HomeUI({ content }: { content: Record<string, string> })
         href="https://wa.me/"
         target="_blank"
         rel="noopener"
-        className="pulse-ring fixed bottom-8 right-6 z-50 w-14 h-14 rounded-full bg-[#25D366] text-white flex items-center justify-center shadow-2xl shadow-green-500/30"
+        className="fixed bottom-8 right-6 z-50 w-16 h-16 rounded-full bg-gradient-to-br from-rose to-rose-dark text-white flex items-center justify-center shadow-2xl shadow-rose/40 ring-4 ring-rose/20"
         initial={{ scale: 0, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ delay: 2.2, type: "spring", stiffness: 220, damping: 18 }}
-        whileHover={{ scale: 1.12 }}
+        animate={{ scale: [1, 1.08, 1] , opacity: 1 }}
+        transition={{ scale: { duration: 2, repeat: Infinity, ease: "easeInOut" }, opacity: { delay: 2.2, duration: 0.5 } }}
+        whileHover={{ scale: 1.15 }}
         whileTap={{ scale: 0.92 }}
       >
         <svg viewBox="0 0 24 24" fill="currentColor" className="w-7 h-7">
@@ -187,7 +188,7 @@ export default function HomeUI({ content }: { content: Record<string, string> })
       </motion.a>
 
       {/* HERO */}
-      <section className="relative min-h-[85vh] flex items-center pt-24 overflow-hidden bg-white">
+      <section className="relative min-h-[85vh] flex items-center pt-6 lg:pt-24 overflow-hidden bg-white">
         <div className="absolute inset-0 hero-dots opacity-30 pointer-events-none" />
         <div className="absolute top-[-15%] end-[-5%] w-[600px] h-[600px] bg-rose/5 rounded-full blur-[120px] pointer-events-none" />
         <div className="absolute bottom-[-10%] start-[-5%] w-[400px] h-[400px] bg-gold/5 rounded-full blur-[100px] pointer-events-none" />
@@ -397,17 +398,6 @@ export default function HomeUI({ content }: { content: Record<string, string> })
         </div>
       </section>
 
-      {/* CERTIFICATES */}
-      <section id="certs" className="py-24 bg-background">
-        <div className="max-w-7xl mx-auto px-6">
-          <motion.div variants={fadeUp} initial="hidden" whileInView="show" className="text-center space-y-4 mb-14">
-            <h2 className="text-4xl lg:text-5xl font-black text-charcoal">{dict.certs.title}</h2>
-            <p className="text-charcoal/50 text-lg">{dict.certs.subtitle}</p>
-          </motion.div>
-          <CertCarousel />
-        </div>
-      </section>
-
       <Wave bg="var(--background)" fill="var(--charcoal)" />
 
       {/* MISSION */}
@@ -505,6 +495,17 @@ export default function HomeUI({ content }: { content: Record<string, string> })
               ))}
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* CERTIFICATES */}
+      <section id="certs" className="py-24 bg-background">
+        <div className="max-w-7xl mx-auto px-6">
+          <motion.div variants={fadeUp} initial="hidden" whileInView="show" className="text-center space-y-4 mb-14">
+            <h2 className="text-4xl lg:text-5xl font-black text-charcoal">{dict.certs.title}</h2>
+            <p className="text-charcoal/50 text-lg">{dict.certs.subtitle}</p>
+          </motion.div>
+          <CertCarousel />
         </div>
       </section>
 
