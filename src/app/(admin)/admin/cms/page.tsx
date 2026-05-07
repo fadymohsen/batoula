@@ -49,16 +49,26 @@ const CMS_CONFIG: Record<string, { label: string; group: string; icon: string }>
 
 async function saveContent(formData: FormData) {
   "use server";
-  const id = formData.get("id") as string;
-  const value = formData.get("value") as string;
+  try {
+    const id = formData.get("id") as string;
+    const value = formData.get("value") as string;
 
-  await prisma.content.update({
-    where: { id },
-    data: { value },
-  });
-  
-  revalidatePath("/");
-  revalidatePath("/admin/cms");
+    if (!id) throw new Error("Missing ID");
+
+    await prisma.content.update({
+      where: { id },
+      data: { value },
+    });
+    
+    // Revalidate everything to ensure the homepage and admin panel are updated
+    revalidatePath("/", "layout");
+    revalidatePath("/admin/cms");
+    
+    return { success: true };
+  } catch (error) {
+    console.error("Save failed:", error);
+    throw error;
+  }
 }
 
 export default async function AdminCMSPage() {

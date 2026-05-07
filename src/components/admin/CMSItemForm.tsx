@@ -18,13 +18,28 @@ export default function CMSItemForm({
   saveAction 
 }: { 
   item: any; 
-  saveAction: (formData: FormData) => Promise<void> 
+  saveAction: (formData: FormData) => Promise<any> 
 }) {
   const [value, setValue] = useState(item.value);
+  const [isSaving, setIsSaving] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
   const Icon = ICON_MAP[item.config.icon] || Layout;
 
+  const handleSubmit = async (formData: FormData) => {
+    setIsSaving(true);
+    try {
+      await saveAction(formData);
+      setShowSuccess(true);
+      setTimeout(() => setShowSuccess(false), 3000);
+    } catch (e) {
+      alert("حدث خطأ أثناء الحفظ");
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
   return (
-    <div className="bg-white p-8 rounded-[24px] shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+    <div className={`bg-white p-8 rounded-[24px] shadow-sm border transition-all ${showSuccess ? 'border-green-500 ring-4 ring-green-500/10' : 'border-gray-100'}`}>
       <div className="flex flex-col lg:flex-row gap-8">
         
         {/* Left: Info */}
@@ -54,7 +69,7 @@ export default function CMSItemForm({
 
         {/* Right: Form */}
         <div className="lg:w-2/3">
-          <form action={saveAction} className="h-full flex flex-col">
+          <form action={handleSubmit} className="h-full flex flex-col">
             <input type="hidden" name="id" value={item.id} />
             <div className="flex-1">
               {item.type === 'TEXT' ? (
@@ -76,9 +91,21 @@ export default function CMSItemForm({
               )}
             </div>
             <div className="flex justify-end mt-4">
-              <button type="submit" className="flex items-center gap-2 bg-[#2c2825] text-white px-8 py-3 rounded-xl font-bold hover:bg-[#b48a66] transition-all shadow-lg shadow-black/5 active:scale-95">
-                <Save size={18} />
-                حفظ التعديلات
+              <button 
+                type="submit" 
+                disabled={isSaving}
+                className={`flex items-center gap-2 px-8 py-3 rounded-xl font-bold transition-all shadow-lg active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed ${
+                  showSuccess ? 'bg-green-600 text-white' : 'bg-[#2c2825] text-white hover:bg-[#b48a66]'
+                }`}
+              >
+                {isSaving ? (
+                  <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                ) : showSuccess ? (
+                  <span className="flex items-center gap-2">✓ تم الحفظ</span>
+                ) : (
+                  <Save size={18} />
+                )}
+                {!isSaving && !showSuccess && "حفظ التعديلات"}
               </button>
             </div>
           </form>
