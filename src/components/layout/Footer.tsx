@@ -64,6 +64,9 @@ export default function Footer() {
               <Heart size={14} className="text-rose fill-rose" />
             </motion.span>
           </div>
+          <a href="https://veliq.co" target="_blank" rel="noopener" className="text-white/30 hover:text-white/60 transition-colors">
+            Powered by <span className="font-semibold">VELIQ</span>
+          </a>
         </div>
       </div>
     </footer>
