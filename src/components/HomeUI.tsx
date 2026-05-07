@@ -208,27 +208,25 @@ export default function HomeUI({ content }: { content: Record<string, string> })
               </p>
             </motion.div>
 
-            <motion.div variants={fadeUp} className="pt-8 border-t border-charcoal/8">
-              <div className="flex flex-wrap items-end gap-x-8 gap-y-4 justify-start">
+            <motion.div variants={fadeUp} className="pt-6 border-t border-charcoal/8">
+              <div className="grid grid-cols-3 gap-4">
                 <div className={textAlign}>
-                  <div className="text-6xl lg:text-7xl font-black text-charcoal leading-none tracking-tight">
+                  <div className="text-3xl lg:text-4xl font-black text-charcoal leading-none tracking-tight">
                     +<AnimatedCounter to={2000} />
                   </div>
-                  <div className="text-xs font-bold text-charcoal/35 mt-2">{dict.hero.stat1Label}</div>
+                  <div className="text-[10px] font-bold text-charcoal/35 mt-1.5">{dict.hero.stat1Label}</div>
                 </div>
-                <div className="w-px h-12 bg-charcoal/10 self-center hidden sm:block" />
-                <div className={textAlign}>
-                  <div className="text-4xl lg:text-5xl font-black text-rose leading-none tracking-tight">
-                    <AnimatedCounter to={27} /><span className="text-2xl font-bold"> {dict.hero.stat2Unit}</span>
+                <div className={`${textAlign} border-x border-charcoal/10 px-4`}>
+                  <div className="text-3xl lg:text-4xl font-black text-rose leading-none tracking-tight">
+                    <AnimatedCounter to={27} /><span className="text-lg font-bold"> {dict.hero.stat2Unit}</span>
                   </div>
-                  <div className="text-xs font-bold text-charcoal/35 mt-2">{dict.hero.stat2Label}</div>
+                  <div className="text-[10px] font-bold text-charcoal/35 mt-1.5">{dict.hero.stat2Label}</div>
                 </div>
-                <div className="w-px h-12 bg-charcoal/10 self-center hidden sm:block" />
                 <div className={textAlign}>
-                  <div className="text-4xl lg:text-5xl font-black text-charcoal leading-none tracking-tight">
+                  <div className="text-3xl lg:text-4xl font-black text-charcoal leading-none tracking-tight">
                     +<AnimatedCounter to={500} />
                   </div>
-                  <div className="text-xs font-bold text-charcoal/35 mt-2">{dict.hero.stat3Label}</div>
+                  <div className="text-[10px] font-bold text-charcoal/35 mt-1.5">{dict.hero.stat3Label}</div>
                 </div>
               </div>
             </motion.div>
@@ -247,7 +245,7 @@ export default function HomeUI({ content }: { content: Record<string, string> })
             transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
             className="relative order-1 lg:order-2 flex justify-center"
           >
-            <div className="relative w-full max-w-[500px] aspect-[4/5] rounded-[60px] overflow-hidden shadow-[0_48px_96px_-16px_rgba(0,0,0,0.3)] bg-charcoal border-[12px] border-white group">
+            <div className="relative w-full max-w-[380px] aspect-[4/5] rounded-[48px] overflow-hidden shadow-[0_48px_96px_-16px_rgba(0,0,0,0.3)] bg-charcoal border-[10px] border-white group">
               <Image
                 src="/coach-batoula.jpg"
                 alt={dict.hero.imageAlt}
