@@ -1,0 +1,169 @@
+@import "tailwindcss";
+
+:root {
+  --background: #faf9f6;
+  --foreground: #1a1a1a;
+  --rose-light: #f4e7e7;
+  --rose: #b76e79;
+  --rose-dark: #8e555e;
+  --charcoal: #2c3e50;
+  --charcoal-dark: #1a252f;
+  --gold-light: #e6d5b8;
+  --gold: #c5a059;
+  --gold-dark: #a68445;
+  --white: #ffffff;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-rose-light: var(--rose-light);
+  --color-rose: var(--rose);
+  --color-rose-dark: var(--rose-dark);
+  --color-charcoal: var(--charcoal);
+  --color-charcoal-dark: var(--charcoal-dark);
+  --color-gold-light: var(--gold-light);
+  --color-gold: var(--gold);
+  --color-gold-dark: var(--gold-dark);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-cairo), Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* ─── Scrollbar ─────────────────────────── */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--background); }
+::-webkit-scrollbar-thumb { background: var(--rose-light); border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: var(--rose); }
+
+/* ─── Utility classes ───────────────────── */
+.glass {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
+}
+
+.glass-dark {
+  background: rgba(44, 62, 80, 0.25);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+.premium-card {
+  background: #ffffff;
+  border: 1px solid rgba(44, 62, 80, 0.07);
+  border-radius: 24px;
+  padding: 2rem;
+  box-shadow: 0 4px 32px rgba(44, 62, 80, 0.05);
+  transition: box-shadow 0.35s ease, transform 0.35s ease, border-color 0.35s ease;
+}
+.premium-card:hover {
+  box-shadow: 0 12px 48px rgba(44, 62, 80, 0.1);
+  transform: translateY(-3px);
+}
+
+
+.section-padding {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+@media (min-width: 1024px) {
+  .section-padding { padding-top: 7rem; padding-bottom: 7rem; }
+}
+
+/* ─── Hero dot-grid pattern ──────────────── */
+.hero-dots {
+  background-image: radial-gradient(circle, rgba(44, 62, 80, 0.06) 1.2px, transparent 1.2px);
+  background-size: 26px 26px;
+}
+
+/* ─── Button shine effect ────────────────── */
+.btn-shine { position: relative; overflow: hidden; }
+.btn-shine::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.22) 50%, transparent 100%);
+  transform: translateX(-100%) skewX(-15deg);
+  transition: none;
+}
+.btn-shine:hover::after {
+  animation: shimmer 0.7s ease forwards;
+}
+
+/* ─── Keyframe animations ────────────────── */
+@keyframes float {
+  0%, 100% { transform: translateY(0px)   scale(1); }
+  50%       { transform: translateY(-18px) scale(1.04); }
+}
+@keyframes float2 {
+  0%, 100% { transform: translateY(0px) scale(1)    rotate(0deg); }
+  50%       { transform: translateY(-22px) scale(1.06) rotate(4deg); }
+}
+@keyframes shimmer {
+  from { transform: translateX(-100%) skewX(-15deg); }
+  to   { transform: translateX(220%)  skewX(-15deg); }
+}
+@keyframes pulse-ring {
+  0%   { transform: scale(1);   opacity: 0.55; }
+  100% { transform: scale(1.7); opacity: 0; }
+}
+@keyframes gradient-x {
+  0%, 100% { background-position: 0%   50%; }
+  50%       { background-position: 100% 50%; }
+}
+
+.float-1  { animation: float  6s ease-in-out infinite; }
+.float-2  { animation: float2 8s ease-in-out infinite 1s; }
+.float-3  { animation: float  7s ease-in-out infinite 2.5s; }
+.pulse-ring::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 9999px;
+  background: #25D366;
+  animation: pulse-ring 2s ease-out infinite;
+  z-index: -1;
+}
+
+/* ─── No-scrollbar (carousel) ──────────────── */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* ─── Global focus rings (WCAG 2.1 AA §1.4.11) ─── */
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible,
+[role="button"]:focus-visible {
+  outline: 2px solid var(--rose);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* ─── Reduced motion (WCAG, Apple, MD) ─── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .float-1, .float-2, .float-3 { animation: none; }
+  .pulse-ring::before { animation: none; }
+  .btn-shine::after { animation: none !important; }
+}
