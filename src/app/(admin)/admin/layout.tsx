@@ -3,7 +3,14 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import { LayoutDashboard, ShoppingCart, List, Image as ImageIcon, LogOut } from "lucide-react";
 import { signOut } from "@/auth";
-import "../globals.css";
+import { Cairo } from "next/font/google";
+import "../../globals.css";
+
+const cairo = Cairo({
+  variable: "--font-cairo",
+  subsets: ["arabic", "latin"],
+  weight: ["400", "600", "700", "800"],
+});
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const session = await auth();
@@ -17,8 +24,8 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   // It's cleaner to have the layout render a sidebar if logged in.
   
   return (
-    <html lang="ar" dir="rtl">
-      <body className="min-h-screen bg-gray-50 flex">
+    <html lang="ar" dir="rtl" className={cairo.variable}>
+      <body className={`${cairo.className} min-h-screen bg-gray-50 flex`}>
         {!session ? (
           <main className="flex-1">
             {children}

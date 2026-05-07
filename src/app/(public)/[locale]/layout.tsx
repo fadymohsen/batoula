@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Cairo, Inter } from "next/font/google";
-import "../globals.css";
+import "../../globals.css";
 import { FramerProviders } from "@/components/FramerProviders";
 import { i18n, isRtl, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/get-dictionary";
