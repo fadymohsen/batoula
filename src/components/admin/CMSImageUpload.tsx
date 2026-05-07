@@ -27,13 +27,18 @@ export default function CMSImageUpload({
         },
       );
 
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Upload failed');
+      }
+
       const newBlob = await response.json();
       onUploadComplete(newBlob.url);
       setDone(true);
       setTimeout(() => setDone(false), 3000);
-    } catch (error) {
+    } catch (error: any) {
       console.error("Upload failed", error);
-      alert("فشل الرفع، يرجى المحاولة مرة أخرى");
+      alert(`فشل الرفع: ${error.message || 'يرجى المحاولة مرة أخرى'}`);
     } finally {
       setUploading(false);
     }

@@ -16,10 +16,10 @@ export async function POST(request: Request): Promise<NextResponse> {
     });
 
     return NextResponse.json(blob);
-  } catch (error) {
+  } catch (error: any) {
     console.error('Blob upload error:', error);
     return NextResponse.json(
-      { error: 'Error uploading file' },
+      { error: error.message || 'Error uploading file' },
       { status: 500 },
     );
   }
