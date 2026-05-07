@@ -1,0 +1,214 @@
+{
+  "meta": {
+    "title": "Coach Batoula | Certified Nutrition Coach & Life Trainer",
+    "description": "Coach Batoula - Certified clinical nutrition coach and life trainer. Lost 27kg and helped 500+ women transform their lives. Start your healthy lifestyle journey with a personalized diet plan and direct personal follow-up.",
+    "keywords": "nutrition coach, certified nutritionist, weight loss coach, healthy diet plan, clinical nutrition, life coach, fitness coaching, personalized diet, online nutrition coach, weight management, meal planning, sports nutrition, body transformation, health coaching, coach batoula, كوتش بتولة",
+    "plansTitle": "Transformation Plans | Coach Batoula - Nutrition & Coaching Packages",
+    "plansDescription": "Choose the perfect nutrition plan for you with Coach Batoula. Monthly, quarterly, and annual packages including personalized diet plans, fitness routines, and direct WhatsApp follow-up.",
+    "plansKeywords": "nutrition plans, diet subscription, monthly diet plan, nutrition packages, online coaching, fitness plan, weight loss program, nutrition coaching online",
+    "planDetailTitle": "Plan Details | Coach Batoula",
+    "planDetailDescription": "Discover plan details and benefits. Custom diet plan, personal follow-up, and fitness routine with Coach Batoula.",
+    "checkoutTitle": "Subscribe Now | Coach Batoula",
+    "checkoutDescription": "Complete your subscription and start your transformation journey with Coach Batoula. Secure payment and immediate follow-up."
+  },
+  "nav": {
+    "brand": "Coach Batoula",
+    "myStory": "My Story",
+    "plans": "Plans",
+    "certificates": "Certificates",
+    "faq": "FAQ",
+    "bookNow": "Book Now",
+    "menu": "Menu",
+    "closeMenu": "Close Menu"
+  },
+  "hero": {
+    "title1": "Fitness",
+    "titleHighlight": "starts",
+    "title2": "with a decision,",
+    "title3": "and consistency makes the difference.",
+    "subtitle": "My journey began with a personal experience of losing 27kg, and today I'm here to help you reach your goals using the best scientific and psychological methods.",
+    "cta": "Start Your Journey Now",
+    "stat1Value": "2000",
+    "stat1Label": "Hours of intensive training",
+    "stat2Value": "27",
+    "stat2Unit": "kg",
+    "stat2Label": "My personal achievement",
+    "stat3Value": "500",
+    "stat3Label": "Trainees achieved their goals",
+    "imageAlt": "Coach Batoula"
+  },
+  "about": {
+    "title": "From Experience to Science:",
+    "titleHighlight": "The Real",
+    "titleEnd": "Transformation Story",
+    "intro": "I'm Batoul.. Before becoming your coach, I was once in your shoes. My journey started with excess weight and emotional exhaustion, but at a moment of honesty with myself, I made the decision.",
+    "credentials": [
+      "Clinical Nutrition Diploma from the American Institute.",
+      "Master's in Therapeutic Nutrition for Chronic Diseases — deep understanding of the body.",
+      "Certified Life Coach for training women on psychological transformation.",
+      "Practical training at SuperHuman Clinics and regular conference attendance."
+    ],
+    "quote": "My goal isn't just to help you lose weight.. My goal is for you to find yourself, love your body, and learn how to live a healthy life forever.",
+    "weightLoss": "27kg",
+    "weightLossLabel": "Documented loss backed by science and experience"
+  },
+  "plans": {
+    "sectionTitle": "Transformation Plans",
+    "sectionSubtitle": "Not a temporary diet... but a real journey",
+    "viewDetails": "View Details",
+    "mostPopular": "Most Popular",
+    "plan1": {
+      "name": "First Step",
+      "price": "$45",
+      "period": "/ month",
+      "description": "A one-month subscription program for weight loss in a structured and practical way.",
+      "benefits": [
+        "Personal call to assess your health and nutritional status.",
+        "Custom diet plan based on your goals and lifestyle.",
+        "Fitness plan suited to your physical level.",
+        "Plan updates every 10 days for optimal progress."
+      ],
+      "tagline": "A real start... with steady steps and measured results.",
+      "renewal": "Monthly renewal $35"
+    },
+    "plan2": {
+      "name": "Serious Change",
+      "price": "$99",
+      "period": "/ 3 months",
+      "description": "An intensive 3-month package for a clear transformation in weight and lifestyle.",
+      "benefits": [
+        "Detailed call to assess your health and set precise goals.",
+        "Custom diet plan tailored to your body type and lifestyle.",
+        "Practical fitness plan suitable for your level.",
+        "Plan updates every 15 days to maintain motivation and accelerate results."
+      ],
+      "tagline": "Change doesn't happen by accident... it takes a clear plan and real commitment."
+    },
+    "plan3": {
+      "name": "The Journey",
+      "price": "$299",
+      "period": "/ full year",
+      "description": "A comprehensive annual package for building a lasting healthy lifestyle.",
+      "benefits": [
+        "Monthly call for follow-up, progress evaluation, and course correction.",
+        "Custom and evolving diet plan based on your phase and progress.",
+        "Plan renewal every 15 days to maintain motivation and prevent plateaus.",
+        "Special Ramadan plan considering fasting and meal organization.",
+        "Continuous support to ensure lasting results throughout the year."
+      ],
+      "tagline": "Not a temporary diet... but a real transformation journey lasting a full year."
+    }
+  },
+  "certs": {
+    "title": "Internationally Accredited Certificates",
+    "subtitle": "I continuously develop myself to always give you the best",
+    "prev": "Previous",
+    "next": "Next"
+  },
+  "mission": {
+    "quote": "My message to you: It's not about dieting, it's about living",
+    "description": "I'm here to change the idea we all have about dieting. Dieting is not a punishment, nor is it a temporary period of deprivation that we finish and go back to our old habits. My goal is to help you build a healthy lifestyle that lasts a lifetime.",
+    "pillars": [
+      { "title": "Home cooking is the foundation", "desc": "You can eat from the same home cooking you make for your family, with simple and smart adjustments to make it healthy and nutritious.", "num": "1" },
+      { "title": "No deprivation", "desc": "Food is a pleasure, and it's impossible to stay consistent if we deprive ourselves. The secret is moderation, not restriction.", "num": "2" },
+      { "title": "Realistic and flexible", "desc": "I know that life has gatherings, work, and pressures. The plan is tailored to fit your life.", "num": "3" },
+      { "title": "Behavior change, not just weight", "desc": "We're working to modify our habits from the roots, so the healthy choice becomes the easiest choice.", "num": "4" }
+    ]
+  },
+  "results": {
+    "title": "Real Results",
+    "titleHighlight": "Inspiring Success Stories",
+    "subtitle": "Here we see the fruits of hard work and commitment. Real photos of trainees who changed their lives for the better.",
+    "imageAlt": "Trainee Results",
+    "link1": "Trainee Results (1)",
+    "link2": "Trainee Results (2)"
+  },
+  "testimonials": {
+    "title": "What They Say",
+    "count": "+500 success stories",
+    "featured": "I wanted to lose just 5 kg and it was sooo hard to commit and lose them — but with Batoula nothing is impossible. Two months of flexibility, awareness, and a comfortable system without deprivation.",
+    "featuredTag": "3-month package",
+    "featuredAuthor": "A champion girl",
+    "items": [
+      { "name": "A dedicated trainee", "quote": "Her effort is amazing, may God bless her — she's talented, loves the journey, enjoys it, knows what's best for her, and keeps trying and persevering.", "tag": "Annual Journey" },
+      { "name": "Journey companion", "quote": "30 days of follow-up are enough to become friends. Thank God I gained more than 100 companions in the past two months, proud of the results and the girls' feedback.", "tag": "1-month package" }
+    ]
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "items": [
+      { "q": "How many kg can I lose per month?", "a": "4 to 6 kg depending on weight, age, and health condition." },
+      { "q": "Is there a diet for pregnant women?", "a": "Yes, available and completely safe." },
+      { "q": "Is there a diet for breastfeeding mothers?", "a": "Yes, with a system that ensures your needs and your baby's needs." },
+      { "q": "Is the follow-up with Batoula personally?", "a": "Yes, directly with Batoula via WhatsApp." },
+      { "q": "Group or private?", "a": "Available both ways, based on your preference." },
+      { "q": "When can we start?", "a": "Once payment is made, booking and contact will happen within 12 hours." }
+    ]
+  },
+  "footer": {
+    "cta": "Ready to start a new life?",
+    "ctaDescription": "Join over 500 women who changed their lives for the better. You're not just subscribing to a \"diet\" — you're starting a real transformation journey that lasts a full year.",
+    "whatsapp": "Contact me via WhatsApp",
+    "copyright": "Coach Batoula. All rights reserved.",
+    "madeWith": "Made with love to support Arab women"
+  },
+  "plansPage": {
+    "badge": "Subscription Plans",
+    "title": "Transformation Plans",
+    "subtitle": "Choose the plan that fits your goals and start your transformation journey today with precise personal follow-up.",
+    "mostPopular": "Most popular and result-achieving",
+    "perPeriod": "/ per period",
+    "detailsCta": "Plan details & subscription",
+    "unsure": "Not sure which plan suits you?",
+    "unsureDesc": "Contact me personally on WhatsApp and we'll determine the best plan for your situation",
+    "freeConsult": "Free consultation on WhatsApp"
+  },
+  "planDetails": {
+    "backToPlans": "Back to all plans",
+    "priceLabel": "Subscription price",
+    "priceNote": "For the full program period",
+    "guaranteeTitle": "Personal Follow-up Guarantee",
+    "guaranteeDesc": "Batoula is with you step by step via WhatsApp to ensure the best results",
+    "benefitsTitle": "What will you get in this plan?",
+    "subscribeCta": "Subscribe now and start the change",
+    "videoTitle": "Introduction Video",
+    "videoDesc": "Coming soon.. We'll explain everything in detail via a personal call or video reel",
+    "successStories": "Success stories",
+    "directFollow": "Direct follow-up"
+  },
+  "checkout": {
+    "step1Title": "Your Personal Information",
+    "step1Desc": "We'll contact you on WhatsApp, please verify the number",
+    "fullName": "Full Name",
+    "email": "Email Address",
+    "phone": "WhatsApp Number (with country code)",
+    "phonePlaceholder": "+961 70 123 456",
+    "continuePayment": "Continue to Payment",
+    "step2Title": "Payment Method",
+    "amountDue": "Amount due:",
+    "creditCard": "Credit / Debit Card",
+    "bankTransfer": "Bank Transfer / InstaPay",
+    "shamCash": "ShamCash (Syria)",
+    "back": "Back",
+    "payNow": "Pay Now",
+    "continue": "Continue",
+    "step3Title": "Attach Payment Receipt",
+    "step3Desc": "Please transfer the amount of",
+    "step3DescEnd": "then attach a photo of the receipt",
+    "instaPayLabel": "InstaPay / Bank Account Number",
+    "shamCashLabel": "ShamCash Number",
+    "uploadTitle": "Click here to upload receipt image",
+    "uploadDesc": "Or drag and drop the image here",
+    "changeMethod": "Change Method",
+    "confirmSend": "Confirm & Send",
+    "successTitle": "Your order has been received successfully!",
+    "successCard": "Payment confirmed successfully. We'll contact you on WhatsApp very soon to start the journey.",
+    "successManual": "Receipt received. It will be reviewed and we'll contact you on WhatsApp soon.",
+    "backHome": "Back to Home",
+    "uploadFirst": "Please upload the receipt image first",
+    "uploadError": "Failed to upload image. Please try again.",
+    "orderError": "An error occurred while processing the order. Please try again.",
+    "serverError": "An error occurred while connecting to the server."
+  },
+  "langSwitch": "العربية"
+}
