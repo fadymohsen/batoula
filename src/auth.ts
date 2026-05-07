@@ -1,7 +1,4 @@
 import NextAuth, { type DefaultSession } from "next-auth"
-import CredentialsProvider from "next-auth/providers/credentials"
-import prisma from "@/lib/prisma"
-import bcrypt from "bcryptjs"
 
 declare module "next-auth" {
   interface Session {
@@ -17,17 +14,15 @@ declare module "next-auth" {
   }
 }
 
-
-
+import CredentialsProvider from "next-auth/providers/credentials"
+import prisma from "@/lib/prisma"
+import bcrypt from "bcryptjs"
+import { authConfig } from "./auth.config"
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
+  ...authConfig,
   providers: [
     CredentialsProvider({
-      name: "Credentials",
-      credentials: {
-        email: { label: "Email", type: "email", placeholder: "admin@coachbatoula.com" },
-        password: { label: "Password", type: "password" }
-      },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) return null;
 
@@ -37,7 +32,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           });
 
           if (!user) {
-            // For demo purposes, let's allow a hardcoded admin if DB is empty
+            // For demo purposes, allow hardcoded admin if DB is empty
             if (credentials.email === "admin@admin.com" && credentials.password === "admin") {
               return { id: "1", email: "admin@admin.com", role: "ADMIN" };
             }
@@ -54,7 +49,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           }
           return null;
         } catch (error) {
-          // Fallback if DB is disconnected
           if (credentials.email === "admin@admin.com" && credentials.password === "admin") {
             return { id: "1", email: "admin@admin.com", role: "ADMIN" };
           }
@@ -66,7 +60,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   callbacks: {
     jwt({ token, user }) {
       if (user) {
-        token.role = user.role;
+        token.role = (user as any).role;
       }
       return token;
     },
@@ -76,10 +70,5 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       }
       return session;
     }
-  },
-  pages: {
-    signIn: "/admin/login",
-  },
-  session: { strategy: "jwt" },
-  trustHost: true,
+  }
 })
