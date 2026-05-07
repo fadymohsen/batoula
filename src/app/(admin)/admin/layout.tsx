@@ -4,6 +4,7 @@ import Link from "next/link";
 import { LayoutDashboard, ShoppingCart, List, Image as ImageIcon, LogOut } from "lucide-react";
 import { signOut } from "@/auth";
 import { Cairo } from "next/font/google";
+import LogoutButton from "@/components/admin/LogoutButton";
 import "../../globals.css";
 
 const cairo = Cairo({
@@ -59,15 +60,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
               </nav>
 
               <div className="p-4 border-t border-[#3d3733]">
-                <form action={async () => {
-                  "use server";
-                  await signOut({ redirectTo: "/" });
-                }}>
-                  <button type="submit" className="flex items-center gap-3 px-4 py-3 w-full rounded-lg hover:bg-red-900/50 text-red-400 transition-colors">
-                    <LogOut className="w-5 h-5" />
-                    <span>تسجيل الخروج</span>
-                  </button>
-                </form>
+                <LogoutButton />
               </div>
             </aside>
 
