@@ -25,16 +25,16 @@ export default function CMSImageUpload({
       
       const result = await uploadFileAction(formData).catch(err => {
         // This catches network errors or Next.js action errors
-        return { success: false, error: err.message };
+        return { success: false as const, error: err.message };
       });
       
-      if (!result.success) {
+      if (result.success) {
+        onUploadComplete(result.url);
+        setDone(true);
+        setTimeout(() => setDone(false), 3000);
+      } else {
         throw new Error(result.error);
       }
-      
-      onUploadComplete(result.url as string);
-      setDone(true);
-      setTimeout(() => setDone(false), 3000);
     } catch (error: any) {
       console.error("Upload failed", error);
       const msg = error.message || '';
