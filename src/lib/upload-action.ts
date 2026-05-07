@@ -2,7 +2,7 @@
 
 import { put } from "@vercel/blob";
 
-export async function uploadFileAction(formData: FormData) {
+export async function uploadFileAction(formData: FormData): Promise<{ success: true; url: string } | { success: false; error: string }> {
   try {
     const file = formData.get("file") as File;
     

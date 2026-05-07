@@ -29,7 +29,7 @@ export default function CMSImageUpload({
         throw new Error(result.error);
       }
       
-      onUploadComplete(result.url);
+      onUploadComplete(result.url as string);
       setDone(true);
       setTimeout(() => setDone(false), 3000);
     } catch (error: any) {
