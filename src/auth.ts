@@ -26,18 +26,18 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) return null;
 
+        // 1. Check for hardcoded admin first (emergency fallback)
+        if (credentials.email === "admin@admin.com" && credentials.password === "admin") {
+          return { id: "1", email: "admin@admin.com", role: "ADMIN" };
+        }
+
         try {
+          // 2. Try database check
           const user = await prisma.user.findUnique({
             where: { email: credentials.email as string }
           });
 
-          if (!user) {
-            // For demo purposes, allow hardcoded admin if DB is empty
-            if (credentials.email === "admin@admin.com" && credentials.password === "admin") {
-              return { id: "1", email: "admin@admin.com", role: "ADMIN" };
-            }
-            return null;
-          }
+          if (!user) return null;
 
           const passwordsMatch = await bcrypt.compare(
             credentials.password as string,
@@ -49,9 +49,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           }
           return null;
         } catch (error) {
-          if (credentials.email === "admin@admin.com" && credentials.password === "admin") {
-            return { id: "1", email: "admin@admin.com", role: "ADMIN" };
-          }
+          console.error("Auth database error:", error);
           return null;
         }
       }
