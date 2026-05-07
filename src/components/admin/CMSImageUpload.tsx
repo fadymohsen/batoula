@@ -25,6 +25,10 @@ export default function CMSImageUpload({
       
       const result = await uploadFileAction(formData);
       
+      if (!result.success) {
+        throw new Error(result.error);
+      }
+      
       onUploadComplete(result.url);
       setDone(true);
       setTimeout(() => setDone(false), 3000);
