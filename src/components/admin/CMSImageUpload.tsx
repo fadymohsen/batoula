@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Upload, Loader2, Check } from "lucide-react";
+import { uploadFileAction } from "@/lib/upload-action";
 
 export default function CMSImageUpload({ 
   currentValue, 
@@ -19,21 +20,12 @@ export default function CMSImageUpload({
 
     setUploading(true);
     try {
-      const response = await fetch(
-        `/api/upload?filename=${file.name}`,
-        {
-          method: 'POST',
-          body: file,
-        },
-      );
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Upload failed');
-      }
-
-      const newBlob = await response.json();
-      onUploadComplete(newBlob.url);
+      const formData = new FormData();
+      formData.append("file", file);
+      
+      const result = await uploadFileAction(formData);
+      
+      onUploadComplete(result.url);
       setDone(true);
       setTimeout(() => setDone(false), 3000);
     } catch (error: any) {
