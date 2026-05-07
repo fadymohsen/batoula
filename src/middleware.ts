@@ -11,7 +11,7 @@ function getLocaleFromRequest(req: Request): string {
   return i18n.defaultLocale;
 }
 
-const proxy = auth((req) => {
+const middleware = auth((req) => {
   const { pathname } = req.nextUrl;
   // Normalize pathname to lowercase for checking
   const lowerPath = pathname.toLowerCase();
@@ -58,8 +58,8 @@ const proxy = auth((req) => {
   );
 });
 
-export default proxy;
-export { proxy };
+export default middleware;
+export { middleware };
 
 export const config = {
   matcher: ["/((?!_next/static|_next/image|favicon.ico|.*\\..*).*)"],
