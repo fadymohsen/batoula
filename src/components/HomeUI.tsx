@@ -552,21 +552,21 @@ export default function HomeUI({ content }: { content: Record<string, string> })
             <div className="w-12 h-0.5 bg-rose mt-3" />
           </div>
           <div className="divide-y divide-charcoal/8">
-            {[1, 2].map((num) => (
-              <div key={num} className="py-6 cursor-pointer group" onClick={() => setOpenFaq(openFaq === num ? null : num)}>
+            {dict.faq.items.map((faq: { q: string; a: string }, i: number) => (
+              <div key={i} className="py-6 cursor-pointer group" onClick={() => setOpenFaq(openFaq === i ? null : i)}>
                 <div className="flex justify-between items-center">
-                  <span className={`flex-1 font-black text-lg transition-colors ${openFaq === num ? 'text-rose' : 'text-charcoal group-hover:text-rose'}`}>
-                    {getContent(content, `faq_${num}_q`, dict.faq.items[num-1]?.q || "")}
+                  <span className={`flex-1 font-black text-lg transition-colors ${openFaq === i ? 'text-rose' : 'text-charcoal group-hover:text-rose'}`}>
+                    {getContent(content, `faq_${i + 1}_q`, faq.q)}
                   </span>
-                  <ChevronDown size={18} className={`transition-transform duration-300 ms-4 shrink-0 ${openFaq === num ? 'rotate-180 text-rose' : 'text-charcoal/25'}`} />
+                  <ChevronDown size={18} className={`transition-transform duration-300 ms-4 shrink-0 ${openFaq === i ? 'rotate-180 text-rose' : 'text-charcoal/25'}`} />
                 </div>
-                {openFaq === num && (
+                {openFaq === i && (
                   <motion.div
                     initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.2 }}
                     className="mt-3 text-charcoal/55 text-base font-semibold leading-relaxed pe-8"
                   >
-                    {getContent(content, `faq_${num}_a`, dict.faq.items[num-1]?.a || "")}
+                    {getContent(content, `faq_${i + 1}_a`, faq.a)}
                   </motion.div>
                 )}
               </div>
