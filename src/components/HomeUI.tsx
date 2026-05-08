@@ -62,91 +62,11 @@ const staggerItem = {
 };
 
 const CERT_IMAGES = [
-  { img: "/content/_.jpg.jpeg",      orient: "landscape", rotate: -90 },
-  { img: "/content/_.jpg (2).jpeg",  orient: "landscape", rotate: -90 },
-  { img: "/content/_.jpg (8).jpeg",  orient: "landscape", rotate: -90 },
-  { img: "/content/_.jpg (10).jpeg", orient: "landscape" },
+  { img: "/content/_.jpg.jpeg",      rotate: -90 },
+  { img: "/content/_.jpg (2).jpeg",  rotate: -90 },
+  { img: "/content/_.jpg (8).jpeg",  rotate: -90 },
+  { img: "/content/_.jpg (10).jpeg" },
 ];
-
-function CertCarousel() {
-  const { dict } = useLocale();
-  const trackRef = useRef<HTMLDivElement>(null);
-  const [paused, setPaused] = useState(false);
-
-  const step = (dir: 1 | -1) => {
-    const el = trackRef.current;
-    if (!el) return;
-    const card = el.querySelector<HTMLElement>("[data-cert]");
-    const amount = (card ? card.offsetWidth : 224) + 16;
-    const max = el.scrollWidth - el.clientWidth;
-    const next = el.scrollLeft + dir * amount;
-    if (next >= max - 2) el.scrollTo({ left: 0, behavior: "smooth" });
-    else if (next <= 2) el.scrollTo({ left: max, behavior: "smooth" });
-    else el.scrollBy({ left: dir * amount, behavior: "smooth" });
-  };
-
-  useEffect(() => {
-    if (paused) return;
-    const id = setInterval(() => step(1), 3200);
-    return () => clearInterval(id);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [paused]);
-
-  return (
-    <div
-      className="relative"
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-    >
-      <button
-        onClick={() => step(-1)}
-        aria-label={dict.certs.prev}
-        className="absolute -start-3 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-white shadow-md border border-charcoal/10 flex items-center justify-center text-charcoal hover:bg-rose-light hover:text-rose transition-colors"
-      >
-        <ChevronRight size={18} />
-      </button>
-      <button
-        onClick={() => step(1)}
-        aria-label={dict.certs.next}
-        className="absolute -end-3 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-white shadow-md border border-charcoal/10 flex items-center justify-center text-charcoal hover:bg-rose-light hover:text-rose transition-colors"
-      >
-        <ChevronLeft size={18} />
-      </button>
-
-      <div className="-mx-6 overflow-hidden" dir="ltr">
-        <div
-          ref={trackRef}
-          className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 px-6 no-scrollbar"
-        >
-          {CERT_IMAGES.map((cert, idx) => {
-            const rotate = (cert as { rotate?: number }).rotate;
-            const translated = dict.certs.items[idx];
-            return (
-              <div key={idx} data-cert="" className="snap-start shrink-0 group relative w-52 h-72 rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
-                {rotate ? (
-                  <div
-                    className="absolute top-1/2 left-1/2"
-                    style={{ width: "133.34%", height: "75%", transform: `translate(-50%, -50%) rotate(${rotate}deg)` }}
-                  >
-                    <Image src={cert.img} alt={translated?.title || ""} fill className="object-cover" unoptimized />
-                  </div>
-                ) : (
-                  <Image src={cert.img} alt={translated?.title || ""} fill className="object-cover group-hover:scale-[1.03] transition-transform duration-300" unoptimized />
-                )}
-                <div className="absolute inset-0 bg-gradient-to-t from-charcoal/75 via-charcoal/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <div className="absolute bottom-0 inset-x-0 p-4 translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 text-right">
-                  <div className="text-white font-black text-sm leading-snug">{translated?.title}</div>
-                  <div className="text-white/60 text-xs mt-0.5">{translated?.sub}</div>
-                </div>
-              </div>
-            );
-          })}
-          <div className="shrink-0 w-2" aria-hidden="true" />
-        </div>
-      </div>
-    </div>
-  );
-}
 
 export default function HomeUI({ content }: { content: Record<string, string> }) {
   const { locale, dict } = useLocale();
@@ -420,6 +340,48 @@ export default function HomeUI({ content }: { content: Record<string, string> })
         </div>
       </section>
 
+      {/* MOBILE APP */}
+      <section className="py-24 bg-background relative overflow-hidden">
+        <div className="absolute top-[-10%] start-[-5%] w-[500px] h-[500px] bg-rose/5 rounded-full blur-[120px] pointer-events-none" />
+        <div className="max-w-5xl mx-auto px-6 relative z-10">
+          <motion.div variants={fadeUp} initial="hidden" whileInView="show" className="text-center space-y-5 mb-14">
+            <h2 className="text-4xl lg:text-5xl font-black text-charcoal">
+              {dict.app.title}{" "}
+              <span className="text-rose">{dict.app.titleHighlight}</span>
+            </h2>
+            <p className="text-charcoal/50 text-lg font-bold max-w-xl mx-auto leading-relaxed">
+              {dict.app.subtitle}
+            </p>
+          </motion.div>
+
+          <motion.div
+            variants={fadeUp} initial="hidden" whileInView="show"
+            className="flex flex-col sm:flex-row gap-5 justify-center items-center"
+          >
+            <a
+              href="https://apps.apple.com/eg/app/coachbatoul/id6761961312"
+              target="_blank"
+              rel="noopener"
+              className="btn-shine inline-flex items-center gap-3 bg-charcoal text-white px-8 py-4 rounded-2xl font-black text-sm shadow-xl hover:bg-charcoal-dark transition-all"
+            >
+              <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 shrink-0">
+                <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+              </svg>
+              {dict.app.appStore}
+            </a>
+            <a
+              href="https://coachbatoul.beprime.site"
+              target="_blank"
+              rel="noopener"
+              className="btn-shine inline-flex items-center gap-3 bg-rose text-white px-8 py-4 rounded-2xl font-black text-sm shadow-xl hover:bg-rose-dark transition-all"
+            >
+              <Globe size={22} className="shrink-0" />
+              {dict.app.webApp}
+            </a>
+          </motion.div>
+        </div>
+      </section>
+
       <Wave bg="var(--background)" fill="var(--charcoal)" />
 
       {/* MISSION */}
@@ -535,7 +497,31 @@ export default function HomeUI({ content }: { content: Record<string, string> })
             <h2 className="text-4xl lg:text-5xl font-black text-charcoal">{dict.certs.title}</h2>
             <p className="text-charcoal/50 text-lg">{dict.certs.subtitle}</p>
           </motion.div>
-          <CertCarousel />
+          <motion.div variants={staggerGrid} initial="hidden" whileInView="show" className="grid grid-cols-2 lg:grid-cols-4 gap-5">
+            {CERT_IMAGES.map((cert, idx) => {
+              const rotate = (cert as { rotate?: number }).rotate;
+              const translated = dict.certs.items[idx];
+              return (
+                <motion.div key={idx} variants={staggerItem} className="group relative aspect-[3/4] rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 bg-white">
+                  {rotate ? (
+                    <div
+                      className="absolute top-1/2 left-1/2"
+                      style={{ width: "133.34%", height: "75%", transform: `translate(-50%, -50%) rotate(${rotate}deg)` }}
+                    >
+                      <Image src={cert.img} alt={translated?.title || ""} fill className="object-cover" unoptimized />
+                    </div>
+                  ) : (
+                    <Image src={cert.img} alt={translated?.title || ""} fill className="object-cover group-hover:scale-[1.03] transition-transform duration-300" unoptimized />
+                  )}
+                  <div className="absolute inset-0 bg-gradient-to-t from-charcoal/75 via-charcoal/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="absolute bottom-0 inset-x-0 p-4 translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 text-center">
+                    <div className="text-white font-black text-sm leading-snug">{translated?.title}</div>
+                    <div className="text-white/60 text-xs mt-0.5">{translated?.sub}</div>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </motion.div>
         </div>
       </section>
 
@@ -567,48 +553,6 @@ export default function HomeUI({ content }: { content: Record<string, string> })
               </div>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* MOBILE APP */}
-      <section className="py-24 bg-background relative overflow-hidden">
-        <div className="absolute top-[-10%] start-[-5%] w-[500px] h-[500px] bg-rose/5 rounded-full blur-[120px] pointer-events-none" />
-        <div className="max-w-5xl mx-auto px-6 relative z-10">
-          <motion.div variants={fadeUp} initial="hidden" whileInView="show" className="text-center space-y-5 mb-14">
-            <h2 className="text-4xl lg:text-5xl font-black text-charcoal">
-              {dict.app.title}{" "}
-              <span className="text-rose">{dict.app.titleHighlight}</span>
-            </h2>
-            <p className="text-charcoal/50 text-lg font-bold max-w-xl mx-auto leading-relaxed">
-              {dict.app.subtitle}
-            </p>
-          </motion.div>
-
-          <motion.div
-            variants={fadeUp} initial="hidden" whileInView="show"
-            className="flex flex-col sm:flex-row gap-5 justify-center items-center"
-          >
-            <a
-              href="https://apps.apple.com/eg/app/coachbatoul/id6761961312"
-              target="_blank"
-              rel="noopener"
-              className="btn-shine inline-flex items-center gap-3 bg-charcoal text-white px-8 py-4 rounded-2xl font-black text-sm shadow-xl hover:bg-charcoal-dark transition-all"
-            >
-              <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 shrink-0">
-                <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
-              </svg>
-              {dict.app.appStore}
-            </a>
-            <a
-              href="https://coachbatoul.beprime.site"
-              target="_blank"
-              rel="noopener"
-              className="btn-shine inline-flex items-center gap-3 bg-rose text-white px-8 py-4 rounded-2xl font-black text-sm shadow-xl hover:bg-rose-dark transition-all"
-            >
-              <Globe size={22} className="shrink-0" />
-              {dict.app.webApp}
-            </a>
-          </motion.div>
         </div>
       </section>
 
