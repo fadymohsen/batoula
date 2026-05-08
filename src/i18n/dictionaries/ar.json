@@ -105,9 +105,7 @@
     "prev": "السابق",
     "next": "التالي",
     "items": [
-      { "title": "SuperHuman Clinics", "sub": "تدريب عملي في التغذية العلاجية" },
       { "title": "Challenge Academy", "sub": "تغذية سريرية ورياضية والسمنة" },
-      { "title": "ICNC 2026", "sub": "مؤتمر التغذية التجميلية الدولي" },
       { "title": "ICN Certificate", "sub": "شهادة في التغذية الصحية" },
       { "title": "Diabetes Workshop", "sub": "ورشة عمل متخصصة بالسكري" },
       { "title": "CFT Course", "sub": "تشريح الجسم وتصميم البرامج" },

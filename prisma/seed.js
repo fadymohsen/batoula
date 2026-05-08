@@ -9,6 +9,7 @@ async function main() {
     {
       slug: 'basic',
       title: 'الخطوة الأولى',
+      titleEn: 'First Step',
       price: 45,
       videoUrl: 'https://www.youtube.com/embed/o6pHqCymE1Q',
       benefits: [
@@ -17,10 +18,17 @@ async function main() {
         'خطة رياضية مناسبة للمستوى البدني.',
         'تحديث النظام كل 10 أيام لضمان أفضل استجابة وتقدم مستمر.'
       ],
+      benefitsEn: [
+        'Personal call to assess your health and nutritional status.',
+        'Custom diet plan based on your goals and lifestyle.',
+        'Fitness plan suited to your physical level.',
+        'Plan updates every 10 days for optimal progress.'
+      ],
     },
     {
       slug: 'premium',
       title: 'تغيير خطير',
+      titleEn: 'Serious Change',
       price: 99,
       videoUrl: 'https://www.youtube.com/embed/Cx2si3Au1W0',
       benefits: [
@@ -29,10 +37,17 @@ async function main() {
         'خطة رياضية عملية قابلة للتطبيق حسب المستوى البدني.',
         'تحديث النظام كل 15 يوم لضمان استمرار التحفيز وتسريع النتائج.'
       ],
+      benefitsEn: [
+        'Detailed call to assess your health and set precise goals.',
+        'Custom diet plan tailored to your body type and lifestyle.',
+        'Practical fitness plan suitable for your level.',
+        'Plan updates every 15 days to maintain motivation and accelerate results.'
+      ],
     },
     {
       slug: 'ultimate',
       title: 'الرحلة',
+      titleEn: 'The Journey',
       price: 299,
       videoUrl: 'https://www.youtube.com/embed/R5YITtsCV58',
       benefits: [
@@ -42,6 +57,13 @@ async function main() {
         'خطة خاصة لشهر رمضان تراعي الصيام وتنظيم الوجبات.',
         'دعم مستمر لضمان استمرارية النتائج طوال العام.'
       ],
+      benefitsEn: [
+        'Monthly call for follow-up, progress evaluation, and course correction.',
+        'Custom and evolving diet plan based on your phase and progress.',
+        'Plan renewal every 15 days to maintain motivation and prevent plateaus.',
+        'Special Ramadan plan considering fasting and meal organization.',
+        'Continuous support to ensure lasting results throughout the year.'
+      ],
     }
   ];
 
@@ -50,8 +72,10 @@ async function main() {
       where: { slug: p.slug },
       update: {
         title: p.title,
+        titleEn: p.titleEn,
         price: p.price,
         benefits: p.benefits,
+        benefitsEn: p.benefitsEn,
         videoUrl: p.videoUrl,
       },
       create: p,

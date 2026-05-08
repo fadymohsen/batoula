@@ -105,9 +105,7 @@
     "prev": "Previous",
     "next": "Next",
     "items": [
-      { "title": "SuperHuman Clinics", "sub": "Clinical Nutrition Training" },
       { "title": "Challenge Academy", "sub": "Clinical & Sports Nutrition" },
-      { "title": "ICNC 2026", "sub": "International Cosmetic Nutrition" },
       { "title": "ICN Certificate", "sub": "Healthy Nutrition Certificate" },
       { "title": "Diabetes Workshop", "sub": "Specialized Diabetes Workshop" },
       { "title": "CFT Course", "sub": "Body Anatomy & Program Design" },

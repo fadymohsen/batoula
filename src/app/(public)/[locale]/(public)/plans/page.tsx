@@ -22,9 +22,16 @@ export default async function PlansPage({ params }: { params: Promise<{ locale: 
 
   let plans: { id: string; title: string; price: number; slug: string; benefits: string[] }[] = [];
   try {
-    plans = await prisma.plan.findMany({
+    const dbPlans = await prisma.plan.findMany({
       orderBy: { price: 'asc' }
     });
+    plans = dbPlans.map(p => ({
+      id: p.id,
+      title: locale === "en" && p.titleEn ? p.titleEn : p.title,
+      price: p.price,
+      slug: p.slug,
+      benefits: locale === "en" && p.benefitsEn.length > 0 ? p.benefitsEn : p.benefits,
+    }));
   } catch (error) {
     console.error("Failed to fetch plans from DB, using fallbacks", error);
     plans = [

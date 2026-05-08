@@ -20,11 +20,17 @@ export default async function PlanDetailsPage({ params }: { params: Promise<{ sl
   const { slug, locale } = await params;
   const dict = await getDictionary(locale as Locale);
 
-  const plan = await prisma.plan.findUnique({
+  const dbPlan = await prisma.plan.findUnique({
     where: { slug },
   });
 
-  if (!plan) notFound();
+  if (!dbPlan) notFound();
+
+  const plan = {
+    ...dbPlan,
+    title: locale === "en" && dbPlan.titleEn ? dbPlan.titleEn : dbPlan.title,
+    benefits: locale === "en" && dbPlan.benefitsEn.length > 0 ? dbPlan.benefitsEn : dbPlan.benefits,
+  };
 
   return (
     <div className="min-h-screen bg-background pt-32 pb-20 overflow-hidden">
@@ -104,6 +110,7 @@ export default async function PlanDetailsPage({ params }: { params: Promise<{ sl
                 <iframe
                   src={plan.videoUrl}
                   className="w-full h-full"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
                 />
               ) : (

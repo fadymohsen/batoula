@@ -62,9 +62,7 @@ const staggerItem = {
 };
 
 const CERT_IMAGES = [
-  { img: "/content/_.jpg (3).jpeg",  orient: "portrait" },
   { img: "/content/_.jpg (5).jpeg",  orient: "portrait" },
-  { img: "/content/_.jpg (9).jpeg",  orient: "portrait" },
   { img: "/content/_.jpg.jpeg",      orient: "landscape", rotate: -90 },
   { img: "/content/_.jpg (2).jpeg",  orient: "landscape", rotate: -90 },
   { img: "/content/_.jpg (8).jpeg",  orient: "landscape", rotate: -90 },
