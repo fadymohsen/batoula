@@ -10,6 +10,7 @@ async function main() {
       slug: 'basic',
       title: 'الخطوة الأولى',
       price: 45,
+      videoUrl: 'https://www.youtube.com/embed/o6pHqCymE1Q',
       benefits: [
         'اتصال شخصي لتقييم الحالة الصحية والغذائية بدقة.',
         'إعداد نظام غذائي مخصص بحسب الهدف ونمط الحياة.',
@@ -21,6 +22,7 @@ async function main() {
       slug: 'premium',
       title: 'تغيير خطير',
       price: 99,
+      videoUrl: 'https://www.youtube.com/embed/Cx2si3Au1W0',
       benefits: [
         'اتصال تفصيلي لتقييم الحالة الصحية والغذائية وتحديد الأهداف بدقة.',
         'إعداد نظام غذائي مخصص يتناسب مع طبيعة الجسم ونمط الحياة.',
@@ -32,6 +34,7 @@ async function main() {
       slug: 'ultimate',
       title: 'الرحلة',
       price: 299,
+      videoUrl: 'https://www.youtube.com/embed/R5YITtsCV58',
       benefits: [
         'اتصال شهري للمتابعة وتقييم التقدم وتعديل المسار عند الحاجة.',
         'نظام غذائي مخصص ومتجدد بحسب المرحلة والتطور.',
@@ -49,6 +52,7 @@ async function main() {
         title: p.title,
         price: p.price,
         benefits: p.benefits,
+        videoUrl: p.videoUrl,
       },
       create: p,
     });

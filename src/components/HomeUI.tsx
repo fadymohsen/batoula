@@ -310,7 +310,7 @@ export default function HomeUI({ content }: { content: Record<string, string> })
             </div>
 
             <div className="relative order-1 lg:order-2 flex justify-center">
-              <div className="relative rounded-[48px] overflow-hidden aspect-[4/5] w-full max-w-[400px] shadow-xl border-[10px] border-[#fafafa]">
+              <div className="relative rounded-[48px] overflow-hidden aspect-[4/5] w-full max-w-[400px] shadow-xl border-[10px] border-rose/30">
                 <Image
                   src={getContent(content, "about_image", "/coach-batoula-about.jpg")}
                   alt={dict.hero.imageAlt}
@@ -468,9 +468,9 @@ export default function HomeUI({ content }: { content: Record<string, string> })
             </p>
           </motion.div>
 
-          <motion.div variants={fadeUp} initial="hidden" whileInView="show" className="relative rounded-[40px] overflow-hidden shadow-2xl aspect-square max-w-[420px] mx-auto border-8 border-background mb-12">
+          <motion.div variants={fadeUp} initial="hidden" whileInView="show" className="relative rounded-[40px] overflow-hidden shadow-2xl aspect-[3/4] max-w-[420px] mx-auto border-8 border-rose/30 mb-12">
             <Image
-              src={getContent(content, "trans_image", "/coach-batoula-logo.jpg")}
+              src={getContent(content, "trans_image", "/coach-batoula-certificate.jpg")}
               alt={dict.results.imageAlt}
               fill
               className="object-cover"
