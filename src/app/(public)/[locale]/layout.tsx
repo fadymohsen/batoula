@@ -57,7 +57,7 @@ export async function generateMetadata({
     openGraph: {
       title: dict.meta.title,
       description: dict.meta.description,
-      images: [{ url: "/og-image.jpg", width: 1200, height: 1200, alt: dict.nav.brand }],
+      images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: dict.nav.brand }],
       locale: locale === "ar" ? "ar_EG" : "en_US",
       type: "website",
       siteName: dict.nav.brand,
