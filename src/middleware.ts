@@ -1,7 +1,9 @@
-import { auth } from "@/auth-edge";
+import NextAuth from "next-auth";
+import { authConfig } from "./auth.config";
 import { NextResponse } from "next/server";
 import { i18n } from "@/i18n/config";
 
+const { auth } = NextAuth(authConfig);
 
 export default auth((req) => {
   const { pathname } = req.nextUrl;

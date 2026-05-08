@@ -20,5 +20,6 @@ export const authConfig = {
     signIn: "/admin/login",
   },
   session: { strategy: "jwt" },
+  secret: process.env.AUTH_SECRET,
   trustHost: true,
 } satisfies NextAuthConfig;
