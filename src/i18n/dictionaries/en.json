@@ -151,6 +151,13 @@
       { "q": "When can we start?", "a": "Almost immediately! Once payment is confirmed, Batoula will contact you within 12 hours maximum to schedule your first consultation call. During this call, we'll assess your health status in detail and define your goals, then you'll receive your personalized diet plan and fitness routine. From payment to starting your transformation — it takes no more than a day or two!" }
     ]
   },
+  "app": {
+    "title": "Download the App",
+    "titleHighlight": "Now",
+    "subtitle": "Track your diet, workouts, and progress all in one place. Available on the App Store and on the web.",
+    "appStore": "Download on App Store",
+    "webApp": "Open Web App"
+  },
   "footer": {
     "cta": "Ready to start a new life?",
     "ctaDescription": "Join over 500 women who changed their lives for the better. You're not just subscribing to a \"diet\" — you're starting a real transformation journey that lasts a full year.",
