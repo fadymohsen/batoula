@@ -2,16 +2,8 @@ import { auth } from "@/auth-edge";
 import { NextResponse } from "next/server";
 import { i18n } from "@/i18n/config";
 
-function getLocaleFromRequest(req: Request): string {
-  const acceptLang = req.headers.get("accept-language") || "";
-  const preferred = acceptLang.split(",")[0]?.split("-")[0]?.toLowerCase();
-  if (preferred && i18n.locales.includes(preferred as typeof i18n.locales[number])) {
-    return preferred;
-  }
-  return i18n.defaultLocale;
-}
 
-export const proxy = auth((req) => {
+export default auth((req) => {
   const { pathname } = req.nextUrl;
   const lowerPath = pathname.toLowerCase();
 
@@ -48,9 +40,9 @@ export const proxy = auth((req) => {
 
   if (pathnameHasLocale) return NextResponse.next();
 
-  const locale = getLocaleFromRequest(req);
+  // Force Arabic as the default redirect for the root or any non-locale path
   return NextResponse.redirect(
-    new URL(`/${locale}${pathname === "/" ? "" : pathname}`, req.url)
+    new URL(`/ar${pathname === "/" ? "" : pathname}`, req.url)
   );
 });
 

@@ -5,46 +5,54 @@ import CMSItemForm from "@/components/admin/CMSItemForm";
 
 const CMS_CONFIG: Record<string, { label: string; group: string; icon: string }> = {
   // Hero
-  hero_badge_1: { label: "الشارة الأولى (Hero)", group: "الهيرو", icon: "info" },
-  hero_badge_2: { label: "الشارة الثانية (Hero)", group: "الهيرو", icon: "info" },
-  hero_badge_3: { label: "الشارة الثالثة (Hero)", group: "الهيرو", icon: "info" },
-  hero_title_1: { label: "العنوان الرئيسي الأول", group: "الهيرو", icon: "type" },
-  hero_title_2: { label: "العنوان الرئيسي الثاني (ملون)", group: "الهيرو", icon: "type" },
-  hero_description: { label: "وصف الهيرو", group: "الهيرو", icon: "type" },
+  hero_title_1: { label: "العنوان الرئيسي 1 (عربي)", group: "الهيرو", icon: "type" },
+  hero_title_1_en: { label: "Main Title 1 (English)", group: "الهيرو", icon: "type" },
+  hero_title_highlight: { label: "الكلمة المميزة (عربي)", group: "الهيرو", icon: "type" },
+  hero_title_highlight_en: { label: "Highlight Word (English)", group: "الهيرو", icon: "type" },
+  hero_title_2: { label: "العنوان الرئيسي 2 (عربي)", group: "الهيرو", icon: "type" },
+  hero_title_2_en: { label: "Main Title 2 (English)", group: "الهيرو", icon: "type" },
+  hero_title_3: { label: "العنوان الرئيسي 3 (عربي)", group: "الهيرو", icon: "type" },
+  hero_title_3_en: { label: "Main Title 3 (English)", group: "الهيرو", icon: "type" },
+  hero_description: { label: "وصف الهيرو (عربي)", group: "الهيرو", icon: "type" },
+  hero_description_en: { label: "Hero Description (English)", group: "الهيرو", icon: "type" },
   hero_image: { label: "صورة الهيرو", group: "الهيرو", icon: "image" },
   
   // About
-  about_title: { label: "عنوان قسم عن المدربة", group: "عن بتول", icon: "user" },
-  about_description: { label: "نص قصة المدربة", group: "عن بتول", icon: "type" },
-  about_image: { label: "صورة قسم عن المدربة", group: "عن بتول", icon: "image" },
+  about_title: { label: "عنوان قصة بتول (عربي)", group: "عن بتول", icon: "user" },
+  about_title_en: { label: "About Title (English)", group: "عن بتول", icon: "user" },
+  about_title_highlight: { label: "الكلمة المميزة - عن بتول (عربي)", group: "عن بتول", icon: "type" },
+  about_title_highlight_en: { label: "Highlight Word - About (English)", group: "عن بتول", icon: "type" },
+  about_title_end: { label: "نهاية العنوان - عن بتول (عربي)", group: "عن بتول", icon: "type" },
+  about_title_end_en: { label: "Title End - About (English)", group: "عن بتول", icon: "type" },
+  about_description: { label: "نص القصة (عربي)", group: "عن بتول", icon: "type" },
+  about_description_en: { label: "Story Text (English)", group: "عن بتول", icon: "type" },
+  about_image: { label: "صورة عن بتول", group: "عن بتول", icon: "image" },
 
   // Stats
-  stats_1_label: { label: "تسمية الإحصائية 1", group: "الإحصائيات", icon: "info" },
+  stats_1_label: { label: "تسمية الإحصائية 1 (عربي)", group: "الإحصائيات", icon: "info" },
+  stats_1_label_en: { label: "Stat 1 Label (English)", group: "الإحصائيات", icon: "info" },
   stats_1_value: { label: "قيمة الإحصائية 1", group: "الإحصائيات", icon: "type" },
-  stats_2_label: { label: "تسمية الإحصائية 2", group: "الإحصائيات", icon: "info" },
+  stats_2_label: { label: "تسمية الإحصائية 2 (عربي)", group: "الإحصائيات", icon: "info" },
+  stats_2_label_en: { label: "Stat 2 Label (English)", group: "الإحصائيات", icon: "info" },
   stats_2_value: { label: "قيمة الإحصائية 2", group: "الإحصائيات", icon: "type" },
-  stats_3_label: { label: "تسمية الإحصائية 3", group: "الإحصائيات", icon: "info" },
+  stats_3_label: { label: "تسمية الإحصائية 3 (عربي)", group: "الإحصائيات", icon: "info" },
+  stats_3_label_en: { label: "Stat 3 Label (English)", group: "الإحصائيات", icon: "info" },
   stats_3_value: { label: "قيمة الإحصائية 3", group: "الإحصائيات", icon: "type" },
 
   // Mission
-  mission_title: { label: "عنوان قسم الرسالة", group: "الرسالة والأهداف", icon: "type" },
-  mission_item_1_title: { label: "هدف 1 - عنوان", group: "الرسالة والأهداف", icon: "type" },
-  mission_item_1_desc: { label: "هدف 1 - وصف", group: "الرسالة والأهداف", icon: "type" },
-  mission_item_2_title: { label: "هدف 2 - عنوان", group: "الرسالة والأهداف", icon: "type" },
-  mission_item_2_desc: { label: "هدف 2 - وصف", group: "الرسالة والأهداف", icon: "type" },
-  mission_item_3_title: { label: "هدف 3 - عنوان", group: "الرسالة والأهداف", icon: "type" },
-  mission_item_3_desc: { label: "هدف 3 - وصف", group: "الرسالة والأهداف", icon: "type" },
+  mission_quote: { label: "الاقتباس (عربي)", group: "الرسالة", icon: "type" },
+  mission_quote_en: { label: "Quote (English)", group: "الرسالة", icon: "type" },
+  mission_description: { label: "الوصف (عربي)", group: "الرسالة", icon: "type" },
+  mission_description_en: { label: "Description (English)", group: "الرسالة", icon: "type" },
 
   // Transformation
-  trans_title: { label: "عنوان قسم النتائج", group: "النتائج والتحول", icon: "type" },
-  trans_description: { label: "وصف قسم النتائج", group: "النتائج والتحول", icon: "type" },
-  trans_image: { label: "صورة التحول (قبل وبعد)", group: "النتائج والتحول", icon: "image" },
-
-  // FAQ (Simplified for now as key-value pairs)
-  faq_1_q: { label: "سؤال 1", group: "الأسئلة الشائعة", icon: "info" },
-  faq_1_a: { label: "جواب 1", group: "الأسئلة الشائعة", icon: "type" },
-  faq_2_q: { label: "سؤال 2", group: "الأسئلة الشائعة", icon: "info" },
-  faq_2_a: { label: "جواب 2", group: "الأسئلة الشائعة", icon: "type" },
+  trans_title: { label: "عنوان النتائج (عربي)", group: "النتائج", icon: "type" },
+  trans_title_en: { label: "Results Title (English)", group: "النتائج", icon: "type" },
+  trans_title_highlight: { label: "الكلمة المميزة - نتائج (عربي)", group: "النتائج", icon: "type" },
+  trans_title_highlight_en: { label: "Highlight Word - Results (English)", group: "النتائج", icon: "type" },
+  trans_description: { label: "وصف النتائج (عربي)", group: "النتائج", icon: "type" },
+  trans_description_en: { label: "Results Description (English)", group: "النتائج", icon: "type" },
+  trans_image: { label: "صورة التحول", group: "النتائج", icon: "image" },
 };
 
 async function saveContent(formData: FormData) {

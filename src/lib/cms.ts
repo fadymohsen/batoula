@@ -14,7 +14,9 @@ export async function getCMSContent() {
   }
 }
 
-// Utility to get a specific key with fallback
-export function getContent(map: Record<string, string>, key: string, fallback: string) {
-  return map[key] || fallback;
+// Utility to get a specific key with fallback and locale support
+export function getContent(map: Record<string, string>, key: string, fallback: string, locale: string = "ar") {
+  const localeKey = `${key}_${locale}`;
+  // Priority: 1. Localized key (e.g. hero_title_en), 2. Default key (hero_title), 3. Fallback string
+  return map[localeKey] || map[key] || fallback;
 }

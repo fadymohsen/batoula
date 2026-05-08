@@ -201,15 +201,15 @@ export default function HomeUI({ content }: { content: Record<string, string> })
           >
             <motion.div variants={fadeUp} className="space-y-4">
               <h1 className="text-5xl lg:text-7xl font-black text-charcoal leading-[1.05] tracking-tight">
-                {getContent(content, "hero_title_1", dict.hero.title1)}{" "}
+                {getContent(content, "hero_title_1", dict.hero.title1, locale)}{" "}
                 <span className="text-rose">
-                  {getContent(content, "hero_title_highlight", dict.hero.titleHighlight)}
+                  {getContent(content, "hero_title_highlight", dict.hero.titleHighlight, locale)}
                 </span>{" "}
-                {getContent(content, "hero_title_2", dict.hero.title2)} <br />
-                {getContent(content, "hero_title_3", dict.hero.title3)}
+                {getContent(content, "hero_title_2", dict.hero.title2, locale)} <br />
+                {getContent(content, "hero_title_3", dict.hero.title3, locale)}
               </h1>
               <p className={`text-lg font-bold text-charcoal/50 max-w-lg ${isRtl ? "ms-auto" : "me-auto"} leading-relaxed`}>
-                {getContent(content, "hero_description", dict.hero.subtitle)}
+                {getContent(content, "hero_description", dict.hero.subtitle, locale)}
               </p>
             </motion.div>
 
@@ -217,29 +217,29 @@ export default function HomeUI({ content }: { content: Record<string, string> })
               <div className="flex flex-wrap items-end gap-x-8 gap-y-4 justify-start">
                 <div className={textAlign}>
                   <div className="text-6xl lg:text-7xl font-black text-charcoal leading-none tracking-tight">
-                    +<AnimatedCounter to={parseInt(getContent(content, "stats_1_value", dict.hero.stat1Value).replace(/\D/g, ''))} />
+                    +<AnimatedCounter to={parseInt(getContent(content, "stats_1_value", dict.hero.stat1Value, locale).replace(/\D/g, ''))} />
                   </div>
                   <div className="text-xs font-bold text-charcoal/35 mt-2">
-                    {getContent(content, "stats_1_label", dict.hero.stat1Label)}
+                    {getContent(content, "stats_1_label", dict.hero.stat1Label, locale)}
                   </div>
                 </div>
                 <div className="w-px h-12 bg-charcoal/10 self-center hidden sm:block" />
                 <div className={textAlign}>
                   <div className="text-4xl lg:text-5xl font-black text-rose leading-none tracking-tight">
-                    <AnimatedCounter to={parseInt(getContent(content, "stats_2_value", dict.hero.stat2Value).replace(/\D/g, ''))} />
+                    <AnimatedCounter to={parseInt(getContent(content, "stats_2_value", dict.hero.stat2Value, locale).replace(/\D/g, ''))} />
                     <span className="text-2xl font-bold"> {dict.hero.stat2Unit}</span>
                   </div>
                   <div className="text-xs font-bold text-charcoal/35 mt-2">
-                    {getContent(content, "stats_2_label", dict.hero.stat2Label)}
+                    {getContent(content, "stats_2_label", dict.hero.stat2Label, locale)}
                   </div>
                 </div>
                 <div className="w-px h-12 bg-charcoal/10 self-center hidden sm:block" />
                 <div className={textAlign}>
                   <div className="text-4xl lg:text-5xl font-black text-charcoal leading-none tracking-tight">
-                    +<AnimatedCounter to={parseInt(getContent(content, "stats_3_value", dict.hero.stat3Value).replace(/\D/g, ''))} />
+                    +<AnimatedCounter to={parseInt(getContent(content, "stats_3_value", dict.hero.stat3Value, locale).replace(/\D/g, ''))} />
                   </div>
                   <div className="text-xs font-bold text-charcoal/35 mt-2">
-                    {getContent(content, "stats_3_label", dict.hero.stat3Label)}
+                    {getContent(content, "stats_3_label", dict.hero.stat3Label, locale)}
                   </div>
                 </div>
               </div>
@@ -281,17 +281,17 @@ export default function HomeUI({ content }: { content: Record<string, string> })
             <div className={`space-y-7 ${textAlign} order-2 lg:order-1`}>
               <div className="space-y-3">
                 <h2 className="text-3xl lg:text-4xl font-black text-charcoal leading-tight">
-                  {getContent(content, "about_title", dict.about.title)}{" "}
+                  {getContent(content, "about_title", dict.about.title, locale)}{" "}
                   <span className="text-rose">
-                    {getContent(content, "about_title_highlight", dict.about.titleHighlight)}
+                    {getContent(content, "about_title_highlight", dict.about.titleHighlight, locale)}
                   </span>{" "}
-                  {getContent(content, "about_title_end", dict.about.titleEnd)}
+                  {getContent(content, "about_title_end", dict.about.titleEnd, locale)}
                 </h2>
                 <div className={`w-16 h-1.5 bg-gold rounded-full ${isRtl ? "ms-auto" : "me-auto"}`} />
               </div>
 
               <p className="text-base font-bold text-charcoal/65 leading-relaxed">
-                {getContent(content, "about_description", dict.about.intro)}
+                {getContent(content, "about_description", dict.about.intro, locale)}
               </p>
 
               <div className="border-t border-charcoal/8">
@@ -322,10 +322,10 @@ export default function HomeUI({ content }: { content: Record<string, string> })
               </div>
               <div className={`absolute -bottom-6 ${isRtl ? "-start-6" : "-end-6"} glass p-6 rounded-[32px] shadow-xl border border-white/20`}>
                 <div className="text-4xl font-black text-rose mb-1">
-                  {getContent(content, "about_weight_loss", dict.about.weightLoss)}
+                  {getContent(content, "about_weight_loss", dict.about.weightLoss, locale)}
                 </div>
                 <div className="text-xs font-black text-charcoal">
-                  {getContent(content, "about_weight_loss_label", dict.about.weightLossLabel)}
+                  {getContent(content, "about_weight_loss_label", dict.about.weightLossLabel, locale)}
                 </div>
               </div>
             </div>
@@ -433,10 +433,10 @@ export default function HomeUI({ content }: { content: Record<string, string> })
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
             <h2 className="text-3xl lg:text-4xl font-black leading-tight italic text-rose">
-              &quot;{getContent(content, "mission_quote", dict.mission.quote)}&quot;
+              &quot;{getContent(content, "mission_quote", dict.mission.quote, locale)}&quot;
             </h2>
             <p className="text-white/60 text-lg leading-relaxed">
-              {getContent(content, "mission_description", dict.mission.description)}
+              {getContent(content, "mission_description", dict.mission.description, locale)}
             </p>
           </div>
 
@@ -457,14 +457,14 @@ export default function HomeUI({ content }: { content: Record<string, string> })
         <div className="max-w-4xl mx-auto px-6 text-center">
           <motion.div variants={fadeUp} initial="hidden" whileInView="show" className="space-y-5 mb-14">
             <h2 className="text-4xl lg:text-5xl font-black text-charcoal leading-tight">
-              {getContent(content, "trans_title", dict.results.title)}
+              {getContent(content, "trans_title", dict.results.title, locale)}
               <br />
               <span className="text-rose">
-                {getContent(content, "trans_title_highlight", dict.results.titleHighlight)}
+                {getContent(content, "trans_title_highlight", dict.results.titleHighlight, locale)}
               </span>
             </h2>
             <p className="text-charcoal/50 leading-relaxed text-lg font-bold max-w-xl mx-auto">
-              {getContent(content, "trans_description", dict.results.subtitle)}
+              {getContent(content, "trans_description", dict.results.subtitle, locale)}
             </p>
           </motion.div>
 
@@ -556,7 +556,7 @@ export default function HomeUI({ content }: { content: Record<string, string> })
               <div key={i} className="py-6 cursor-pointer group" onClick={() => setOpenFaq(openFaq === i ? null : i)}>
                 <div className="flex justify-between items-center">
                   <span className={`flex-1 font-black text-lg transition-colors ${openFaq === i ? 'text-rose' : 'text-charcoal group-hover:text-rose'}`}>
-                    {getContent(content, `faq_${i + 1}_q`, faq.q)}
+                    {getContent(content, `faq_${i + 1}_q`, faq.q, locale)}
                   </span>
                   <ChevronDown size={18} className={`transition-transform duration-300 ms-4 shrink-0 ${openFaq === i ? 'rotate-180 text-rose' : 'text-charcoal/25'}`} />
                 </div>
@@ -566,7 +566,7 @@ export default function HomeUI({ content }: { content: Record<string, string> })
                     transition={{ duration: 0.2 }}
                     className="mt-3 text-charcoal/55 text-base font-semibold leading-relaxed pe-8"
                   >
-                    {getContent(content, `faq_${i + 1}_a`, faq.a)}
+                    {getContent(content, `faq_${i + 1}_a`, faq.a, locale)}
                   </motion.div>
                 )}
               </div>
