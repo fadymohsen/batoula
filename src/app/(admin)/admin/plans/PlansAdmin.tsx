@@ -30,7 +30,7 @@ export default function PlansAdmin({
   const [editingPlan, setEditingPlan] = useState<Plan | null>(null);
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
   const [toast, setToast] = useState<{ type: "success" | "error"; message: string } | null>(null);
-  const formRef = useRef<HTMLFormElement>(null);
+  const formRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const success = searchParams.get("success");
@@ -67,7 +67,8 @@ export default function PlansAdmin({
 
   function handleCancelEdit() {
     setEditingPlan(null);
-    formRef.current?.reset();
+    const form = formRef.current?.querySelector("form") as HTMLFormElement | null;
+    form?.reset();
   }
 
   const inputClass = "w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-[#b48a66] focus:border-[#b48a66] outline-none transition-colors";
