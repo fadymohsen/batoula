@@ -254,12 +254,12 @@ export default function HomeUI({ content }: { content: Record<string, string> })
             transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
             className="relative order-1 lg:order-2 flex justify-center"
           >
-            <div className="relative w-full max-w-[380px] lg:max-w-[460px] aspect-[4/5] rounded-[48px] overflow-hidden shadow-[0_48px_96px_-16px_rgba(0,0,0,0.3)] bg-rose border-[10px] border-rose/30 group">
+            <div className="relative w-full max-w-[380px] lg:max-w-[460px] aspect-[4/5] rounded-[48px] overflow-hidden shadow-[0_48px_96px_-16px_rgba(0,0,0,0.3)] bg-charcoal border-[10px] border-rose/30 group">
               <Image
                 src={getContent(content, "hero_image", "/coach-batoula.jpg")}
                 alt={dict.hero.imageAlt}
                 fill
-                className="object-cover object-top group-hover:scale-105 transition-transform duration-1000 mix-blend-lighten"
+                className="object-cover object-top group-hover:scale-105 transition-transform duration-1000"
                 priority
                 unoptimized
               />
