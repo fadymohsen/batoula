@@ -214,31 +214,31 @@ export default function HomeUI({ content }: { content: Record<string, string> })
             </motion.div>
 
             <motion.div variants={fadeUp} className="pt-8 border-t border-charcoal/8">
-              <div className="flex flex-wrap items-end gap-x-8 gap-y-4 justify-start">
+              <div className="flex flex-nowrap items-end gap-x-6 gap-y-4 justify-start">
                 <div className={textAlign}>
-                  <div className="text-6xl lg:text-7xl font-black text-charcoal leading-none tracking-tight">
+                  <div className="text-4xl lg:text-5xl font-black text-charcoal leading-none tracking-tight">
                     +<AnimatedCounter to={parseInt(getContent(content, "stats_1_value", dict.hero.stat1Value, locale).replace(/\D/g, ''))} />
                   </div>
-                  <div className="text-xs font-bold text-charcoal/35 mt-2">
+                  <div className="text-[10px] font-bold text-charcoal/35 mt-2">
                     {getContent(content, "stats_1_label", dict.hero.stat1Label, locale)}
                   </div>
                 </div>
-                <div className="w-px h-12 bg-charcoal/10 self-center hidden sm:block" />
+                <div className="w-px h-10 bg-charcoal/10 self-center hidden sm:block" />
                 <div className={textAlign}>
-                  <div className="text-4xl lg:text-5xl font-black text-rose leading-none tracking-tight">
+                  <div className="text-3xl lg:text-4xl font-black text-rose leading-none tracking-tight">
                     <AnimatedCounter to={parseInt(getContent(content, "stats_2_value", dict.hero.stat2Value, locale).replace(/\D/g, ''))} />
-                    <span className="text-2xl font-bold"> {dict.hero.stat2Unit}</span>
+                    <span className="text-xl font-bold"> {dict.hero.stat2Unit}</span>
                   </div>
-                  <div className="text-xs font-bold text-charcoal/35 mt-2">
+                  <div className="text-[10px] font-bold text-charcoal/35 mt-2">
                     {getContent(content, "stats_2_label", dict.hero.stat2Label, locale)}
                   </div>
                 </div>
-                <div className="w-px h-12 bg-charcoal/10 self-center hidden sm:block" />
+                <div className="w-px h-10 bg-charcoal/10 self-center hidden sm:block" />
                 <div className={textAlign}>
-                  <div className="text-4xl lg:text-5xl font-black text-charcoal leading-none tracking-tight">
+                  <div className="text-3xl lg:text-4xl font-black text-charcoal leading-none tracking-tight">
                     +<AnimatedCounter to={parseInt(getContent(content, "stats_3_value", dict.hero.stat3Value, locale).replace(/\D/g, ''))} />
                   </div>
-                  <div className="text-xs font-bold text-charcoal/35 mt-2">
+                  <div className="text-[10px] font-bold text-charcoal/35 mt-2">
                     {getContent(content, "stats_3_label", dict.hero.stat3Label, locale)}
                   </div>
                 </div>
@@ -473,7 +473,7 @@ export default function HomeUI({ content }: { content: Record<string, string> })
               src={getContent(content, "trans_image", "/coach-batoula-certificate.jpg")}
               alt={dict.results.imageAlt}
               fill
-              className="object-cover"
+              className="object-cover object-[center_15%]"
               unoptimized
             />
           </motion.div>
