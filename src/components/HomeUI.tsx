@@ -62,13 +62,10 @@ const staggerItem = {
 };
 
 const CERT_IMAGES = [
-  { img: "/content/_.jpg (5).jpeg",  orient: "portrait" },
   { img: "/content/_.jpg.jpeg",      orient: "landscape", rotate: -90 },
   { img: "/content/_.jpg (2).jpeg",  orient: "landscape", rotate: -90 },
   { img: "/content/_.jpg (8).jpeg",  orient: "landscape", rotate: -90 },
-  { img: "/content/_.jpg (6).jpeg",  orient: "landscape" },
   { img: "/content/_.jpg (10).jpeg", orient: "landscape" },
-  { img: "/content/_.jpg (11).jpeg", orient: "landscape" },
 ];
 
 function CertCarousel() {

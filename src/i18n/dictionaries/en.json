@@ -105,13 +105,10 @@
     "prev": "Previous",
     "next": "Next",
     "items": [
-      { "title": "Challenge Academy", "sub": "Clinical & Sports Nutrition" },
       { "title": "ICN Certificate", "sub": "Healthy Nutrition Certificate" },
       { "title": "Diabetes Workshop", "sub": "Specialized Diabetes Workshop" },
       { "title": "CFT Course", "sub": "Body Anatomy & Program Design" },
-      { "title": "Diploma Certificate", "sub": "Diploma Holder" },
-      { "title": "With Certificates", "sub": "Batoula with her certificates" },
-      { "title": "INSEP PRO", "sub": "Batoula at INSEP PRO" }
+      { "title": "With Certificates", "sub": "Batoula with her certificates" }
     ]
   },
   "mission": {

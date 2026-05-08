@@ -105,13 +105,10 @@
     "prev": "السابق",
     "next": "التالي",
     "items": [
-      { "title": "Challenge Academy", "sub": "تغذية سريرية ورياضية والسمنة" },
       { "title": "ICN Certificate", "sub": "شهادة في التغذية الصحية" },
       { "title": "Diabetes Workshop", "sub": "ورشة عمل متخصصة بالسكري" },
       { "title": "CFT Course", "sub": "تشريح الجسم وتصميم البرامج" },
-      { "title": "شهادة الدبلوم", "sub": "بتولة تحمل شهادة الدبلوم" },
-      { "title": "مع شهاداتها", "sub": "بتولة مع شهاداتها" },
-      { "title": "INSEP PRO", "sub": "بتولة في INSEP PRO" }
+      { "title": "مع شهاداتها", "sub": "بتولة مع شهاداتها" }
     ]
   },
   "mission": {
