@@ -17,15 +17,17 @@ model User {
 }
 
 model Plan {
-  id        String   @id @default(cuid())
-  slug      String   @unique
-  title     String
-  price     Float
-  benefits  String[]
-  videoUrl  String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  orders    Order[]
+  id         String   @id @default(cuid())
+  slug       String   @unique
+  title      String
+  titleEn    String?
+  price      Float
+  benefits   String[]
+  benefitsEn String[]
+  videoUrl   String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  orders     Order[]
 }
 
 model Order {
