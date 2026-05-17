@@ -22,7 +22,7 @@ export async function POST(request: Request) {
         customerName,
         customerEmail,
         customerPhone,
-        paymentMethod: 'FAWATERAK',
+        paymentMethod: 'INSTAPAY',
         planId: plan.id,
         status: 'PENDING',
       },

@@ -76,9 +76,8 @@ export default function OrdersTable({ initialOrders }: { initialOrders: Order[] 
   };
 
   const paymentLabels: Record<string, string> = {
-    FAWATERAK: locale === 'ar' ? 'بطاقة / محفظة' : 'Card / Wallet',
-    CREDIT_CARD: locale === 'ar' ? 'بطاقة ائتمان' : 'Credit Card',
-    INSTAPAY: locale === 'ar' ? 'تحويل / InstaPay' : 'Transfer / InstaPay',
+    INSTAPAY: 'InstaPay',
+    BANK_TRANSFER: locale === 'ar' ? 'تحويل بنكي' : 'Bank Transfer',
     PAYPAL: 'PayPal',
   };
 

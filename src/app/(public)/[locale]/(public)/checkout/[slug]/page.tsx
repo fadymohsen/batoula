@@ -21,7 +21,7 @@ export default function CheckoutPage({ params }: { params: Promise<{ slug: strin
   const [formData, setFormData] = useState({
     customerName: '',
     customerEmail: '',
-    paymentMethod: 'FAWATERAK',
+    paymentMethod: 'INSTAPAY',
   });
 
   const planDetails = slug === 'premium'
@@ -81,11 +81,7 @@ export default function CheckoutPage({ params }: { params: Promise<{ slug: strin
       if (!validatePhone()) return;
       setStep(2);
     } else if (step === 2) {
-      if (formData.paymentMethod === 'FAWATERAK') {
-        await initiateFawaterakPayment();
-      } else {
-        setStep(3);
-      }
+      setStep(3);
     }
   };
 
@@ -152,7 +148,8 @@ export default function CheckoutPage({ params }: { params: Promise<{ slug: strin
     try {
       await processManualOrder(null);
       // Build WhatsApp message with order details
-      const methodLabel = formData.paymentMethod === 'INSTAPAY' ? 'Bank Transfer / InstaPay' : 'PayPal';
+      const methodLabels: Record<string, string> = { INSTAPAY: 'InstaPay', BANK_TRANSFER: 'Bank Transfer', PAYPAL: 'PayPal' };
+      const methodLabel = methodLabels[formData.paymentMethod] || formData.paymentMethod;
       const msg = encodeURIComponent(
         `مرحباً، أنا ${formData.customerName}\n` +
         `تم تسجيل طلب اشتراك:\n` +
@@ -329,21 +326,21 @@ export default function CheckoutPage({ params }: { params: Promise<{ slug: strin
             </div>
 
             <div className="space-y-4">
-              <label className={`block border-2 rounded-xl p-4 cursor-pointer transition-colors ${formData.paymentMethod === 'FAWATERAK' ? 'border-[#b48a66] bg-[#b48a66]/5' : 'border-[#e8dfd1] hover:border-[#b48a66]/50'}`}>
-                <div className="flex items-center gap-4">
-                  <input type="radio" name="payment" value="FAWATERAK" checked={formData.paymentMethod === 'FAWATERAK'} onChange={() => setFormData({...formData, paymentMethod: 'FAWATERAK'})} className="w-5 h-5 text-[#b48a66] focus:ring-[#b48a66]" />
-                  <div className="flex items-center gap-3">
-                    <CreditCard className="text-[#b48a66]" />
-                    <span className="font-bold text-lg">{dict.checkout.creditCard}</span>
-                  </div>
-                </div>
-              </label>
-
               <label className={`block border-2 rounded-xl p-4 cursor-pointer transition-colors ${formData.paymentMethod === 'INSTAPAY' ? 'border-[#b48a66] bg-[#b48a66]/5' : 'border-[#e8dfd1] hover:border-[#b48a66]/50'}`}>
                 <div className="flex items-center gap-4">
                   <input type="radio" name="payment" value="INSTAPAY" checked={formData.paymentMethod === 'INSTAPAY'} onChange={() => setFormData({...formData, paymentMethod: 'INSTAPAY'})} className="w-5 h-5 text-[#b48a66] focus:ring-[#b48a66]" />
                   <div className="flex items-center gap-3">
                     <Wallet className="text-[#b48a66]" />
+                    <span className="font-bold text-lg">InstaPay</span>
+                  </div>
+                </div>
+              </label>
+
+              <label className={`block border-2 rounded-xl p-4 cursor-pointer transition-colors ${formData.paymentMethod === 'BANK_TRANSFER' ? 'border-[#b48a66] bg-[#b48a66]/5' : 'border-[#e8dfd1] hover:border-[#b48a66]/50'}`}>
+                <div className="flex items-center gap-4">
+                  <input type="radio" name="payment" value="BANK_TRANSFER" checked={formData.paymentMethod === 'BANK_TRANSFER'} onChange={() => setFormData({...formData, paymentMethod: 'BANK_TRANSFER'})} className="w-5 h-5 text-[#b48a66] focus:ring-[#b48a66]" />
+                  <div className="flex items-center gap-3">
+                    <CreditCard className="text-[#b48a66]" />
                     <span className="font-bold text-lg">{dict.checkout.bankTransfer}</span>
                   </div>
                 </div>
@@ -365,12 +362,7 @@ export default function CheckoutPage({ params }: { params: Promise<{ slug: strin
                 {dict.checkout.back}
               </button>
               <button type="submit" disabled={loading} className="w-2/3 bg-[#2c2825] text-white py-4 rounded-xl font-bold text-lg hover:bg-[#1a1715] transition-colors flex justify-center items-center gap-2">
-                {loading ? (
-                  <>
-                    <Loader2 className="animate-spin" />
-                    {formData.paymentMethod === 'FAWATERAK' && (dict.payment?.redirecting || 'Redirecting...')}
-                  </>
-                ) : formData.paymentMethod === 'FAWATERAK' ? dict.checkout.payNow : dict.checkout.continue}
+                {loading ? <Loader2 className="animate-spin" /> : dict.checkout.continue}
               </button>
             </div>
           </form>
@@ -384,15 +376,38 @@ export default function CheckoutPage({ params }: { params: Promise<{ slug: strin
             </div>
 
             <div className="bg-[#f5f1eb] p-6 rounded-xl border border-[#e8dfd1] mb-6">
-              {formData.paymentMethod === 'INSTAPAY' ? (
-                <div className="text-center space-y-1">
+              {formData.paymentMethod === 'INSTAPAY' && (
+                <div className="text-center space-y-2" dir="ltr">
                   <p className="font-bold text-sm text-[#8a7f76]">{dict.checkout.instaPayLabel}</p>
-                  <p className="text-xl font-bold" dir="ltr">+20 100 123 4567</p>
+                  <p className="text-2xl font-black text-[#2c2825] tracking-wider">01142632709</p>
                 </div>
-              ) : (
-                <div className="text-center space-y-1">
+              )}
+              {formData.paymentMethod === 'BANK_TRANSFER' && (
+                <div className="space-y-3" dir="ltr">
+                  <div className="text-center space-y-1">
+                    <p className="font-bold text-xs text-[#8a7f76] uppercase tracking-wide">Account Name</p>
+                    <p className="text-sm font-bold text-[#2c2825]">BATOOL ABDU ALJABAR ALAHMAD</p>
+                  </div>
+                  <div className="border-t border-[#e8dfd1] pt-3 text-center space-y-1">
+                    <p className="font-bold text-xs text-[#8a7f76] uppercase tracking-wide">IBAN (EGP)</p>
+                    <p className="text-sm font-bold text-[#2c2825] tracking-wider break-all">EG960003014850020382772000120</p>
+                  </div>
+                  <div className="border-t border-[#e8dfd1] pt-3 text-center space-y-1">
+                    <p className="font-bold text-xs text-[#8a7f76] uppercase tracking-wide">SWIFT Code</p>
+                    <p className="text-sm font-bold text-[#2c2825] tracking-wider">NBEGEGCX148</p>
+                  </div>
+                  <div className="border-t border-[#e8dfd1] pt-3 text-center space-y-1">
+                    <p className="font-bold text-xs text-[#8a7f76] uppercase tracking-wide">Bank</p>
+                    <p className="text-sm font-bold text-[#2c2825]">National Bank of Egypt</p>
+                  </div>
+                </div>
+              )}
+              {formData.paymentMethod === 'PAYPAL' && (
+                <div className="text-center space-y-2" dir="ltr">
                   <p className="font-bold text-sm text-[#8a7f76]">{dict.checkout.paypalLabel}</p>
-                  <p className="text-xl font-bold" dir="ltr">paypal@coachbatool.com</p>
+                  <a href="https://paypal.me/BatoolAlahmad" target="_blank" rel="noopener noreferrer" className="text-lg font-bold text-[#b48a66] hover:underline block">
+                    paypal.me/BatoolAlahmad
+                  </a>
                 </div>
               )}
             </div>

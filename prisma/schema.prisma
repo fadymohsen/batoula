@@ -66,9 +66,8 @@ enum OrderStatus {
 }
 
 enum PaymentMethod {
-  CREDIT_CARD
-  FAWATERAK
   INSTAPAY
+  BANK_TRANSFER
   PAYPAL
 }
 

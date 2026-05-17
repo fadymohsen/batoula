@@ -215,10 +215,9 @@ export async function sendAdminNotification({
   const adminEmail = process.env.ADMIN_EMAIL || 'admin@coachbatool.com';
 
   const paymentLabels: Record<string, string> = {
-    FAWATERAK: 'بطاقة ائتمان (فوترك)',
-    INSTAPAY: 'تحويل بنكي / InstaPay / محفظة / شام كاش',
-    SHAMCASH: 'شام كاش',
-    CREDIT_CARD: 'بطاقة ائتمان',
+    INSTAPAY: 'InstaPay',
+    BANK_TRANSFER: 'تحويل بنكي',
+    PAYPAL: 'PayPal',
   };
 
   return sendEmail({
