@@ -215,6 +215,17 @@ export default function OrdersTable({ initialOrders }: { initialOrders: Order[] 
           </table>
         </div>
       </div>
+
+      <ConfirmModal
+        open={!!deleteTarget}
+        title={t.deleteOrder}
+        message={t.confirmDelete}
+        confirmLabel={t.deleteOrder}
+        cancelLabel={locale === 'ar' ? 'إلغاء' : 'Cancel'}
+        variant="danger"
+        onConfirm={executeDelete}
+        onCancel={() => setDeleteTarget(null)}
+      />
     </div>
   );
 }
