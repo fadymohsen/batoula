@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
+import { sendOrderConfirmation, sendAdminNotification } from '@/lib/resend';
 
 export async function POST(request: Request) {
   try {
@@ -17,6 +18,7 @@ export async function POST(request: Request) {
     // Find the order by Fawaterak invoice ID
     const order = await prisma.order.findFirst({
       where: { fawaterakInvoiceId: invoiceIdStr },
+      include: { plan: true },
     });
 
     if (!order) {
@@ -38,6 +40,26 @@ export async function POST(request: Request) {
       where: { id: order.id },
       data: { status },
     });
+
+    // Send confirmation emails when payment is successful
+    if (status === 'COMPLETED') {
+      Promise.allSettled([
+        sendOrderConfirmation({
+          customerName: order.customerName,
+          customerEmail: order.customerEmail,
+          planTitle: order.plan.title,
+          price: order.plan.price,
+        }),
+        sendAdminNotification({
+          customerName: order.customerName,
+          customerEmail: order.customerEmail,
+          customerPhone: order.customerPhone,
+          planTitle: order.plan.title,
+          price: order.plan.price,
+          paymentMethod: order.paymentMethod,
+        }),
+      ]).catch((err) => console.error('Email sending error:', err));
+    }
 
     return NextResponse.json({ success: true });
   } catch (error) {
