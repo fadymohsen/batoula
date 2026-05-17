@@ -340,6 +340,117 @@ export default function HomeUI({ content }: { content: Record<string, string> })
         </div>
       </section>
 
+      {/* BOOK */}
+      <section className="py-28 bg-white relative overflow-hidden">
+        <div className="absolute top-[-10%] end-[-10%] w-[500px] h-[500px] bg-gold/5 rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute bottom-[-10%] start-[-5%] w-[400px] h-[400px] bg-rose/5 rounded-full blur-[100px] pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+
+            {/* Book mockup */}
+            <motion.div
+              variants={fadeUp} initial="hidden" whileInView="show"
+              className={`flex justify-center order-1 ${isRtl ? "lg:order-2" : "lg:order-1"}`}
+            >
+              <div className="relative">
+                {/* Book shadow */}
+                <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 w-[75%] h-12 bg-charcoal/10 blur-2xl rounded-full" />
+
+                {/* Book container */}
+                <div className="relative w-[280px] sm:w-[320px] group">
+                  {/* Book spine effect */}
+                  <div className="absolute top-0 bottom-0 start-0 w-[18px] bg-gradient-to-r from-charcoal/20 to-transparent rounded-s-lg z-10" />
+
+                  {/* Book cover */}
+                  <div className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-[0_32px_64px_-12px_rgba(0,0,0,0.25)] border-[6px] border-white ring-1 ring-charcoal/10 bg-gradient-to-br from-rose via-rose-dark to-charcoal group-hover:shadow-[0_40px_80px_-12px_rgba(0,0,0,0.35)] transition-shadow duration-500">
+                    {/* Book cover design */}
+                    <div className="absolute inset-0 flex flex-col items-center justify-center p-8 text-white text-center">
+                      <div className="absolute top-0 right-0 w-40 h-40 bg-white/10 rounded-full blur-[60px]" />
+                      <div className="absolute bottom-0 left-0 w-32 h-32 bg-gold/20 rounded-full blur-[50px]" />
+
+                      <div className="relative z-10 space-y-4">
+                        <BookOpen size={48} className="mx-auto text-white/80" />
+                        <div className="space-y-2">
+                          <h3 className="text-2xl sm:text-3xl font-black leading-tight">
+                            {dict.book.title}{" "}
+                            <span className="text-gold">{dict.book.titleHighlight}</span>
+                          </h3>
+                          <p className="text-sm font-bold text-white/60">{dict.book.titleEnd}</p>
+                        </div>
+                        <div className="w-12 h-0.5 bg-gold/60 mx-auto" />
+                        <p className="text-xs font-bold text-white/40 tracking-widest uppercase">Coach Batoula</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Pages effect */}
+                  <div className="absolute top-[3px] bottom-[3px] -end-[5px] w-[5px] bg-gradient-to-b from-[#f5f0e8] via-[#ebe5da] to-[#f5f0e8] rounded-e-sm" />
+                  <div className="absolute top-[6px] bottom-[6px] -end-[9px] w-[4px] bg-gradient-to-b from-[#ece7df] via-[#e2dbd0] to-[#ece7df] rounded-e-sm" />
+                </div>
+
+                {/* Badge */}
+                <div className="absolute -top-4 -end-4 bg-gold text-charcoal px-4 py-2 rounded-full text-xs font-black shadow-lg shadow-gold/30 z-20">
+                  {dict.book.previewPages}
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Book info */}
+            <motion.div
+              initial="hidden" whileInView="show"
+              variants={{ hidden: {}, show: { transition: { staggerChildren: 0.12 } } }}
+              className={`space-y-8 order-2 ${isRtl ? "lg:order-1 text-right" : "lg:order-2 text-left"}`}
+            >
+              <motion.div variants={fadeUp} className="space-y-4">
+                <span className="inline-block text-rose font-black tracking-widest text-xs uppercase px-4 py-2 rounded-full bg-rose/5 border border-rose/15">
+                  {dict.book.badge}
+                </span>
+                <h2 className="text-4xl lg:text-5xl font-black text-charcoal leading-tight">
+                  {dict.book.title}{" "}
+                  <span className="text-rose">{dict.book.titleHighlight}</span>{" "}
+                  {dict.book.titleEnd}
+                </h2>
+                <p className="text-lg text-charcoal/50 font-bold leading-relaxed max-w-lg">
+                  {dict.book.subtitle}
+                </p>
+              </motion.div>
+
+              <motion.div variants={fadeUp} className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                {[
+                  { icon: <Heart size={20} />, title: dict.book.feature1Title, desc: dict.book.feature1Desc },
+                  { icon: <BookOpen size={20} />, title: dict.book.feature2Title, desc: dict.book.feature2Desc },
+                  { icon: <ShieldCheck size={20} />, title: dict.book.feature3Title, desc: dict.book.feature3Desc },
+                ].map((f, i) => (
+                  <div key={i} className="p-5 rounded-2xl bg-background border border-charcoal/5 hover:border-rose/20 hover:shadow-lg transition-all duration-300 group">
+                    <div className="w-10 h-10 rounded-xl bg-rose/10 flex items-center justify-center text-rose mb-3 group-hover:bg-rose group-hover:text-white transition-colors">
+                      {f.icon}
+                    </div>
+                    <h4 className="font-black text-charcoal text-sm mb-1">{f.title}</h4>
+                    <p className="text-xs text-charcoal/50 font-medium leading-relaxed">{f.desc}</p>
+                  </div>
+                ))}
+              </motion.div>
+
+              <motion.div variants={fadeUp} className={`flex flex-wrap items-center gap-6 pt-4 ${isRtl ? "justify-end" : "justify-start"}`}>
+                <Link
+                  href={`/${locale}/checkout/book`}
+                  className="btn-shine inline-flex items-center gap-3 px-10 py-4 rounded-2xl bg-charcoal text-white text-lg font-black hover:bg-charcoal-dark shadow-xl transition-all"
+                >
+                  {dict.book.cta}
+                  <ArrowRight size={20} />
+                </Link>
+                <div className={isRtl ? "text-right" : "text-left"}>
+                  <div className="text-3xl font-black text-rose">{dict.book.price}</div>
+                  <div className="text-xs text-charcoal/40 font-bold">{dict.book.priceNote}</div>
+                </div>
+              </motion.div>
+            </motion.div>
+
+          </div>
+        </div>
+      </section>
+
       {/* MOBILE APP */}
       <section className="py-24 bg-background relative overflow-hidden">
         <div className="absolute top-[-10%] start-[-5%] w-[500px] h-[500px] bg-rose/5 rounded-full blur-[120px] pointer-events-none" />

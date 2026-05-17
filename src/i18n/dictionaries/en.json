@@ -151,6 +151,23 @@
       { "q": "When can we start?", "a": "Almost immediately! Once payment is confirmed, Batoula will contact you within 12 hours maximum to schedule your first consultation call. During this call, we'll assess your health status in detail and define your goals, then you'll receive your personalized diet plan and fitness routine. From payment to starting your transformation — it takes no more than a day or two!" }
     ]
   },
+  "book": {
+    "badge": "NEW RELEASE",
+    "title": "The",
+    "titleHighlight": "Book",
+    "titleEnd": "That Changes Everything",
+    "subtitle": "Everything I've learned from years of experience, research, and transforming hundreds of lives — all in one book. Your guide to eating from home, staying healthy, and building a lifestyle that lasts.",
+    "feature1Title": "Home Recipes",
+    "feature1Desc": "Healthy versions of the meals your family already loves",
+    "feature2Title": "Meal Plans",
+    "feature2Desc": "Ready-to-follow weekly plans for every goal",
+    "feature3Title": "Science-Backed",
+    "feature3Desc": "Simple nutrition science explained for real life",
+    "cta": "Get Your Copy Now",
+    "price": "$10",
+    "priceNote": "Digital + Printable",
+    "previewPages": "120+ Pages"
+  },
   "app": {
     "title": "Download the App",
     "titleHighlight": "Now",
