@@ -57,16 +57,16 @@ export async function generateMetadata({
     openGraph: {
       title: dict.meta.title,
       description: dict.meta.description,
-      images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: dict.nav.brand }],
+      images: [{ url: `/api/og?locale=${locale}`, width: 1200, height: 630, alt: dict.nav.brand }],
       locale: locale === "ar" ? "ar_EG" : "en_US",
       type: "website",
       siteName: dict.nav.brand,
     },
     twitter: {
-      card: "summary",
+      card: "summary_large_image",
       title: dict.meta.title,
       description: dict.meta.description,
-      images: ["/og-image.jpg"],
+      images: [`/api/og?locale=${locale}`],
     },
     robots: {
       index: true,
