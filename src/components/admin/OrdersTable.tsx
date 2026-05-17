@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Check, X, Eye, Clock, RefreshCw, Trash2 } from 'lucide-react';
 import { useAdminLocale } from './AdminLocaleProvider';
+import ConfirmModal from './ConfirmModal';
 
 interface Order {
   id: string;
@@ -20,6 +21,7 @@ export default function OrdersTable({ initialOrders }: { initialOrders: Order[] 
   const { t, locale } = useAdminLocale();
   const [orders, setOrders] = useState<Order[]>(initialOrders);
   const [updating, setUpdating] = useState<string | null>(null);
+  const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
 
   // Auto-refresh every 10 seconds
   useEffect(() => {
@@ -35,17 +37,18 @@ export default function OrdersTable({ initialOrders }: { initialOrders: Order[] 
     return () => clearInterval(interval);
   }, []);
 
-  const deleteOrder = async (orderId: string) => {
-    if (!confirm(t.confirmDelete)) return;
-    setUpdating(orderId);
+  const executeDelete = async () => {
+    if (!deleteTarget) return;
+    setUpdating(deleteTarget);
+    setDeleteTarget(null);
     try {
       const res = await fetch('/api/admin/orders', {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ orderId }),
+        body: JSON.stringify({ orderId: deleteTarget }),
       });
       if (res.ok) {
-        setOrders(prev => prev.filter(o => o.id !== orderId));
+        setOrders(prev => prev.filter(o => o.id !== deleteTarget));
       }
     } catch (err) {
       console.error('Failed to delete order', err);
@@ -196,7 +199,7 @@ export default function OrdersTable({ initialOrders }: { initialOrders: Order[] 
                           </>
                         )}
                         <button
-                          onClick={() => deleteOrder(order.id)}
+                          onClick={() => setDeleteTarget(order.id)}
                           disabled={updating === order.id}
                           className="p-2 bg-gray-50 text-gray-400 rounded-lg hover:bg-red-50 hover:text-red-500 transition-colors disabled:opacity-50"
                           title={t.deleteOrder}
