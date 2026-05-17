@@ -2,7 +2,7 @@
 
 import { useState, useRef, use } from 'react';
 import { useRouter } from 'next/navigation';
-import { Upload, CreditCard, Wallet, CheckCircle, Loader2, ChevronDown } from 'lucide-react';
+import { CreditCard, Wallet, CheckCircle, Loader2, ChevronDown } from 'lucide-react';
 import { useLocale } from '@/i18n/LocaleContext';
 import { countryCodes, countryNames, type CountryCode } from '@/lib/country-codes';
 
@@ -23,8 +23,6 @@ export default function CheckoutPage({ params }: { params: Promise<{ slug: strin
     customerEmail: '',
     paymentMethod: 'FAWATERAK',
   });
-  const [file, setFile] = useState<File | null>(null);
-  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const planDetails = slug === 'premium'
     ? { id: '2', title: dict.plans.plan2.name, price: 99 }
@@ -149,29 +147,24 @@ export default function CheckoutPage({ params }: { params: Promise<{ slug: strin
     }
   };
 
-  const handleUploadAndSubmit = async () => {
-    if (!file) {
-      alert(dict.checkout.uploadFirst);
-      return;
-    }
-
+  const handleConfirmAndWhatsApp = async () => {
     setLoading(true);
     try {
-      const uploadRes = await fetch(`/api/upload?filename=${file.name}`, {
-        method: 'POST',
-        body: file,
-      });
-
-      const uploadData = await uploadRes.json();
-
-      if (uploadData.url) {
-        await processManualOrder(uploadData.url);
-      } else {
-        throw new Error("Failed to upload image");
-      }
+      await processManualOrder(null);
+      // Build WhatsApp message with order details
+      const methodLabel = formData.paymentMethod === 'INSTAPAY' ? 'Bank Transfer / InstaPay' : 'PayPal';
+      const msg = encodeURIComponent(
+        `مرحباً، أنا ${formData.customerName}\n` +
+        `تم تسجيل طلب اشتراك:\n` +
+        `الباقة: ${planDetails.title}\n` +
+        `المبلغ: $${planDetails.price}\n` +
+        `طريقة الدفع: ${methodLabel}\n` +
+        `أرجو إرفاق صورة إيصال الدفع هنا 👇`
+      );
+      window.open(`https://wa.me/?text=${msg}`, '_blank');
     } catch (error) {
-      console.error("Upload failed", error);
-      alert(dict.checkout.uploadError);
+      console.error(error);
+      alert(dict.checkout.serverError);
       setLoading(false);
     }
   };
@@ -351,10 +344,17 @@ export default function CheckoutPage({ params }: { params: Promise<{ slug: strin
                   <input type="radio" name="payment" value="INSTAPAY" checked={formData.paymentMethod === 'INSTAPAY'} onChange={() => setFormData({...formData, paymentMethod: 'INSTAPAY'})} className="w-5 h-5 text-[#b48a66] focus:ring-[#b48a66]" />
                   <div className="flex items-center gap-3">
                     <Wallet className="text-[#b48a66]" />
-                    <div>
-                      <span className="font-bold text-lg block">{dict.checkout.manualTransfer}</span>
-                      <span className="text-xs text-[#8a7f76]">{dict.checkout.manualTransferDesc}</span>
-                    </div>
+                    <span className="font-bold text-lg">{dict.checkout.bankTransfer}</span>
+                  </div>
+                </div>
+              </label>
+
+              <label className={`block border-2 rounded-xl p-4 cursor-pointer transition-colors ${formData.paymentMethod === 'PAYPAL' ? 'border-[#b48a66] bg-[#b48a66]/5' : 'border-[#e8dfd1] hover:border-[#b48a66]/50'}`}>
+                <div className="flex items-center gap-4">
+                  <input type="radio" name="payment" value="PAYPAL" checked={formData.paymentMethod === 'PAYPAL'} onChange={() => setFormData({...formData, paymentMethod: 'PAYPAL'})} className="w-5 h-5 text-[#b48a66] focus:ring-[#b48a66]" />
+                  <div className="flex items-center gap-3">
+                    <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 text-[#b48a66]"><path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944 3.72a.77.77 0 0 1 .757-.644h6.568c2.602 0 4.282 1.317 4.636 3.54.018.113.03.224.038.334.06.715-.038 1.533-.306 2.43-.966 3.243-3.207 4.272-6.006 4.272H8.756a.77.77 0 0 0-.757.644l-1.023 6.54a.641.641 0 0 1-.633.54h-.267v-.05ZM19.166 8.3c-.006.064-.013.13-.022.194-.796 3.045-3.1 4.393-6.175 4.393h-1.563a.766.766 0 0 0-.757.644l-.8 5.073a.536.536 0 0 0 .529.622h3.716a.675.675 0 0 0 .666-.564l.028-.14.527-3.345.034-.184a.675.675 0 0 1 .666-.564h.42c2.716 0 4.843-1.103 5.466-4.293.26-1.333.125-2.446-.562-3.228a2.68 2.68 0 0 0-.768-.573l.095-.035Z"/></svg>
+                    <span className="font-bold text-lg">PayPal</span>
                   </div>
                 </div>
               </label>
@@ -383,37 +383,24 @@ export default function CheckoutPage({ params }: { params: Promise<{ slug: strin
               <p className="text-[#8a7f76]">{dict.checkout.step3Desc} {planDetails.price}$ {dict.checkout.step3DescEnd}</p>
             </div>
 
-            <div className="bg-[#f5f1eb] p-6 rounded-xl border border-[#e8dfd1] mb-6 space-y-4">
-              <div className="text-center space-y-1 pb-3 border-b border-[#e8dfd1]">
-                <p className="font-bold text-sm text-[#8a7f76]">{dict.checkout.instaPayLabel}</p>
-                <p className="text-xl font-bold" dir="ltr">+20 100 123 4567</p>
-              </div>
-              <div className="text-center space-y-1">
-                <p className="font-bold text-sm text-[#8a7f76]">{dict.checkout.shamCashLabel}</p>
-                <p className="text-xl font-bold" dir="ltr">0933 123 456</p>
-              </div>
+            <div className="bg-[#f5f1eb] p-6 rounded-xl border border-[#e8dfd1] mb-6">
+              {formData.paymentMethod === 'INSTAPAY' ? (
+                <div className="text-center space-y-1">
+                  <p className="font-bold text-sm text-[#8a7f76]">{dict.checkout.instaPayLabel}</p>
+                  <p className="text-xl font-bold" dir="ltr">+20 100 123 4567</p>
+                </div>
+              ) : (
+                <div className="text-center space-y-1">
+                  <p className="font-bold text-sm text-[#8a7f76]">{dict.checkout.paypalLabel}</p>
+                  <p className="text-xl font-bold" dir="ltr">paypal@coachbatool.com</p>
+                </div>
+              )}
             </div>
 
-            <div
-              className="border-2 border-dashed border-[#b48a66]/40 bg-[#b48a66]/5 rounded-2xl p-8 text-center cursor-pointer hover:bg-[#b48a66]/10 transition-colors"
-              onClick={() => fileInputRef.current?.click()}
-            >
-              <Upload className="w-10 h-10 text-[#b48a66] mx-auto mb-4" />
-              {file ? (
-                <p className="font-bold text-green-700">{file.name}</p>
-              ) : (
-                <>
-                  <p className="font-bold text-lg text-[#b48a66] mb-1">{dict.checkout.uploadTitle}</p>
-                  <p className="text-sm text-[#8a7f76]">{dict.checkout.uploadDesc}</p>
-                </>
-              )}
-              <input
-                type="file"
-                ref={fileInputRef}
-                onChange={(e) => setFile(e.target.files?.[0] || null)}
-                className="hidden"
-                accept="image/*"
-              />
+            <div className="bg-[#25D366]/5 border border-[#25D366]/20 rounded-2xl p-6 text-center">
+              <p className="text-sm text-[#2c2825] font-bold leading-relaxed">
+                {dict.checkout.whatsappInstruction}
+              </p>
             </div>
 
             <div className="flex gap-4 mt-8">
@@ -421,11 +408,11 @@ export default function CheckoutPage({ params }: { params: Promise<{ slug: strin
                 {dict.checkout.changeMethod}
               </button>
               <button
-                onClick={handleUploadAndSubmit}
-                disabled={loading || !file}
-                className="w-2/3 bg-[#b48a66] text-white py-4 rounded-xl font-bold text-lg hover:bg-[#9d7756] transition-colors flex justify-center items-center gap-2 disabled:opacity-50"
+                onClick={handleConfirmAndWhatsApp}
+                disabled={loading}
+                className="w-2/3 bg-[#25D366] text-white py-4 rounded-xl font-bold text-lg hover:bg-[#1da851] transition-colors flex justify-center items-center gap-2 disabled:opacity-50"
               >
-                {loading ? <Loader2 className="animate-spin" /> : dict.checkout.confirmSend}
+                {loading ? <Loader2 className="animate-spin" /> : dict.checkout.confirmWhatsApp}
               </button>
             </div>
           </div>

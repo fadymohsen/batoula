@@ -69,7 +69,7 @@ enum PaymentMethod {
   CREDIT_CARD
   FAWATERAK
   INSTAPAY
-  SHAMCASH
+  PAYPAL
 }
 
 enum ContentType {
