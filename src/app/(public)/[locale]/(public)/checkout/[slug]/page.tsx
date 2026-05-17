@@ -15,27 +15,63 @@ export default function CheckoutPage({ params }: { params: Promise<{ slug: strin
     customerName: '',
     customerEmail: '',
     customerPhone: '',
-    paymentMethod: 'CREDIT_CARD',
+    paymentMethod: 'FAWATERAK',
   });
   const [file, setFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const planDetails = slug === 'premium' ? { id: '2', title: dict.plans.plan2.name, price: 120 } : { id: '1', title: dict.plans.plan1.name, price: 50 };
+  const planDetails = slug === 'premium'
+    ? { id: '2', title: dict.plans.plan2.name, price: 99 }
+    : slug === 'ultimate'
+      ? { id: '3', title: dict.plans.plan3.name, price: 299 }
+      : { id: '1', title: dict.plans.plan1.name, price: 45 };
 
-  const handleNextStep = (e: React.FormEvent) => {
+  const handleNextStep = async (e: React.FormEvent) => {
     e.preventDefault();
     if (step === 1 && formData.customerName && formData.customerEmail && formData.customerPhone) {
       setStep(2);
     } else if (step === 2) {
-      if (formData.paymentMethod === 'CREDIT_CARD') {
-        processOrder(null);
+      if (formData.paymentMethod === 'FAWATERAK') {
+        // Redirect to Fawaterak payment gateway
+        await initiateFawaterakPayment();
       } else {
+        // Manual payment methods (InstaPay/ShamCash) → show upload step
         setStep(3);
       }
     }
   };
 
-  const processOrder = async (receiptUrl: string | null) => {
+  const initiateFawaterakPayment = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch('/api/payments/initiate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          customerName: formData.customerName,
+          customerEmail: formData.customerEmail,
+          customerPhone: formData.customerPhone,
+          planSlug: slug,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.paymentUrl) {
+        // Redirect user to Fawaterak payment page
+        window.location.href = data.paymentUrl;
+      } else {
+        alert(dict.checkout.orderError);
+        setLoading(false);
+      }
+    } catch (error) {
+      console.error('Payment initiation error:', error);
+      alert(dict.checkout.serverError);
+      setLoading(false);
+    }
+  };
+
+  const processManualOrder = async (receiptUrl: string | null) => {
     setLoading(true);
     try {
       const response = await fetch('/api/orders', {
@@ -77,7 +113,7 @@ export default function CheckoutPage({ params }: { params: Promise<{ slug: strin
       const uploadData = await uploadRes.json();
 
       if (uploadData.url) {
-        await processOrder(uploadData.url);
+        await processManualOrder(uploadData.url);
       } else {
         throw new Error("Failed to upload image");
       }
@@ -165,9 +201,9 @@ export default function CheckoutPage({ params }: { params: Promise<{ slug: strin
             </div>
 
             <div className="space-y-4">
-              <label className={`block border-2 rounded-xl p-4 cursor-pointer transition-colors ${formData.paymentMethod === 'CREDIT_CARD' ? 'border-[#b48a66] bg-[#b48a66]/5' : 'border-[#e8dfd1] hover:border-[#b48a66]/50'}`}>
+              <label className={`block border-2 rounded-xl p-4 cursor-pointer transition-colors ${formData.paymentMethod === 'FAWATERAK' ? 'border-[#b48a66] bg-[#b48a66]/5' : 'border-[#e8dfd1] hover:border-[#b48a66]/50'}`}>
                 <div className="flex items-center gap-4">
-                  <input type="radio" name="payment" value="CREDIT_CARD" checked={formData.paymentMethod === 'CREDIT_CARD'} onChange={() => setFormData({...formData, paymentMethod: 'CREDIT_CARD'})} className="w-5 h-5 text-[#b48a66] focus:ring-[#b48a66]" />
+                  <input type="radio" name="payment" value="FAWATERAK" checked={formData.paymentMethod === 'FAWATERAK'} onChange={() => setFormData({...formData, paymentMethod: 'FAWATERAK'})} className="w-5 h-5 text-[#b48a66] focus:ring-[#b48a66]" />
                   <div className="flex items-center gap-3">
                     <CreditCard className="text-[#b48a66]" />
                     <span className="font-bold text-lg">{dict.checkout.creditCard}</span>
@@ -201,7 +237,12 @@ export default function CheckoutPage({ params }: { params: Promise<{ slug: strin
                 {dict.checkout.back}
               </button>
               <button type="submit" disabled={loading} className="w-2/3 bg-[#2c2825] text-white py-4 rounded-xl font-bold text-lg hover:bg-[#1a1715] transition-colors flex justify-center items-center gap-2">
-                {loading ? <Loader2 className="animate-spin" /> : formData.paymentMethod === 'CREDIT_CARD' ? dict.checkout.payNow : dict.checkout.continue}
+                {loading ? (
+                  <>
+                    <Loader2 className="animate-spin" />
+                    {formData.paymentMethod === 'FAWATERAK' && (dict.payment?.redirecting || 'Redirecting...')}
+                  </>
+                ) : formData.paymentMethod === 'FAWATERAK' ? dict.checkout.payNow : dict.checkout.continue}
               </button>
             </div>
           </form>
@@ -270,7 +311,7 @@ export default function CheckoutPage({ params }: { params: Promise<{ slug: strin
             <CheckCircle className="w-20 h-20 text-green-500 mx-auto mb-6" />
             <h1 className="text-3xl font-bold mb-4">{dict.checkout.successTitle}</h1>
             <p className="text-lg text-[#6b625a] mb-8">
-              {formData.paymentMethod === 'CREDIT_CARD' ? dict.checkout.successCard : dict.checkout.successManual}
+              {dict.checkout.successManual}
             </p>
             <button
               onClick={() => router.push(`/${locale}`)}

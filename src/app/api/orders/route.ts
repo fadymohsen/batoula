@@ -10,10 +10,9 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
 
-    // Determine status based on payment method
-    // In a real app, CREDIT_CARD would be PENDING until Stripe webhook confirms
-    // But for this mockup, we'll set manual to PENDING and CC to COMPLETED or PENDING
-    const status = paymentMethod === 'CREDIT_CARD' ? 'COMPLETED' : 'PENDING';
+    // All manual orders start as PENDING (admin confirms after reviewing receipt)
+    // Fawaterak payments go through /api/payments/initiate instead
+    const status = 'PENDING';
 
     const order = await prisma.order.create({
       data: {

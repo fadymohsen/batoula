@@ -223,5 +223,13 @@
     "orderError": "An error occurred while processing the order. Please try again.",
     "serverError": "An error occurred while connecting to the server."
   },
+  "payment": {
+    "failedTitle": "Payment Failed",
+    "failedDesc": "Something went wrong with your payment. Please try again or choose a different payment method.",
+    "tryAgain": "Try Again",
+    "pendingTitle": "Payment Processing",
+    "pendingDesc": "Your payment is being processed. We'll contact you on WhatsApp once confirmed.",
+    "redirecting": "Redirecting to payment gateway..."
+  },
   "langSwitch": "العربية"
 }
