@@ -63,7 +63,7 @@ export async function generateMetadata({
       siteName: dict.nav.brand,
     },
     twitter: {
-      card: "summary_large_image",
+      card: "summary",
       title: dict.meta.title,
       description: dict.meta.description,
       images: ["/og-image.jpg"],
