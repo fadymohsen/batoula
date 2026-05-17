@@ -109,12 +109,56 @@ export default function OrdersTable({ initialOrders }: { initialOrders: Order[] 
     }
   };
 
+  const actionButtons = (order: Order) => (
+    <div className="flex gap-2 flex-wrap">
+      {order.receiptUrl && (
+        <a
+          href={order.receiptUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="p-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors"
+          title={t.viewReceipt}
+        >
+          <Eye size={18} />
+        </a>
+      )}
+      {order.status === 'PENDING' && (
+        <>
+          <button
+            onClick={() => updateStatus(order.id, 'COMPLETED')}
+            disabled={updating === order.id}
+            className="p-2 bg-green-50 text-green-600 rounded-lg hover:bg-green-100 transition-colors disabled:opacity-50"
+            title={t.confirmPayment}
+          >
+            <Check size={18} />
+          </button>
+          <button
+            onClick={() => updateStatus(order.id, 'FAILED')}
+            disabled={updating === order.id}
+            className="p-2 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition-colors disabled:opacity-50"
+            title={t.rejectOrder}
+          >
+            <X size={18} />
+          </button>
+        </>
+      )}
+      <button
+        onClick={() => setDeleteTarget(order.id)}
+        disabled={updating === order.id}
+        className="p-2 bg-gray-50 text-gray-400 rounded-lg hover:bg-red-50 hover:text-red-500 transition-colors disabled:opacity-50"
+        title={t.deleteOrder}
+      >
+        <Trash2 size={18} />
+      </button>
+    </div>
+  );
+
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
         <div>
-          <h1 className="text-3xl font-bold text-[#2c2825]">{t.manageOrders}</h1>
-          <p className="text-[#8a7f76] mt-1">{t.manageOrdersDesc}</p>
+          <h1 className="text-2xl md:text-3xl font-bold text-[#2c2825]">{t.manageOrders}</h1>
+          <p className="text-sm md:text-base text-[#8a7f76] mt-1">{t.manageOrdersDesc}</p>
         </div>
         <div className="flex items-center gap-2 text-xs text-gray-400">
           <RefreshCw size={14} className="animate-spin" style={{ animationDuration: '3s' }} />
@@ -122,7 +166,55 @@ export default function OrdersTable({ initialOrders }: { initialOrders: Order[] 
         </div>
       </div>
 
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+      {/* Mobile card list */}
+      <div className="md:hidden space-y-3">
+        {orders.length === 0 ? (
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 px-6 py-12 text-center text-gray-400">
+            {t.noOrders}
+          </div>
+        ) : (
+          orders.map((order) => (
+            <div
+              key={order.id}
+              className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 space-y-3"
+            >
+              <div className="flex justify-between items-start gap-3">
+                <div className="min-w-0">
+                  <div className="font-bold text-[#2c2825] truncate">{order.customerName}</div>
+                  <div className="text-xs text-gray-400 truncate" dir="ltr">{order.customerPhone}</div>
+                </div>
+                {statusBadge(order.status)}
+              </div>
+
+              <div className="grid grid-cols-2 gap-3 text-sm border-t border-gray-50 pt-3">
+                <div className="min-w-0">
+                  <p className="text-[10px] uppercase tracking-wide text-gray-400 mb-1">{t.planPrice}</p>
+                  <p className="font-semibold text-[#2c2825] truncate">
+                    {locale === 'en' && order.plan.titleEn ? order.plan.titleEn : order.plan.title}
+                  </p>
+                  <p className="text-xs text-[#b48a66] font-bold">${order.plan.price}</p>
+                </div>
+                <div className="min-w-0">
+                  <p className="text-[10px] uppercase tracking-wide text-gray-400 mb-1">{t.paymentMethod}</p>
+                  <span className="inline-block text-xs font-bold px-2 py-1 bg-gray-100 rounded text-gray-600">
+                    {paymentLabels[order.paymentMethod] || order.paymentMethod}
+                  </span>
+                  <p className="text-xs text-gray-500 mt-2" dir="ltr">
+                    {new Intl.DateTimeFormat('en-CA').format(new Date(order.createdAt))}
+                  </p>
+                </div>
+              </div>
+
+              <div className="border-t border-gray-50 pt-3">
+                {actionButtons(order)}
+              </div>
+            </div>
+          ))
+        )}
+      </div>
+
+      {/* Desktop table */}
+      <div className="hidden md:block bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
         <div className="overflow-x-auto">
           <table className={`w-full ${locale === 'ar' ? 'text-right' : 'text-left'}`}>
             <thead className="bg-[#faf8f5] border-b border-gray-100">
@@ -165,47 +257,7 @@ export default function OrdersTable({ initialOrders }: { initialOrders: Order[] 
                       {statusBadge(order.status)}
                     </td>
                     <td className="px-6 py-4">
-                      <div className="flex gap-2">
-                        {order.receiptUrl && (
-                          <a
-                            href={order.receiptUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="p-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors"
-                            title={t.viewReceipt}
-                          >
-                            <Eye size={18} />
-                          </a>
-                        )}
-                        {order.status === 'PENDING' && (
-                          <>
-                            <button
-                              onClick={() => updateStatus(order.id, 'COMPLETED')}
-                              disabled={updating === order.id}
-                              className="p-2 bg-green-50 text-green-600 rounded-lg hover:bg-green-100 transition-colors disabled:opacity-50"
-                              title={t.confirmPayment}
-                            >
-                              <Check size={18} />
-                            </button>
-                            <button
-                              onClick={() => updateStatus(order.id, 'FAILED')}
-                              disabled={updating === order.id}
-                              className="p-2 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition-colors disabled:opacity-50"
-                              title={t.rejectOrder}
-                            >
-                              <X size={18} />
-                            </button>
-                          </>
-                        )}
-                        <button
-                          onClick={() => setDeleteTarget(order.id)}
-                          disabled={updating === order.id}
-                          className="p-2 bg-gray-50 text-gray-400 rounded-lg hover:bg-red-50 hover:text-red-500 transition-colors disabled:opacity-50"
-                          title={t.deleteOrder}
-                        >
-                          <Trash2 size={18} />
-                        </button>
-                      </div>
+                      {actionButtons(order)}
                     </td>
                   </tr>
                 ))
