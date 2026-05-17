@@ -71,6 +71,10 @@ export default function PlansAdmin({
     form?.reset();
   }
 
+  function scrollToForm() {
+    formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
   const inputClass = "w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-[#b48a66] focus:border-[#b48a66] outline-none transition-colors";
 
   return (
@@ -90,18 +94,27 @@ export default function PlansAdmin({
         </div>
       )}
 
-      <div>
-        <h1 className="text-3xl font-bold text-[#2c2825]">إدارة الباقات</h1>
-        <p className="text-[#8a7f76] mt-1">تعديل الأسعار والمزايا لكل باقة — عربي وإنجليزي</p>
+      <div className="flex items-start justify-between gap-3">
+        <div>
+          <h1 className="text-2xl md:text-3xl font-bold text-[#2c2825]">إدارة الباقات</h1>
+          <p className="text-sm md:text-base text-[#8a7f76] mt-1">تعديل الأسعار والمزايا لكل باقة — عربي وإنجليزي</p>
+        </div>
+        <button
+          onClick={() => { handleCancelEdit(); scrollToForm(); }}
+          className="lg:hidden flex items-center gap-1.5 bg-[#2c2825] text-white px-3 py-2 rounded-xl text-sm font-bold shadow-sm hover:bg-[#1a1715] transition-colors shrink-0"
+        >
+          <Plus size={16} />
+          إضافة
+        </button>
       </div>
 
-      <div className="grid lg:grid-cols-2 gap-8">
+      <div className="grid lg:grid-cols-2 gap-6 lg:gap-8">
         {/* Plans List */}
-        <div className="space-y-4 order-2 lg:order-1">
+        <div className="space-y-4 lg:order-1">
           {plans.map((plan) => (
             <div
               key={plan.id}
-              className={`bg-white p-6 rounded-2xl shadow-sm border transition-all ${
+              className={`bg-white p-4 md:p-6 rounded-2xl shadow-sm border transition-all ${
                 editingPlan?.id === plan.id ? "border-[#b48a66] ring-2 ring-[#b48a66]/20" : "border-gray-100"
               }`}
             >
@@ -194,7 +207,7 @@ export default function PlansAdmin({
         </div>
 
         {/* Add/Edit Form */}
-        <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 h-fit sticky top-8 order-1 lg:order-2" ref={formRef}>
+        <div className="bg-white p-5 md:p-8 rounded-2xl shadow-sm border border-gray-100 h-fit lg:sticky lg:top-8 lg:order-2" ref={formRef}>
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-xl font-bold flex items-center gap-2">
               {editingPlan ? (
