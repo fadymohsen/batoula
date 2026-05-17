@@ -2,8 +2,9 @@
 
 import { useState, useRef, use } from 'react';
 import { useRouter } from 'next/navigation';
-import { Upload, CreditCard, Wallet, CheckCircle, Loader2 } from 'lucide-react';
+import { Upload, CreditCard, Wallet, CheckCircle, Loader2, ChevronDown } from 'lucide-react';
 import { useLocale } from '@/i18n/LocaleContext';
+import { countryCodes, countryNames, type CountryCode } from '@/lib/country-codes';
 
 export default function CheckoutPage({ params }: { params: Promise<{ slug: string; locale: string }> }) {
   const { slug } = use(params);
@@ -11,10 +12,15 @@ export default function CheckoutPage({ params }: { params: Promise<{ slug: strin
   const router = useRouter();
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [selectedCountry, setSelectedCountry] = useState<CountryCode>(countryCodes[0]); // Syria default
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [phoneError, setPhoneError] = useState('');
+  const [showCountryDropdown, setShowCountryDropdown] = useState(false);
+  const [countrySearch, setCountrySearch] = useState('');
+  const dropdownRef = useRef<HTMLDivElement>(null);
   const [formData, setFormData] = useState({
     customerName: '',
     customerEmail: '',
-    customerPhone: '',
     paymentMethod: 'FAWATERAK',
   });
   const [file, setFile] = useState<File | null>(null);
@@ -26,16 +32,60 @@ export default function CheckoutPage({ params }: { params: Promise<{ slug: strin
       ? { id: '3', title: dict.plans.plan3.name, price: 299 }
       : { id: '1', title: dict.plans.plan1.name, price: 45 };
 
+  const digitsOnly = phoneNumber.replace(/\D/g, '');
+  const isPhoneValid = digitsOnly.length >= selectedCountry.minLength && digitsOnly.length <= selectedCountry.maxLength;
+
+  const fullPhone = `${selectedCountry.dial} ${phoneNumber}`;
+
+  const validatePhone = (): boolean => {
+    if (!digitsOnly) {
+      setPhoneError(locale === 'ar' ? 'الرجاء إدخال رقم الهاتف' : 'Please enter a phone number');
+      return false;
+    }
+    if (digitsOnly.length < selectedCountry.minLength) {
+      const name = countryNames[selectedCountry.code]?.[locale === 'ar' ? 'ar' : 'en'] || selectedCountry.code;
+      setPhoneError(
+        locale === 'ar'
+          ? `رقم الهاتف لـ${name} يجب أن يكون ${selectedCountry.minLength === selectedCountry.maxLength ? selectedCountry.minLength : `${selectedCountry.minLength}-${selectedCountry.maxLength}`} أرقام`
+          : `Phone number for ${name} must be ${selectedCountry.minLength === selectedCountry.maxLength ? selectedCountry.minLength : `${selectedCountry.minLength}-${selectedCountry.maxLength}`} digits`
+      );
+      return false;
+    }
+    if (digitsOnly.length > selectedCountry.maxLength) {
+      const name = countryNames[selectedCountry.code]?.[locale === 'ar' ? 'ar' : 'en'] || selectedCountry.code;
+      setPhoneError(
+        locale === 'ar'
+          ? `رقم الهاتف لـ${name} يجب أن يكون ${selectedCountry.minLength === selectedCountry.maxLength ? selectedCountry.minLength : `${selectedCountry.minLength}-${selectedCountry.maxLength}`} أرقام`
+          : `Phone number for ${name} must be ${selectedCountry.minLength === selectedCountry.maxLength ? selectedCountry.minLength : `${selectedCountry.minLength}-${selectedCountry.maxLength}`} digits`
+      );
+      return false;
+    }
+    setPhoneError('');
+    return true;
+  };
+
+  const filteredCountries = countrySearch
+    ? countryCodes.filter((c) => {
+        const name = countryNames[c.code]?.[locale === 'ar' ? 'ar' : 'en'] || '';
+        const q = countrySearch.toLowerCase();
+        return (
+          name.toLowerCase().includes(q) ||
+          c.dial.includes(q) ||
+          c.code.toLowerCase().includes(q)
+        );
+      })
+    : countryCodes;
+
   const handleNextStep = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (step === 1 && formData.customerName && formData.customerEmail && formData.customerPhone) {
+    if (step === 1) {
+      if (!formData.customerName || !formData.customerEmail) return;
+      if (!validatePhone()) return;
       setStep(2);
     } else if (step === 2) {
       if (formData.paymentMethod === 'FAWATERAK') {
-        // Redirect to Fawaterak payment gateway
         await initiateFawaterakPayment();
       } else {
-        // Manual payment methods (InstaPay/ShamCash) → show upload step
         setStep(3);
       }
     }
@@ -50,7 +100,7 @@ export default function CheckoutPage({ params }: { params: Promise<{ slug: strin
         body: JSON.stringify({
           customerName: formData.customerName,
           customerEmail: formData.customerEmail,
-          customerPhone: formData.customerPhone,
+          customerPhone: fullPhone,
           planSlug: slug,
         }),
       });
@@ -58,7 +108,6 @@ export default function CheckoutPage({ params }: { params: Promise<{ slug: strin
       const data = await response.json();
 
       if (response.ok && data.paymentUrl) {
-        // Redirect user to Fawaterak payment page
         window.location.href = data.paymentUrl;
       } else {
         alert(dict.checkout.orderError);
@@ -78,7 +127,10 @@ export default function CheckoutPage({ params }: { params: Promise<{ slug: strin
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          ...formData,
+          customerName: formData.customerName,
+          customerEmail: formData.customerEmail,
+          customerPhone: fullPhone,
+          paymentMethod: formData.paymentMethod,
           planId: planDetails.id,
           receiptUrl
         }),
@@ -175,15 +227,98 @@ export default function CheckoutPage({ params }: { params: Promise<{ slug: strin
               </div>
               <div>
                 <label className="block text-sm font-bold mb-2">{dict.checkout.phone}</label>
-                <input
-                  required
-                  type="tel"
-                  placeholder={dict.checkout.phonePlaceholder}
-                  className="w-full bg-[#faf8f5] border border-[#e8dfd1] rounded-xl px-4 py-3 focus:ring-2 focus:ring-[#b48a66] focus:border-transparent outline-none text-left"
-                  dir="ltr"
-                  value={formData.customerPhone}
-                  onChange={(e) => setFormData({...formData, customerPhone: e.target.value})}
-                />
+                <div className="flex gap-2" dir="ltr">
+                  {/* Country code selector */}
+                  <div className="relative" ref={dropdownRef}>
+                    <button
+                      type="button"
+                      onClick={() => { setShowCountryDropdown(!showCountryDropdown); setCountrySearch(''); }}
+                      className="flex items-center gap-1.5 bg-[#faf8f5] border border-[#e8dfd1] rounded-xl px-3 py-3 hover:border-[#b48a66] transition-colors min-w-[120px] text-left"
+                    >
+                      <span className="text-lg">{selectedCountry.flag}</span>
+                      <span className="font-bold text-sm">{selectedCountry.dial}</span>
+                      <ChevronDown size={14} className={`text-[#8a7f76] transition-transform ${showCountryDropdown ? 'rotate-180' : ''}`} />
+                    </button>
+
+                    {showCountryDropdown && (
+                      <div className="absolute top-full left-0 mt-1 w-72 max-h-64 bg-white border border-[#e8dfd1] rounded-xl shadow-xl z-50 overflow-hidden">
+                        <div className="sticky top-0 bg-white p-2 border-b border-[#f0eadd]">
+                          <input
+                            type="text"
+                            autoFocus
+                            placeholder={locale === 'ar' ? 'ابحث عن بلد...' : 'Search country...'}
+                            className="w-full bg-[#faf8f5] border border-[#e8dfd1] rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-[#b48a66] focus:border-transparent"
+                            value={countrySearch}
+                            onChange={(e) => setCountrySearch(e.target.value)}
+                          />
+                        </div>
+                        <div className="overflow-y-auto max-h-48">
+                          {filteredCountries.map((country) => {
+                            const name = countryNames[country.code]?.[locale === 'ar' ? 'ar' : 'en'] || country.code;
+                            return (
+                              <button
+                                key={country.code}
+                                type="button"
+                                onClick={() => {
+                                  setSelectedCountry(country);
+                                  setShowCountryDropdown(false);
+                                  setPhoneNumber('');
+                                  setPhoneError('');
+                                }}
+                                className={`w-full flex items-center gap-3 px-3 py-2.5 hover:bg-[#faf8f5] transition-colors text-left ${
+                                  selectedCountry.code === country.code ? 'bg-[#b48a66]/5' : ''
+                                }`}
+                              >
+                                <span className="text-lg">{country.flag}</span>
+                                <span className="text-sm font-medium flex-1">{name}</span>
+                                <span className="text-xs text-[#8a7f76] font-mono">{country.dial}</span>
+                              </button>
+                            );
+                          })}
+                          {filteredCountries.length === 0 && (
+                            <div className="px-4 py-6 text-center text-sm text-[#8a7f76]">
+                              {locale === 'ar' ? 'لا توجد نتائج' : 'No results found'}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Phone number input */}
+                  <input
+                    required
+                    type="tel"
+                    placeholder={`${'0'.repeat(selectedCountry.minLength)}`}
+                    className={`flex-1 bg-[#faf8f5] border rounded-xl px-4 py-3 focus:ring-2 focus:ring-[#b48a66] focus:border-transparent outline-none text-left font-mono ${
+                      phoneError ? 'border-red-400' : 'border-[#e8dfd1]'
+                    }`}
+                    dir="ltr"
+                    value={phoneNumber}
+                    onChange={(e) => {
+                      const val = e.target.value.replace(/[^\d\s-]/g, '');
+                      setPhoneNumber(val);
+                      setPhoneError('');
+                    }}
+                    onBlur={validatePhone}
+                  />
+                </div>
+
+                {/* Validation feedback */}
+                <div className="flex items-center justify-between mt-1.5 min-h-[20px]">
+                  {phoneError ? (
+                    <p className="text-red-500 text-xs font-medium">{phoneError}</p>
+                  ) : digitsOnly.length > 0 ? (
+                    <p className={`text-xs font-medium ${isPhoneValid ? 'text-green-600' : 'text-[#8a7f76]'}`}>
+                      {isPhoneValid
+                        ? (locale === 'ar' ? '✓ رقم صحيح' : '✓ Valid number')
+                        : (locale === 'ar'
+                          ? `${digitsOnly.length} من ${selectedCountry.minLength === selectedCountry.maxLength ? selectedCountry.minLength : `${selectedCountry.minLength}-${selectedCountry.maxLength}`} رقم`
+                          : `${digitsOnly.length} of ${selectedCountry.minLength === selectedCountry.maxLength ? selectedCountry.minLength : `${selectedCountry.minLength}-${selectedCountry.maxLength}`} digits`
+                        )}
+                    </p>
+                  ) : <span />}
+                </div>
               </div>
             </div>
 
@@ -216,17 +351,10 @@ export default function CheckoutPage({ params }: { params: Promise<{ slug: strin
                   <input type="radio" name="payment" value="INSTAPAY" checked={formData.paymentMethod === 'INSTAPAY'} onChange={() => setFormData({...formData, paymentMethod: 'INSTAPAY'})} className="w-5 h-5 text-[#b48a66] focus:ring-[#b48a66]" />
                   <div className="flex items-center gap-3">
                     <Wallet className="text-[#b48a66]" />
-                    <span className="font-bold text-lg">{dict.checkout.bankTransfer}</span>
-                  </div>
-                </div>
-              </label>
-
-              <label className={`block border-2 rounded-xl p-4 cursor-pointer transition-colors ${formData.paymentMethod === 'SHAMCASH' ? 'border-[#b48a66] bg-[#b48a66]/5' : 'border-[#e8dfd1] hover:border-[#b48a66]/50'}`}>
-                <div className="flex items-center gap-4">
-                  <input type="radio" name="payment" value="SHAMCASH" checked={formData.paymentMethod === 'SHAMCASH'} onChange={() => setFormData({...formData, paymentMethod: 'SHAMCASH'})} className="w-5 h-5 text-[#b48a66] focus:ring-[#b48a66]" />
-                  <div className="flex items-center gap-3">
-                    <Wallet className="text-[#b48a66]" />
-                    <span className="font-bold text-lg">{dict.checkout.shamCash}</span>
+                    <div>
+                      <span className="font-bold text-lg block">{dict.checkout.manualTransfer}</span>
+                      <span className="text-xs text-[#8a7f76]">{dict.checkout.manualTransferDesc}</span>
+                    </div>
                   </div>
                 </div>
               </label>
@@ -255,18 +383,15 @@ export default function CheckoutPage({ params }: { params: Promise<{ slug: strin
               <p className="text-[#8a7f76]">{dict.checkout.step3Desc} {planDetails.price}$ {dict.checkout.step3DescEnd}</p>
             </div>
 
-            <div className="bg-[#f5f1eb] p-6 rounded-xl border border-[#e8dfd1] mb-6">
-              {formData.paymentMethod === 'INSTAPAY' ? (
-                <div className="text-center space-y-2">
-                  <p className="font-bold text-sm text-[#8a7f76]">{dict.checkout.instaPayLabel}</p>
-                  <p className="text-xl font-bold" dir="ltr">+20 100 123 4567</p>
-                </div>
-              ) : (
-                <div className="text-center space-y-2">
-                  <p className="font-bold text-sm text-[#8a7f76]">{dict.checkout.shamCashLabel}</p>
-                  <p className="text-xl font-bold" dir="ltr">0933 123 456</p>
-                </div>
-              )}
+            <div className="bg-[#f5f1eb] p-6 rounded-xl border border-[#e8dfd1] mb-6 space-y-4">
+              <div className="text-center space-y-1 pb-3 border-b border-[#e8dfd1]">
+                <p className="font-bold text-sm text-[#8a7f76]">{dict.checkout.instaPayLabel}</p>
+                <p className="text-xl font-bold" dir="ltr">+20 100 123 4567</p>
+              </div>
+              <div className="text-center space-y-1">
+                <p className="font-bold text-sm text-[#8a7f76]">{dict.checkout.shamCashLabel}</p>
+                <p className="text-xl font-bold" dir="ltr">0933 123 456</p>
+              </div>
             </div>
 
             <div
