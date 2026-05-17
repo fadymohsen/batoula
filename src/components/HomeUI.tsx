@@ -363,25 +363,14 @@ export default function HomeUI({ content }: { content: Record<string, string> })
                   <div className="absolute top-0 bottom-0 start-0 w-[18px] bg-gradient-to-r from-charcoal/20 to-transparent rounded-s-lg z-10" />
 
                   {/* Book cover */}
-                  <div className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-[0_32px_64px_-12px_rgba(0,0,0,0.25)] border-[6px] border-white ring-1 ring-charcoal/10 bg-gradient-to-br from-rose via-rose-dark to-charcoal group-hover:shadow-[0_40px_80px_-12px_rgba(0,0,0,0.35)] transition-shadow duration-500">
-                    {/* Book cover design */}
-                    <div className="absolute inset-0 flex flex-col items-center justify-center p-8 text-white text-center">
-                      <div className="absolute top-0 right-0 w-40 h-40 bg-white/10 rounded-full blur-[60px]" />
-                      <div className="absolute bottom-0 left-0 w-32 h-32 bg-gold/20 rounded-full blur-[50px]" />
-
-                      <div className="relative z-10 space-y-4">
-                        <BookOpen size={48} className="mx-auto text-white/80" />
-                        <div className="space-y-2">
-                          <h3 className="text-2xl sm:text-3xl font-black leading-tight">
-                            {dict.book.title}{" "}
-                            <span className="text-gold">{dict.book.titleHighlight}</span>
-                          </h3>
-                          <p className="text-sm font-bold text-white/60">{dict.book.titleEnd}</p>
-                        </div>
-                        <div className="w-12 h-0.5 bg-gold/60 mx-auto" />
-                        <p className="text-xs font-bold text-white/40 tracking-widest uppercase">Coach Batoula</p>
-                      </div>
-                    </div>
+                  <div className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-[0_32px_64px_-12px_rgba(0,0,0,0.25)] border-[6px] border-white ring-1 ring-charcoal/10 group-hover:shadow-[0_40px_80px_-12px_rgba(0,0,0,0.35)] transition-shadow duration-500">
+                    <Image
+                      src="/book-cover.jpg"
+                      alt={`${dict.book.title} ${dict.book.titleHighlight} ${dict.book.titleEnd}`}
+                      fill
+                      className="object-cover group-hover:scale-[1.03] transition-transform duration-500"
+                      unoptimized
+                    />
                   </div>
 
                   {/* Pages effect */}
