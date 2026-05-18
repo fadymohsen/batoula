@@ -361,11 +361,11 @@ export default function HomeUI({ content }: { content: Record<string, string> })
             <div className="premium-card p-8 lg:p-10 border-rose ring-4 ring-rose/10 relative">
               <div className={`space-y-6 ${textAlign}`}>
                 {dict.consultation.features.map((f: { title: string; desc: string }, i: number) => (
-                  <div key={i} className={`flex items-start gap-4 ${isRtl ? "flex-row-reverse text-right" : "flex-row text-left"}`}>
+                  <div key={i} className={`flex items-start gap-4 ${isRtl ? "flex-row" : "flex-row"}`}>
                     <div className="w-8 h-8 rounded-full bg-rose/10 flex items-center justify-center shrink-0 mt-0.5">
                       <CheckCircle2 size={16} className="text-rose" />
                     </div>
-                    <div>
+                    <div className={isRtl ? "text-right" : "text-left"}>
                       <h4 className="font-black text-charcoal text-base">{f.title}</h4>
                       <p className="text-charcoal/55 text-sm leading-relaxed mt-1">{f.desc}</p>
                     </div>
