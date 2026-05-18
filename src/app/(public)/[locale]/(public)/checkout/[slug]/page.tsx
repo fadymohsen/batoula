@@ -24,11 +24,14 @@ export default function CheckoutPage({ params }: { params: Promise<{ slug: strin
     paymentMethod: 'INSTAPAY',
   });
 
-  const planDetails = slug === 'premium'
-    ? { id: '2', title: dict.plans.plan2.name, price: 99 }
-    : slug === 'ultimate'
-      ? { id: '3', title: dict.plans.plan3.name, price: 299 }
-      : { id: '1', title: dict.plans.plan1.name, price: 45 };
+  const planMap: Record<string, { title: string; price: number }> = {
+    basic: { title: dict.plans.plan1.name, price: 45 },
+    premium: { title: dict.plans.plan2.name, price: 99 },
+    ultimate: { title: dict.plans.plan3.name, price: 299 },
+    consultation: { title: dict.consultation?.title ? `${dict.consultation.title} ${dict.consultation.titleHighlight}` : 'Consultation', price: 15 },
+    book: { title: dict.book?.title ? `${dict.book.title} ${dict.book.titleHighlight} ${dict.book.titleEnd}` : 'Book', price: 10 },
+  };
+  const planDetails = planMap[slug] || planMap.basic;
 
   const digitsOnly = phoneNumber.replace(/\D/g, '');
   const isPhoneValid = digitsOnly.length >= selectedCountry.minLength && digitsOnly.length <= selectedCountry.maxLength;
@@ -125,7 +128,7 @@ export default function CheckoutPage({ params }: { params: Promise<{ slug: strin
           customerEmail: formData.customerEmail,
           customerPhone: fullPhone,
           paymentMethod: formData.paymentMethod,
-          planId: planDetails.id,
+          planSlug: slug,
           receiptUrl
         }),
       });
