@@ -81,6 +81,23 @@ async function main() {
         'Custom diet plan designed for your goals, body type, and lifestyle.',
         'Clear roadmap so you can continue on your own without getting lost.',
       ],
+    },
+    {
+      slug: 'book',
+      title: 'تقليدية بس صحية',
+      titleEn: 'Traditional but Healthy',
+      price: 10,
+      videoUrl: null,
+      benefits: [
+        'وصفات أكلات سورية أصيلة بتعديلات صحية ذكية.',
+        'كل طبق محسوب الماكروز والسعرات الحرارية.',
+        'كلي من أكل بيتك مع عيلتك وضلّي رشيقة.',
+      ],
+      benefitsEn: [
+        'Authentic Syrian recipes with smart healthy adjustments.',
+        'Every dish has calculated macros and calories.',
+        'Eat your home food with your family and stay fit.',
+      ],
     }
   ];
 

@@ -117,8 +117,7 @@ export default function CheckoutPage({ params }: { params: Promise<{ slug: strin
     }
   };
 
-  const processManualOrder = async (receiptUrl: string | null) => {
-    setLoading(true);
+  const processManualOrder = async (receiptUrl: string | null): Promise<boolean> => {
     try {
       const response = await fetch('/api/orders', {
         method: 'POST',
@@ -134,22 +133,27 @@ export default function CheckoutPage({ params }: { params: Promise<{ slug: strin
       });
 
       if (response.ok) {
-        setStep(4);
+        return true;
       } else {
         alert(dict.checkout.orderError);
+        return false;
       }
     } catch (error) {
       console.error(error);
       alert(dict.checkout.serverError);
-    } finally {
-      setLoading(false);
+      return false;
     }
   };
 
   const handleConfirmAndWhatsApp = async () => {
     setLoading(true);
     try {
-      await processManualOrder(null);
+      const success = await processManualOrder(null);
+      if (!success) {
+        setLoading(false);
+        return;
+      }
+      setStep(4);
       // Build WhatsApp message with order details
       const methodLabels: Record<string, string> = { INSTAPAY: 'InstaPay', BANK_TRANSFER: 'Bank Transfer', PAYPAL: 'PayPal' };
       const methodLabel = methodLabels[formData.paymentMethod] || formData.paymentMethod;
@@ -165,6 +169,7 @@ export default function CheckoutPage({ params }: { params: Promise<{ slug: strin
     } catch (error) {
       console.error(error);
       alert(dict.checkout.serverError);
+    } finally {
       setLoading(false);
     }
   };
