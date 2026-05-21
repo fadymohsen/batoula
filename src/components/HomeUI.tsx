@@ -541,7 +541,7 @@ export default function HomeUI({ content }: { content: Record<string, string> })
 
       {/* MISSION */}
       <section id="mission" className="bg-charcoal text-white py-24 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-full h-full bg-[url('/hero-dots.png')] opacity-10 pointer-events-none" />
+        <div className="absolute inset-0 hero-dots opacity-10 pointer-events-none" />
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
             <h2 className="text-3xl lg:text-4xl font-black leading-tight italic text-rose">
