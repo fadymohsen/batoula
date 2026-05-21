@@ -52,7 +52,7 @@ export default function Navbar() {
               <span className="hidden sm:inline">{dict.langSwitch}</span>
             </Link>
             <a
-              href="https://wa.me/"
+              href="https://wa.me/201142632709"
               target="_blank"
               className="btn-shine hidden sm:flex bg-charcoal text-white px-6 py-2.5 rounded-full text-sm font-black hover:bg-charcoal-dark transition-all shadow-md items-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-charcoal/50 focus-visible:ring-offset-2"
             >
@@ -106,7 +106,7 @@ export default function Navbar() {
               {dict.langSwitch}
             </Link>
             <a
-              href="https://wa.me/"
+              href="https://wa.me/201142632709"
               onClick={() => setNavOpen(false)}
               className="mt-4 flex items-center gap-3 bg-rose text-white px-10 py-4 rounded-full text-lg font-black shadow-xl shadow-rose/20"
             >

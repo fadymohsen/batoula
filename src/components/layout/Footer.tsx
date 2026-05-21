@@ -29,7 +29,7 @@ export default function Footer() {
 
         <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }} className="flex flex-col items-center gap-6">
           <a
-            href="https://wa.me/"
+            href="https://wa.me/201142632709"
             target="_blank"
             className="btn-shine px-12 py-6 rounded-full bg-rose text-white text-xl font-black hover:bg-rose-dark transition-all shadow-2xl shadow-rose/25 flex items-center gap-4"
           >
