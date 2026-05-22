@@ -87,7 +87,7 @@ export default function HomeUI({ content }: { content: Record<string, string> })
 
       {/* Floating WhatsApp */}
       <motion.a
-        href="https://wa.me/"
+        href="https://wa.me/201142632709"
         target="_blank"
         rel="noopener"
         className="fixed bottom-8 right-6 z-50 w-16 h-16 rounded-full bg-gradient-to-br from-rose to-rose-dark text-white flex items-center justify-center shadow-2xl shadow-rose/40 ring-4 ring-rose/20"

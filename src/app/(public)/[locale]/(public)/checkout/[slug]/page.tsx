@@ -126,7 +126,7 @@ export default function CheckoutPage({ params }: { params: Promise<{ slug: strin
       `طريقة الدفع: ${methodLabel}\n` +
       `أرجو إرفاق صورة إيصال الدفع هنا 👇`
     );
-    window.open(`https://wa.me/?text=${msg}`, '_blank');
+    window.open(`https://wa.me/201142632709?text=${msg}`, '_blank');
   };
 
   return (

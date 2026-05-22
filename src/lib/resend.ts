@@ -11,7 +11,7 @@ function getResendClient() {
 const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || 'Coach Batoula <noreply@coachbatool.com>';
 
 const SITE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://coachbatool.com';
-const WHATSAPP_URL = 'https://wa.me/';
+const WHATSAPP_URL = 'https://wa.me/201142632709';
 const INSTAGRAM_URL = 'https://www.instagram.com/batool.home?igsh=MXhnY3R5eDh0d20wcQ==';
 const FACEBOOK_URL = 'https://www.facebook.com/share/1HAy8RGqgV/';
 const TIKTOK_URL = 'https://www.tiktok.com/@batool_home?_r=1&_t=ZN-95w9fa2xqyZ';

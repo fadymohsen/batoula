@@ -122,7 +122,7 @@ export default async function PlansPage({ params }: { params: Promise<{ locale: 
             <h3 className="text-2xl font-black">{dict.plansPage.unsure}</h3>
             <p className="text-white/50 font-bold">{dict.plansPage.unsureDesc}</p>
             <a
-              href="https://wa.me/"
+              href="https://wa.me/201142632709"
               target="_blank"
               className="inline-flex items-center gap-3 px-8 py-4 bg-white text-charcoal rounded-full font-black hover:bg-rose-light transition-all"
             >
