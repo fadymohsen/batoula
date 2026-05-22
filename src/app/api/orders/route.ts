@@ -5,17 +5,23 @@ import { sendOrderConfirmation, sendAdminNotification } from '@/lib/resend';
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { customerName, customerEmail, customerPhone, paymentMethod, planId, receiptUrl } = body;
+    const { customerName, customerEmail, customerPhone, paymentMethod, planSlug, planId, receiptUrl } = body;
 
-    if (!customerName || !customerEmail || !customerPhone || !paymentMethod || !planId) {
+    if (!customerName || !customerEmail || !customerPhone || !paymentMethod) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
 
-    const plan = await prisma.plan.findUnique({ where: { id: planId } });
+    // Find plan by slug or id
+    let plan;
+    if (planSlug) {
+      plan = await prisma.plan.findUnique({ where: { slug: planSlug } });
+    } else if (planId) {
+      plan = await prisma.plan.findUnique({ where: { id: planId } });
+    }
 
-    // All manual orders start as PENDING (admin confirms after reviewing receipt)
-    // Fawaterak payments go through /api/payments/initiate instead
-    const status = 'PENDING';
+    if (!plan) {
+      return NextResponse.json({ error: 'Plan not found' }, { status: 404 });
+    }
 
     const order = await prisma.order.create({
       data: {
@@ -23,31 +29,29 @@ export async function POST(request: Request) {
         customerEmail,
         customerPhone,
         paymentMethod,
-        planId,
+        planId: plan.id,
         receiptUrl,
-        status,
+        status: 'PENDING',
       },
     });
 
     // Send emails (non-blocking)
-    if (plan) {
-      Promise.allSettled([
-        sendOrderConfirmation({
-          customerName,
-          customerEmail,
-          planTitle: plan.title,
-          price: plan.price,
-        }),
-        sendAdminNotification({
-          customerName,
-          customerEmail,
-          customerPhone,
-          planTitle: plan.title,
-          price: plan.price,
-          paymentMethod,
-        }),
-      ]).catch((err) => console.error('Email sending error:', err));
-    }
+    Promise.allSettled([
+      sendOrderConfirmation({
+        customerName,
+        customerEmail,
+        planTitle: plan.title,
+        price: plan.price,
+      }),
+      sendAdminNotification({
+        customerName,
+        customerEmail,
+        customerPhone,
+        planTitle: plan.title,
+        price: plan.price,
+        paymentMethod,
+      }),
+    ]).catch((err) => console.error('Email sending error:', err));
 
     return NextResponse.json(order, { status: 201 });
   } catch (error) {

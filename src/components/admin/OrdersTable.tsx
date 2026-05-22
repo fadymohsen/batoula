@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Check, X, Eye, Clock, RefreshCw, Trash2 } from 'lucide-react';
+import { Check, X, Eye, Clock, RefreshCw, Trash2, MessageCircle } from 'lucide-react';
 import { useAdminLocale } from './AdminLocaleProvider';
 import ConfirmModal from './ConfirmModal';
 
@@ -109,8 +109,25 @@ export default function OrdersTable({ initialOrders }: { initialOrders: Order[] 
     }
   };
 
+  const getWhatsAppUrl = (phone: string) => {
+    const cleaned = phone.replace(/[\s\-()]+/g, '');
+    const number = cleaned.startsWith('+') ? cleaned.slice(1) : cleaned;
+    return `https://wa.me/${number}`;
+  };
+
   const actionButtons = (order: Order) => (
     <div className="flex gap-2 flex-wrap">
+      {order.customerPhone && (
+        <a
+          href={getWhatsAppUrl(order.customerPhone)}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="p-2 bg-green-50 text-green-600 rounded-lg hover:bg-green-100 transition-colors"
+          title={locale === 'ar' ? 'تواصل عبر واتساب' : 'Chat on WhatsApp'}
+        >
+          <MessageCircle size={18} />
+        </a>
+      )}
       {order.receiptUrl && (
         <a
           href={order.receiptUrl}

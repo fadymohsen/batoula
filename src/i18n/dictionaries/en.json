@@ -99,6 +99,21 @@
       "tagline": "Not a temporary diet... but a real transformation journey lasting a full year."
     }
   },
+  "consultation": {
+    "badge": "One-time Session",
+    "title": "Personal",
+    "titleHighlight": "Consultation",
+    "subtitle": "A one-time consultation session to start your journey right with precise guidance.",
+    "features": [
+      { "title": "Direct personal call (40 min)", "desc": "To assess and diagnose your health and nutritional status accurately." },
+      { "title": "Custom diet plan", "desc": "Designed specifically for your goals, body type, and lifestyle." },
+      { "title": "Clear roadmap", "desc": "Know the essential steps so you can continue on your own without getting lost." }
+    ],
+    "note": "This session does not include follow-up or plan updates.",
+    "price": "$15",
+    "priceLabel": "Consultation fee",
+    "cta": "Book Your Session Now"
+  },
   "certs": {
     "title": "Internationally Accredited Certificates",
     "subtitle": "I continuously develop myself to always give you the best",

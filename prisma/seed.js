@@ -64,6 +64,40 @@ async function main() {
         'Special Ramadan plan considering fasting and meal organization.',
         'Continuous support to ensure lasting results throughout the year.'
       ],
+    },
+    {
+      slug: 'consultation',
+      title: 'جلسة الاستشارة الفردية',
+      titleEn: 'Personal Consultation',
+      price: 15,
+      videoUrl: null,
+      benefits: [
+        'اتصال شخصي مباشر (40 دقيقة) لتقييم وتشخيص الحالة الصحية والغذائية بدقة.',
+        'نظام غذائي مخصص مصمم تماماً بحسب هدفكِ، طبيعة جسمكِ، ونمط حياتكِ.',
+        'خريطة طريق واضحة لتقدري تكملي لحالك بدون ضياع.',
+      ],
+      benefitsEn: [
+        'Direct personal call (40 min) to assess your health and nutritional status.',
+        'Custom diet plan designed for your goals, body type, and lifestyle.',
+        'Clear roadmap so you can continue on your own without getting lost.',
+      ],
+    },
+    {
+      slug: 'book',
+      title: 'تقليدية بس صحية',
+      titleEn: 'Traditional but Healthy',
+      price: 10,
+      videoUrl: null,
+      benefits: [
+        'وصفات أكلات سورية أصيلة بتعديلات صحية ذكية.',
+        'كل طبق محسوب الماكروز والسعرات الحرارية.',
+        'كلي من أكل بيتك مع عيلتك وضلّي رشيقة.',
+      ],
+      benefitsEn: [
+        'Authentic Syrian recipes with smart healthy adjustments.',
+        'Every dish has calculated macros and calories.',
+        'Eat your home food with your family and stay fit.',
+      ],
     }
   ];
 

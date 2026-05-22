@@ -340,6 +340,61 @@ export default function HomeUI({ content }: { content: Record<string, string> })
         </div>
       </section>
 
+      {/* CONSULTATION */}
+      <section className="py-24 bg-white relative overflow-hidden">
+        <div className="absolute top-[-10%] start-[-5%] w-[400px] h-[400px] bg-rose/5 rounded-full blur-[100px] pointer-events-none" />
+        <div className="max-w-5xl mx-auto px-6 relative z-10">
+          <motion.div variants={fadeUp} initial="hidden" whileInView="show" className="text-center mb-14 space-y-4">
+            <span className="inline-block text-rose font-black tracking-widest text-xs uppercase px-4 py-2 rounded-full bg-rose/5 border border-rose/15">
+              {dict.consultation.badge}
+            </span>
+            <h2 className="text-4xl lg:text-5xl font-black text-charcoal">
+              {dict.consultation.title}{" "}
+              <span className="text-rose">{dict.consultation.titleHighlight}</span>
+            </h2>
+            <p className="text-charcoal/50 text-lg font-bold max-w-2xl mx-auto leading-relaxed">
+              {dict.consultation.subtitle}
+            </p>
+          </motion.div>
+
+          <motion.div variants={fadeUp} initial="hidden" whileInView="show" className="max-w-3xl mx-auto">
+            <div className="premium-card p-8 lg:p-10 border-rose ring-4 ring-rose/10 relative">
+              <div className={`space-y-6 ${textAlign}`}>
+                {dict.consultation.features.map((f: { title: string; desc: string }, i: number) => (
+                  <div key={i} className={`flex items-start gap-4 ${isRtl ? "flex-row" : "flex-row"}`}>
+                    <div className="w-8 h-8 rounded-full bg-rose/10 flex items-center justify-center shrink-0 mt-0.5">
+                      <CheckCircle2 size={16} className="text-rose" />
+                    </div>
+                    <div className={isRtl ? "text-right" : "text-left"}>
+                      <h4 className="font-black text-charcoal text-base">{f.title}</h4>
+                      <p className="text-charcoal/55 text-sm leading-relaxed mt-1">{f.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className={`mt-6 p-4 rounded-xl bg-charcoal/5 border border-charcoal/8 ${textAlign}`}>
+                <p className="text-xs text-charcoal/50 font-bold">{dict.consultation.note}</p>
+              </div>
+
+              <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-6 pt-6 border-t border-charcoal/8">
+                <div className={textAlign}>
+                  <div className="text-xs text-charcoal/40 font-bold">{dict.consultation.priceLabel}</div>
+                  <div className="text-4xl font-black text-rose">{dict.consultation.price}</div>
+                </div>
+                <Link
+                  href={`/${locale}/checkout/consultation`}
+                  className="btn-shine px-10 py-4 rounded-2xl bg-rose text-white font-black text-center hover:bg-rose-dark transition-all shadow-xl flex items-center justify-center gap-2 w-full sm:w-auto"
+                >
+                  {dict.consultation.cta}
+                  <Zap size={18} />
+                </Link>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* BOOK */}
       <section className="py-28 bg-white relative overflow-hidden">
         <div className="absolute top-[-10%] end-[-10%] w-[500px] h-[500px] bg-gold/5 rounded-full blur-[120px] pointer-events-none" />
@@ -486,7 +541,7 @@ export default function HomeUI({ content }: { content: Record<string, string> })
 
       {/* MISSION */}
       <section id="mission" className="bg-charcoal text-white py-24 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-full h-full bg-[url('/hero-dots.png')] opacity-10 pointer-events-none" />
+        <div className="absolute inset-0 hero-dots opacity-10 pointer-events-none" />
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
             <h2 className="text-3xl lg:text-4xl font-black leading-tight italic text-rose">

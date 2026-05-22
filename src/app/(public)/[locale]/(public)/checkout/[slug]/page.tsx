@@ -24,11 +24,14 @@ export default function CheckoutPage({ params }: { params: Promise<{ slug: strin
     paymentMethod: 'INSTAPAY',
   });
 
-  const planDetails = slug === 'premium'
-    ? { id: '2', title: dict.plans.plan2.name, price: 99 }
-    : slug === 'ultimate'
-      ? { id: '3', title: dict.plans.plan3.name, price: 299 }
-      : { id: '1', title: dict.plans.plan1.name, price: 45 };
+  const planMap: Record<string, { title: string; price: number }> = {
+    basic: { title: dict.plans.plan1.name, price: 45 },
+    premium: { title: dict.plans.plan2.name, price: 99 },
+    ultimate: { title: dict.plans.plan3.name, price: 299 },
+    consultation: { title: dict.consultation?.title ? `${dict.consultation.title} ${dict.consultation.titleHighlight}` : 'Consultation', price: 15 },
+    book: { title: dict.book?.title ? `${dict.book.title} ${dict.book.titleHighlight} ${dict.book.titleEnd}` : 'Book', price: 10 },
+  };
+  const planDetails = planMap[slug] || planMap.basic;
 
   const digitsOnly = phoneNumber.replace(/\D/g, '');
   const isPhoneValid = digitsOnly.length >= selectedCountry.minLength && digitsOnly.length <= selectedCountry.maxLength;
@@ -81,89 +84,49 @@ export default function CheckoutPage({ params }: { params: Promise<{ slug: strin
       if (!validatePhone()) return;
       setStep(2);
     } else if (step === 2) {
-      setStep(3);
-    }
-  };
+      // Create pending order immediately when payment method is chosen
+      setLoading(true);
+      try {
+        const response = await fetch('/api/orders', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            customerName: formData.customerName,
+            customerEmail: formData.customerEmail,
+            customerPhone: fullPhone,
+            paymentMethod: formData.paymentMethod,
+            planSlug: slug,
+            receiptUrl: null,
+          }),
+        });
 
-  const initiateFawaterakPayment = async () => {
-    setLoading(true);
-    try {
-      const response = await fetch('/api/payments/initiate', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          customerName: formData.customerName,
-          customerEmail: formData.customerEmail,
-          customerPhone: fullPhone,
-          planSlug: slug,
-        }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok && data.paymentUrl) {
-        window.location.href = data.paymentUrl;
-      } else {
-        alert(dict.checkout.orderError);
+        if (response.ok) {
+          setStep(3);
+        } else {
+          alert(dict.checkout.orderError);
+        }
+      } catch (error) {
+        console.error('Order creation error:', error);
+        alert(dict.checkout.serverError);
+      } finally {
         setLoading(false);
       }
-    } catch (error) {
-      console.error('Payment initiation error:', error);
-      alert(dict.checkout.serverError);
-      setLoading(false);
     }
   };
 
-  const processManualOrder = async (receiptUrl: string | null) => {
-    setLoading(true);
-    try {
-      const response = await fetch('/api/orders', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          customerName: formData.customerName,
-          customerEmail: formData.customerEmail,
-          customerPhone: fullPhone,
-          paymentMethod: formData.paymentMethod,
-          planId: planDetails.id,
-          receiptUrl
-        }),
-      });
-
-      if (response.ok) {
-        setStep(4);
-      } else {
-        alert(dict.checkout.orderError);
-      }
-    } catch (error) {
-      console.error(error);
-      alert(dict.checkout.serverError);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleConfirmAndWhatsApp = async () => {
-    setLoading(true);
-    try {
-      await processManualOrder(null);
-      // Build WhatsApp message with order details
-      const methodLabels: Record<string, string> = { INSTAPAY: 'InstaPay', BANK_TRANSFER: 'Bank Transfer', PAYPAL: 'PayPal' };
-      const methodLabel = methodLabels[formData.paymentMethod] || formData.paymentMethod;
-      const msg = encodeURIComponent(
-        `مرحباً، أنا ${formData.customerName}\n` +
-        `تم تسجيل طلب اشتراك:\n` +
-        `الباقة: ${planDetails.title}\n` +
-        `المبلغ: $${planDetails.price}\n` +
-        `طريقة الدفع: ${methodLabel}\n` +
-        `أرجو إرفاق صورة إيصال الدفع هنا 👇`
-      );
-      window.open(`https://wa.me/201142632709?text=${msg}`, '_blank');
-    } catch (error) {
-      console.error(error);
-      alert(dict.checkout.serverError);
-      setLoading(false);
-    }
+  const handleConfirmAndWhatsApp = () => {
+    setStep(4);
+    const methodLabels: Record<string, string> = { INSTAPAY: 'InstaPay', BANK_TRANSFER: 'Bank Transfer', PAYPAL: 'PayPal' };
+    const methodLabel = methodLabels[formData.paymentMethod] || formData.paymentMethod;
+    const msg = encodeURIComponent(
+      `مرحباً، أنا ${formData.customerName}\n` +
+      `تم تسجيل طلب اشتراك:\n` +
+      `الباقة: ${planDetails.title}\n` +
+      `المبلغ: $${planDetails.price}\n` +
+      `طريقة الدفع: ${methodLabel}\n` +
+      `أرجو إرفاق صورة إيصال الدفع هنا 👇`
+    );
+    window.open(`https://wa.me/201142632709?text=${msg}`, '_blank');
   };
 
   return (
@@ -418,16 +381,12 @@ export default function CheckoutPage({ params }: { params: Promise<{ slug: strin
               </p>
             </div>
 
-            <div className="flex gap-4 mt-8">
-              <button type="button" onClick={() => setStep(2)} className="w-1/3 bg-[#f5f1eb] text-[#8a7f76] py-4 rounded-xl font-bold hover:bg-[#e8dfd1] transition-colors">
-                {dict.checkout.changeMethod}
-              </button>
+            <div className="mt-8">
               <button
                 onClick={handleConfirmAndWhatsApp}
-                disabled={loading}
-                className="w-2/3 bg-[#25D366] text-white py-4 rounded-xl font-bold text-lg hover:bg-[#1da851] transition-colors flex justify-center items-center gap-2 disabled:opacity-50"
+                className="w-full bg-[#25D366] text-white py-4 rounded-xl font-bold text-lg hover:bg-[#1da851] transition-colors flex justify-center items-center gap-2"
               >
-                {loading ? <Loader2 className="animate-spin" /> : dict.checkout.confirmWhatsApp}
+                {dict.checkout.confirmWhatsApp}
               </button>
             </div>
           </div>
