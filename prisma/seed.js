@@ -101,19 +101,19 @@ async function main() {
     },
     {
       slug: 'snack-book',
-      title: 'بدائل الفطور والسناكات',
-      titleEn: 'Breakfast & Snack Alternatives',
+      title: 'بدائل الفطور',
+      titleEn: 'Breakfast Alternatives',
       price: 5,
       videoUrl: null,
       benefits: [
         'بدائل صحية ومتنوعة لوجبة الفطور تناسب كل ذوق.',
-        'سناكات سريعة وخفيفة بسعرات محسوبة بدقة.',
-        'أفكار عملية تساعدك تتفادي الجوع والملل بين الوجبات.',
+        'وصفات سهلة وسريعة لصباح مزدحم.',
+        'كل طبق محسوب السعرات والماكروز بدقة.',
       ],
       benefitsEn: [
         'Healthy and varied breakfast alternatives for every taste.',
-        'Quick, light snacks with precisely calculated calories.',
-        'Practical ideas to beat hunger and boredom between meals.',
+        'Easy, fast recipes for busy mornings.',
+        'Every dish with precisely calculated calories and macros.',
       ],
     },
   ];
