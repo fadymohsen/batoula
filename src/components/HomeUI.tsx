@@ -566,23 +566,14 @@ export default function HomeUI({ content }: { content: Record<string, string> })
                 <div className="relative w-[280px] sm:w-[320px] group">
                   <div className="absolute top-0 bottom-0 start-0 w-[18px] bg-gradient-to-r from-charcoal/20 to-transparent rounded-s-lg z-10" />
 
-                  <div className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-[0_32px_64px_-12px_rgba(0,0,0,0.25)] border-[6px] border-white ring-1 ring-charcoal/10 group-hover:shadow-[0_40px_80px_-12px_rgba(0,0,0,0.35)] transition-shadow duration-500 bg-gradient-to-br from-gold/25 via-rose/15 to-charcoal/85">
+                  <div className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-[0_32px_64px_-12px_rgba(0,0,0,0.25)] border-[6px] border-white ring-1 ring-charcoal/10 group-hover:shadow-[0_40px_80px_-12px_rgba(0,0,0,0.35)] transition-shadow duration-500">
                     <Image
-                      src={getContent(content, "snack_book_image", "/book-cover.jpg")}
-                      alt={`${dict.snackBook.title} ${dict.snackBook.titleEnd}`}
+                      src={getContent(content, "snack_book_image", "/snack-book-cover.jpg")}
+                      alt={`${dict.snackBook.title} ${dict.snackBook.titleHighlight} ${dict.snackBook.titleEnd}`}
                       fill
-                      className="object-cover mix-blend-luminosity opacity-40 group-hover:scale-[1.03] transition-transform duration-500"
+                      className="object-cover group-hover:scale-[1.03] transition-transform duration-500"
                       unoptimized
                     />
-                    <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-6">
-                      <Coffee size={56} className="text-white drop-shadow-lg mb-4" strokeWidth={1.5} />
-                      <div className="text-white font-black text-2xl leading-tight drop-shadow-md">
-                        {dict.snackBook.title} {dict.snackBook.titleHighlight} {dict.snackBook.titleEnd}
-                      </div>
-                      <div className="mt-3 inline-block text-gold-dark bg-white px-3 py-1 rounded-full text-[10px] font-black tracking-wider uppercase shadow">
-                        {dict.snackBook.previewPages}
-                      </div>
-                    </div>
                   </div>
 
                   <div className="absolute top-[3px] bottom-[3px] -end-[5px] w-[5px] bg-gradient-to-b from-[#f5f0e8] via-[#ebe5da] to-[#f5f0e8] rounded-e-sm" />
