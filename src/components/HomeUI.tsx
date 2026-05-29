@@ -7,6 +7,7 @@ import { motion, useScroll, useSpring, useInView } from "framer-motion";
 import {
   Heart, Star, ShieldCheck, Zap, CheckCircle2, ArrowRight, Smartphone, Globe,
   ChevronDown, BookOpen, Award, GraduationCap, TrendingDown, ChevronLeft, ChevronRight,
+  Coffee, Apple, Clock,
 } from "lucide-react";
 import { getContent } from "@/lib/cms";
 import { useLocale } from "@/i18n/LocaleContext";
@@ -489,6 +490,109 @@ export default function HomeUI({ content }: { content: Record<string, string> })
                   <div className="text-xs text-charcoal/40 font-bold">{dict.book.priceNote}</div>
                 </div>
               </motion.div>
+            </motion.div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* SNACK BOOK */}
+      <section className="py-28 bg-background relative overflow-hidden">
+        <div className="absolute top-[-10%] start-[-10%] w-[500px] h-[500px] bg-rose/5 rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute bottom-[-10%] end-[-5%] w-[400px] h-[400px] bg-gold/5 rounded-full blur-[100px] pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+
+            {/* Snack book info — opposite side from the recipe book */}
+            <motion.div
+              initial="hidden" whileInView="show"
+              variants={{ hidden: {}, show: { transition: { staggerChildren: 0.12 } } }}
+              className={`space-y-8 order-2 ${isRtl ? "lg:order-2 text-right" : "lg:order-1 text-left"}`}
+            >
+              <motion.div variants={fadeUp} className="space-y-4">
+                <span className="inline-block text-gold font-black tracking-widest text-xs uppercase px-4 py-2 rounded-full bg-gold/10 border border-gold/20">
+                  {dict.snackBook.badge}
+                </span>
+                <h2 className="text-4xl lg:text-5xl font-black text-charcoal leading-tight">
+                  {dict.snackBook.title}{" "}
+                  <span className="text-rose">{dict.snackBook.titleHighlight}</span>{" "}
+                  {dict.snackBook.titleEnd}
+                </h2>
+                <p className="text-lg text-charcoal/50 font-bold leading-relaxed max-w-lg">
+                  {dict.snackBook.subtitle}
+                </p>
+              </motion.div>
+
+              <motion.div variants={fadeUp} className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                {[
+                  { icon: <Coffee size={20} />,  title: dict.snackBook.feature1Title, desc: dict.snackBook.feature1Desc },
+                  { icon: <Apple size={20} />,   title: dict.snackBook.feature2Title, desc: dict.snackBook.feature2Desc },
+                  { icon: <Clock size={20} />,   title: dict.snackBook.feature3Title, desc: dict.snackBook.feature3Desc },
+                ].map((f, i) => (
+                  <div key={i} className="p-5 rounded-2xl bg-white border border-charcoal/5 hover:border-gold/30 hover:shadow-lg transition-all duration-300 group">
+                    <div className="w-10 h-10 rounded-xl bg-gold/15 flex items-center justify-center text-gold mb-3 group-hover:bg-gold group-hover:text-white transition-colors">
+                      {f.icon}
+                    </div>
+                    <h4 className="font-black text-charcoal text-sm mb-1">{f.title}</h4>
+                    <p className="text-xs text-charcoal/50 font-medium leading-relaxed">{f.desc}</p>
+                  </div>
+                ))}
+              </motion.div>
+
+              <motion.div variants={fadeUp} className={`flex flex-wrap items-center gap-6 pt-4 ${isRtl ? "justify-end" : "justify-start"}`}>
+                <Link
+                  href={`/${locale}/checkout/snack-book`}
+                  className="btn-shine inline-flex items-center gap-3 px-10 py-4 rounded-2xl bg-gold text-charcoal text-lg font-black hover:bg-gold-dark shadow-xl transition-all"
+                >
+                  {dict.snackBook.cta}
+                  <ArrowRight size={20} />
+                </Link>
+                <div className={isRtl ? "text-right" : "text-left"}>
+                  <div className="text-3xl font-black text-rose">{dict.snackBook.price}</div>
+                  <div className="text-xs text-charcoal/40 font-bold">{dict.snackBook.priceNote}</div>
+                </div>
+              </motion.div>
+            </motion.div>
+
+            {/* Snack book mockup */}
+            <motion.div
+              variants={fadeUp} initial="hidden" whileInView="show"
+              className={`flex justify-center order-1 ${isRtl ? "lg:order-1" : "lg:order-2"}`}
+            >
+              <div className="relative">
+                <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 w-[75%] h-12 bg-charcoal/10 blur-2xl rounded-full" />
+
+                <div className="relative w-[280px] sm:w-[320px] group">
+                  <div className="absolute top-0 bottom-0 start-0 w-[18px] bg-gradient-to-r from-charcoal/20 to-transparent rounded-s-lg z-10" />
+
+                  <div className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-[0_32px_64px_-12px_rgba(0,0,0,0.25)] border-[6px] border-white ring-1 ring-charcoal/10 group-hover:shadow-[0_40px_80px_-12px_rgba(0,0,0,0.35)] transition-shadow duration-500 bg-gradient-to-br from-gold/25 via-rose/15 to-charcoal/85">
+                    <Image
+                      src={getContent(content, "snack_book_image", "/book-cover.jpg")}
+                      alt={`${dict.snackBook.title} ${dict.snackBook.titleEnd}`}
+                      fill
+                      className="object-cover mix-blend-luminosity opacity-40 group-hover:scale-[1.03] transition-transform duration-500"
+                      unoptimized
+                    />
+                    <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-6">
+                      <Coffee size={56} className="text-white drop-shadow-lg mb-4" strokeWidth={1.5} />
+                      <div className="text-white font-black text-2xl leading-tight drop-shadow-md">
+                        {dict.snackBook.title} {dict.snackBook.titleHighlight} {dict.snackBook.titleEnd}
+                      </div>
+                      <div className="mt-3 inline-block text-gold-dark bg-white px-3 py-1 rounded-full text-[10px] font-black tracking-wider uppercase shadow">
+                        {dict.snackBook.previewPages}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="absolute top-[3px] bottom-[3px] -end-[5px] w-[5px] bg-gradient-to-b from-[#f5f0e8] via-[#ebe5da] to-[#f5f0e8] rounded-e-sm" />
+                  <div className="absolute top-[6px] bottom-[6px] -end-[9px] w-[4px] bg-gradient-to-b from-[#ece7df] via-[#e2dbd0] to-[#ece7df] rounded-e-sm" />
+                </div>
+
+                <div className="absolute -top-4 -start-4 bg-rose text-white px-4 py-2 rounded-full text-xs font-black shadow-lg shadow-rose/30 z-20">
+                  {dict.snackBook.price}
+                </div>
+              </div>
             </motion.div>
 
           </div>

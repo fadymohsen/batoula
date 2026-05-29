@@ -183,6 +183,23 @@
     "priceNote": "Digital Copy",
     "previewPages": "Recipe Book"
   },
+  "snackBook": {
+    "badge": "NEW BOOK",
+    "title": "Breakfast",
+    "titleHighlight": "&",
+    "titleEnd": "Snack Alternatives",
+    "subtitle": "Your complete guide to healthy breakfast swaps and light snacks with calculated calories. Quick, tasty, practical ideas to start your day with energy and beat hunger between meals.",
+    "feature1Title": "Varied Breakfasts",
+    "feature1Desc": "Healthy breakfast alternatives for every taste",
+    "feature2Title": "Light Snacks",
+    "feature2Desc": "Quick ideas between meals to fight hunger",
+    "feature3Title": "Calorie-Counted",
+    "feature3Desc": "Every recipe with calories and macros",
+    "cta": "Get Your Copy Now",
+    "price": "$5",
+    "priceNote": "Digital Copy",
+    "previewPages": "Digital Book"
+  },
   "app": {
     "title": "Download the App",
     "titleHighlight": "Now",

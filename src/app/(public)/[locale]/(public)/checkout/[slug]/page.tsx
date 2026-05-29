@@ -30,6 +30,7 @@ export default function CheckoutPage({ params }: { params: Promise<{ slug: strin
     ultimate: { title: dict.plans.plan3.name, price: 299 },
     consultation: { title: dict.consultation?.title ? `${dict.consultation.title} ${dict.consultation.titleHighlight}` : 'Consultation', price: 15 },
     book: { title: dict.book?.title ? `${dict.book.title} ${dict.book.titleHighlight} ${dict.book.titleEnd}` : 'Book', price: 10 },
+    'snack-book': { title: dict.snackBook?.title ? `${dict.snackBook.title} ${dict.snackBook.titleHighlight} ${dict.snackBook.titleEnd}` : 'Breakfast & Snack Alternatives', price: 5 },
   };
   const planDetails = planMap[slug] || planMap.basic;
 

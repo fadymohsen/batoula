@@ -98,7 +98,24 @@ async function main() {
         'Every dish has calculated macros and calories.',
         'Eat your home food with your family and stay fit.',
       ],
-    }
+    },
+    {
+      slug: 'snack-book',
+      title: 'بدائل الفطور والسناكات',
+      titleEn: 'Breakfast & Snack Alternatives',
+      price: 5,
+      videoUrl: null,
+      benefits: [
+        'بدائل صحية ومتنوعة لوجبة الفطور تناسب كل ذوق.',
+        'سناكات سريعة وخفيفة بسعرات محسوبة بدقة.',
+        'أفكار عملية تساعدك تتفادي الجوع والملل بين الوجبات.',
+      ],
+      benefitsEn: [
+        'Healthy and varied breakfast alternatives for every taste.',
+        'Quick, light snacks with precisely calculated calories.',
+        'Practical ideas to beat hunger and boredom between meals.',
+      ],
+    },
   ];
 
   for (const p of plans) {
