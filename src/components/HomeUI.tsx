@@ -67,6 +67,7 @@ const CERT_IMAGES = [
   { img: "/content/_.jpg (2).jpeg",  rotate: -90 },
   { img: "/content/_.jpg (8).jpeg",  rotate: -90 },
   { img: "/content/_.jpg (10).jpeg" },
+  { img: "/content/nutrition-course-cert-1.jpg", pdf: "/certificates/nutrition-course.pdf" },
 ];
 
 export default function HomeUI({ content }: { content: Record<string, string> }) {
@@ -747,12 +748,13 @@ export default function HomeUI({ content }: { content: Record<string, string> })
             <h2 className="text-4xl lg:text-5xl font-black text-charcoal">{dict.certs.title}</h2>
             <p className="text-charcoal/50 text-lg">{dict.certs.subtitle}</p>
           </motion.div>
-          <motion.div variants={staggerGrid} initial="hidden" whileInView="show" className="grid grid-cols-2 lg:grid-cols-4 gap-5">
+          <motion.div variants={staggerGrid} initial="hidden" whileInView="show" className="grid grid-cols-2 lg:grid-cols-5 gap-5">
             {CERT_IMAGES.map((cert, idx) => {
               const rotate = (cert as { rotate?: number }).rotate;
+              const pdf = (cert as { pdf?: string }).pdf;
               const translated = dict.certs.items[idx];
-              return (
-                <motion.div key={idx} variants={staggerItem} className="group relative aspect-[3/4] rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 bg-white">
+              const tile = (
+                <>
                   {rotate ? (
                     <div
                       className="absolute top-1/2 left-1/2"
@@ -768,6 +770,16 @@ export default function HomeUI({ content }: { content: Record<string, string> })
                     <div className="text-white font-black text-sm leading-snug">{translated?.title}</div>
                     <div className="text-white/60 text-xs mt-0.5">{translated?.sub}</div>
                   </div>
+                </>
+              );
+              const tileClass = "group relative aspect-[3/4] rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 bg-white block";
+              return pdf ? (
+                <motion.a key={idx} variants={staggerItem} href={pdf} target="_blank" rel="noopener" className={tileClass}>
+                  {tile}
+                </motion.a>
+              ) : (
+                <motion.div key={idx} variants={staggerItem} className={tileClass}>
+                  {tile}
                 </motion.div>
               );
             })}
