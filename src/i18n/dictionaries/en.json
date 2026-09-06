@@ -201,6 +201,28 @@
     "priceNote": "Digital Copy",
     "previewPages": "Digital Book"
   },
+  "course": {
+    "badge": "RECORDED COURSE",
+    "title": "Professional",
+    "titleHighlight": "Content",
+    "titleEnd": "Creation Course",
+    "subtitle": "4 recorded lectures you can watch anytime — from mobile cinematography to editing, algorithms, and scriptwriting.",
+    "format": "4 Recorded Lectures",
+    "formatDesc": "Watch anytime at your own pace, no schedule needed",
+    "topic1Title": "Cinematic Filming",
+    "topic1Desc": "Professional filming using only your mobile camera",
+    "topic2Title": "Algorithm Secrets",
+    "topic2Desc": "How to dominate social media platforms",
+    "topic3Title": "CapCut Editing",
+    "topic3Desc": "Comprehensive professional editing on CapCut",
+    "topic4Title": "Script & Thumbnails",
+    "topic4Desc": "Scriptwriting skills and thumbnail design",
+    "oldPrice": "$50",
+    "price": "$25",
+    "discount": "50% OFF",
+    "limitedOffer": "Limited time offer",
+    "cta": "Register Now via WhatsApp"
+  },
   "app": {
     "title": "Download the App",
     "titleHighlight": "Now",

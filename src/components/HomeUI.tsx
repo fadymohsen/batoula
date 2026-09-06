@@ -7,7 +7,7 @@ import { motion, useScroll, useSpring, useInView } from "framer-motion";
 import {
   Heart, Star, ShieldCheck, Zap, CheckCircle2, ArrowRight, Smartphone, Globe,
   ChevronDown, BookOpen, Award, GraduationCap, TrendingDown, ChevronLeft, ChevronRight,
-  Coffee, Apple, Clock,
+  Coffee, Apple, Clock, Video, Play, Sparkles, PenTool,
 } from "lucide-react";
 import { getContent } from "@/lib/cms";
 import { useLocale } from "@/i18n/LocaleContext";
@@ -588,6 +588,86 @@ export default function HomeUI({ content }: { content: Record<string, string> })
             </motion.div>
 
           </div>
+        </div>
+      </section>
+
+      {/* CONTENT CREATION COURSE */}
+      <section className="py-28 bg-white relative overflow-hidden">
+        <div className="absolute top-[-10%] end-[-10%] w-[500px] h-[500px] bg-rose/5 rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute bottom-[-10%] start-[-5%] w-[400px] h-[400px] bg-gold/5 rounded-full blur-[100px] pointer-events-none" />
+
+        <div className="max-w-6xl mx-auto px-6 relative z-10">
+          <motion.div variants={fadeUp} initial="hidden" whileInView="show" className="text-center mb-14 space-y-4">
+            <span className="inline-block text-rose font-black tracking-widest text-xs uppercase px-4 py-2 rounded-full bg-rose/5 border border-rose/15">
+              {dict.course.badge}
+            </span>
+            <h2 className="text-4xl lg:text-5xl font-black text-charcoal leading-tight">
+              {dict.course.title}{" "}
+              <span className="text-rose">{dict.course.titleHighlight}</span>{" "}
+              {dict.course.titleEnd}
+            </h2>
+            <p className="text-charcoal/50 text-lg font-bold max-w-2xl mx-auto leading-relaxed">
+              {dict.course.subtitle}
+            </p>
+          </motion.div>
+
+          <motion.div variants={fadeUp} initial="hidden" whileInView="show" className="max-w-4xl mx-auto">
+            <div className="premium-card p-8 lg:p-10 border-rose ring-4 ring-rose/10 relative overflow-hidden">
+              {/* Discount badge */}
+              <div className="absolute -top-0 -end-0 bg-gold text-charcoal px-6 py-2 rounded-bl-2xl text-sm font-black shadow-lg">
+                {dict.course.discount}
+              </div>
+
+              {/* Format info */}
+              <div className={`flex items-center gap-4 mb-8 ${textAlign}`}>
+                <div className="w-14 h-14 rounded-2xl bg-rose/10 flex items-center justify-center shrink-0">
+                  <Play size={24} className="text-rose" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-black text-charcoal">{dict.course.format}</h3>
+                  <p className="text-sm text-charcoal/50 font-bold">{dict.course.formatDesc}</p>
+                </div>
+              </div>
+
+              {/* Topics grid */}
+              <div className={`grid sm:grid-cols-2 gap-4 mb-8 ${textAlign}`}>
+                {[
+                  { icon: <Video size={18} />, title: dict.course.topic1Title, desc: dict.course.topic1Desc },
+                  { icon: <Sparkles size={18} />, title: dict.course.topic2Title, desc: dict.course.topic2Desc },
+                  { icon: <Smartphone size={18} />, title: dict.course.topic3Title, desc: dict.course.topic3Desc },
+                  { icon: <PenTool size={18} />, title: dict.course.topic4Title, desc: dict.course.topic4Desc },
+                ].map((topic, i) => (
+                  <div key={i} className="flex items-start gap-3 p-4 rounded-2xl bg-background border border-charcoal/5 hover:border-rose/20 hover:shadow-md transition-all duration-300 group">
+                    <div className="w-9 h-9 rounded-xl bg-rose/10 flex items-center justify-center text-rose shrink-0 mt-0.5 group-hover:bg-rose group-hover:text-white transition-colors">
+                      {topic.icon}
+                    </div>
+                    <div>
+                      <h4 className="font-black text-charcoal text-sm">{topic.title}</h4>
+                      <p className="text-xs text-charcoal/50 font-medium leading-relaxed mt-0.5">{topic.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Price & CTA */}
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-6 pt-6 border-t border-charcoal/8">
+                <div className={`${textAlign} flex items-baseline gap-3`}>
+                  <div className="text-4xl font-black text-rose">{dict.course.price}</div>
+                  <div className="text-xl font-bold text-charcoal/30 line-through">{dict.course.oldPrice}</div>
+                  <div className="text-xs font-black text-gold bg-gold/10 px-3 py-1 rounded-full">{dict.course.limitedOffer}</div>
+                </div>
+                <a
+                  href={`https://wa.me/201142632709?text=${encodeURIComponent(isRtl ? 'مرحبا، أريد التسجيل في كورس صناعة المحتوى' : 'Hello, I want to register for the Content Creation Course')}`}
+                  target="_blank"
+                  rel="noopener"
+                  className="btn-shine px-10 py-4 rounded-2xl bg-rose text-white font-black text-center hover:bg-rose-dark transition-all shadow-xl flex items-center justify-center gap-2 w-full sm:w-auto"
+                >
+                  {dict.course.cta}
+                  <ArrowRight size={18} />
+                </a>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </section>
 
