@@ -176,16 +176,15 @@ export default function HomeUI({ content }: { content: Record<string, string> })
             transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
             className="relative order-1 lg:order-2 flex justify-center"
           >
-            <div className="relative w-full max-w-[380px] lg:max-w-[460px] aspect-[4/5] rounded-[48px] overflow-hidden shadow-[0_48px_96px_-16px_rgba(0,0,0,0.3)] bg-charcoal border-[10px] border-rose/30 group">
+            <div className="relative w-full max-w-[380px] lg:max-w-[460px] aspect-square rounded-full overflow-hidden shadow-[0_48px_96px_-16px_rgba(0,0,0,0.15)] group">
               <Image
-                src={getContent(content, "hero_image", "/coach-batoula.jpg")}
+                src={getContent(content, "hero_image", "/coach-batoula-hero.png")}
                 alt={dict.hero.imageAlt}
                 fill
-                className="object-cover object-top group-hover:scale-105 transition-transform duration-1000"
+                className="object-cover object-center group-hover:scale-105 transition-transform duration-1000"
                 priority
                 unoptimized
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-charcoal/40 via-transparent to-transparent" />
             </div>
           </motion.div>
         </div>
@@ -246,6 +245,74 @@ export default function HomeUI({ content }: { content: Record<string, string> })
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* MASTER ACHIEVEMENT */}
+      <section className="py-24 bg-background relative overflow-hidden">
+        <div className="absolute top-0 start-0 w-80 h-80 bg-gold/5 rounded-full blur-[100px] pointer-events-none" />
+        <div className="absolute bottom-0 end-0 w-64 h-64 bg-rose/5 rounded-full blur-[80px] pointer-events-none" />
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: isRtl ? 40 : -40 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              className={`relative flex justify-center ${isRtl ? "order-1 lg:order-2" : "order-1 lg:order-1"}`}
+            >
+              <div className="relative rounded-[48px] overflow-hidden aspect-[4/5] w-full max-w-[400px] shadow-2xl border-[6px] border-gold/30">
+                <Image
+                  src="/coach-batoula-master.jpg"
+                  alt={dict.masterAchievement.imageAlt}
+                  fill
+                  className="object-cover object-top"
+                  unoptimized
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-charcoal/20 via-transparent to-transparent" />
+              </div>
+              <div className={`absolute -top-4 ${isRtl ? "-start-4" : "-end-4"} bg-gold text-charcoal px-5 py-2.5 rounded-2xl shadow-lg font-black text-sm`}>
+                <GraduationCap size={16} className="inline-block me-1.5 -mt-0.5" />
+                {dict.masterAchievement.badge}
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: isRtl ? -40 : 40 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
+              className={`space-y-6 ${textAlign} ${isRtl ? "order-2 lg:order-1" : "order-2 lg:order-2"}`}
+            >
+              <div className="space-y-3">
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gold/10 text-gold font-black text-xs tracking-wide uppercase">
+                  <Award size={14} />
+                  Professional Master
+                </div>
+                <h2 className="text-3xl lg:text-5xl font-black text-charcoal leading-tight">
+                  {dict.masterAchievement.title}{" "}
+                  <span className="text-gold">{dict.masterAchievement.highlight}</span>
+                </h2>
+                <div className={`w-16 h-1.5 bg-gold rounded-full ${isRtl ? "ms-auto" : "me-auto"}`} />
+              </div>
+
+              <p className="text-base font-bold text-charcoal/60 leading-relaxed max-w-lg">
+                {dict.masterAchievement.description}
+              </p>
+
+              <div className="p-6 rounded-3xl bg-white border border-charcoal/8 shadow-sm space-y-3">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-gold/10 flex items-center justify-center shrink-0">
+                    <GraduationCap size={20} className="text-gold" />
+                  </div>
+                  <div>
+                    <div className="text-sm font-black text-charcoal">{dict.masterAchievement.credential}</div>
+                    <div className="text-xs font-bold text-charcoal/40">{dict.masterAchievement.field}</div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>

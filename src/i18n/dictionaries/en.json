@@ -305,5 +305,14 @@
     "pendingDesc": "Your payment is being processed. We'll contact you on WhatsApp once confirmed.",
     "redirecting": "Redirecting to payment gateway..."
   },
+  "masterAchievement": {
+    "badge": "New Achievement",
+    "title": "Professional Master",
+    "highlight": "Achieved!",
+    "description": "Coach Batoula has earned her Professional Master in Clinical, Sport Nutrition and Obesity through the Professional Accreditation Program — a proud milestone in her journey to deliver the highest level of nutrition coaching.",
+    "credential": "Professional Master — Professional Accreditation Program",
+    "field": "Clinical, Sport Nutrition and Obesity",
+    "imageAlt": "Coach Batoula with her Professional Master certificate"
+  },
   "langSwitch": "العربية"
 }
