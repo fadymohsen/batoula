@@ -330,10 +330,6 @@ export default function HomeUI({ content }: { content: Record<string, string> })
             <motion.div variants={staggerItem} className="premium-card flex flex-col">
               <div className={`space-y-2 mb-7 ${textAlign}`}>
                 <h3 className="text-3xl font-black text-charcoal">{dict.plans.plan1.name}</h3>
-                <div className="flex items-baseline justify-start gap-1">
-                  <span className="text-4xl font-black text-charcoal">{dict.plans.plan1.price}</span>
-                  <span className="text-xs text-charcoal/40 font-bold">{dict.plans.plan1.period}</span>
-                </div>
                 <p className="text-sm text-charcoal/60 font-bold">{dict.plans.plan1.description}</p>
               </div>
               <ul className={`space-y-4 mb-8 flex-1 ${textAlign}`}>
@@ -358,10 +354,6 @@ export default function HomeUI({ content }: { content: Record<string, string> })
               <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-rose text-white px-5 py-1.5 rounded-full text-xs font-black shadow-lg">{dict.plans.mostPopular}</div>
               <div className={`space-y-2 mb-7 ${textAlign}`}>
                 <h3 className="text-3xl font-black text-charcoal">{dict.plans.plan2.name}</h3>
-                <div className="flex items-baseline justify-start gap-1">
-                  <span className="text-4xl font-black text-charcoal">{dict.plans.plan2.price}</span>
-                  <span className="text-xs text-charcoal/40 font-bold">{dict.plans.plan2.period}</span>
-                </div>
                 <p className="text-sm text-charcoal/60 font-bold">{dict.plans.plan2.description}</p>
               </div>
               <ul className={`space-y-4 mb-8 flex-1 ${textAlign}`}>
@@ -384,10 +376,6 @@ export default function HomeUI({ content }: { content: Record<string, string> })
             <motion.div variants={staggerItem} className="premium-card flex flex-col text-white" style={{ background: "var(--charcoal)" }}>
               <div className={`space-y-2 mb-7 ${textAlign}`}>
                 <h3 className="text-3xl font-black text-gold">{dict.plans.plan3.name}</h3>
-                <div className="flex items-baseline justify-start gap-1">
-                  <span className="text-4xl font-black text-gold">{dict.plans.plan3.price}</span>
-                  <span className="text-xs text-white/40 font-bold">{dict.plans.plan3.period}</span>
-                </div>
                 <p className="text-sm text-white/60 font-bold">{dict.plans.plan3.description}</p>
               </div>
               <ul className={`space-y-4 mb-8 flex-1 ${textAlign}`}>

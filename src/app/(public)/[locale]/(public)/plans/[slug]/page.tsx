@@ -50,13 +50,6 @@ export default async function PlanDetailsPage({ params }: { params: Promise<{ sl
               <h1 className="text-4xl lg:text-5xl font-black text-charcoal leading-tight">
                 {plan.title}
               </h1>
-              <div className={`flex items-center gap-3 pt-2 ${locale === "ar" ? "justify-end" : "justify-start"}`}>
-                <div className={locale === "ar" ? "text-right" : "text-left"}>
-                  <div className="text-[10px] font-bold text-gray-400">{dict.planDetails.priceLabel}</div>
-                  <div className="text-[9px] font-black text-charcoal uppercase tracking-tighter">{dict.planDetails.priceNote}</div>
-                </div>
-                <span className="text-5xl lg:text-6xl font-black text-rose">${plan.price}</span>
-              </div>
             </div>
 
             <div className={`p-6 rounded-[32px] bg-rose/5 border border-rose/10 flex items-center gap-4 shadow-sm ${locale === "ar" ? "justify-end" : "justify-start"}`}>

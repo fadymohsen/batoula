@@ -80,10 +80,6 @@ export default async function PlansPage({ params }: { params: Promise<{ locale: 
 
               <div className="mb-8">
                 <h2 className="text-2xl font-black text-charcoal mb-2">{plan.title}</h2>
-                <div className="flex items-baseline gap-1">
-                  <span className="text-5xl font-black text-charcoal">${plan.price}</span>
-                  <span className="text-charcoal/30 text-sm font-bold">{dict.plansPage.perPeriod}</span>
-                </div>
               </div>
 
               <div className="space-y-4 mb-10 flex-1">
