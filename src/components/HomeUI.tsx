@@ -434,11 +434,7 @@ export default function HomeUI({ content }: { content: Record<string, string> })
                 <p className="text-xs text-charcoal/50 font-bold">{dict.consultation.note}</p>
               </div>
 
-              <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-6 pt-6 border-t border-charcoal/8">
-                <div className={textAlign}>
-                  <div className="text-xs text-charcoal/40 font-bold">{dict.consultation.priceLabel}</div>
-                  <div className="text-4xl font-black text-rose">{dict.consultation.price}</div>
-                </div>
+              <div className="mt-8 flex items-center justify-center pt-6 border-t border-charcoal/8">
                 <Link
                   href={`/${locale}/checkout/consultation`}
                   className="btn-shine px-10 py-4 rounded-2xl bg-rose text-white font-black text-center hover:bg-rose-dark transition-all shadow-xl flex items-center justify-center gap-2 w-full sm:w-auto"
